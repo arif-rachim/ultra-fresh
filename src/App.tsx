@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
-import {motion} from "framer-motion";
+
+import AppShell from "./components/AppShell";
 function App() {
-  return <motion.div animate={{y:100}}>
-    Hello World
-  </motion.div>;
+  return <AppShell/>;
 }
 
 export default App;

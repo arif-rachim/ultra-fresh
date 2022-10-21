@@ -13,7 +13,7 @@ export interface Product{
 export const data:Product[] = [
     {
         "internalCode": "M1009",
-        "name": "Full Cream Milk",
+        "name": "Full Cream",
         "unit": "1",
         "unitType": "GALLON",
         "barcode": "6291031000198",
@@ -24,7 +24,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1006",
-        "name": "Full Cream Milk",
+        "name": "Full Cream",
         "unit": "2",
         "unitType": "LTR.",
         "barcode": "6291031000136",
@@ -35,7 +35,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1005",
-        "name": "Full Cream Milk",
+        "name": "Full Cream",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031000150",
@@ -46,7 +46,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1004",
-        "name": "Full Cream Milk",
+        "name": "Full Cream",
         "unit": "500",
         "unitType": "ML.",
         "barcode": "6291031000167",
@@ -57,7 +57,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1003",
-        "name": "Full Cream Milk",
+        "name": "Full Cream",
         "unit": "250",
         "unitType": "ML.",
         "barcode": "6291031000174",
@@ -68,7 +68,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1030",
-        "name": "Low Fat Milk",
+        "name": "Low Fat",
         "unit": "2",
         "unitType": "LTR.",
         "barcode": "6291031000235",
@@ -79,7 +79,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1029",
-        "name": "Low Fat Milk",
+        "name": "Low Fat",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031000259",
@@ -90,7 +90,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "",
-        "name": "Low Fat Milk",
+        "name": "Low Fat",
         "unit": "500",
         "unitType": "ML.",
         "barcode": "6291031000273",
@@ -101,7 +101,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1028",
-        "name": "Low Fat Milk",
+        "name": "Low Fat",
         "unit": "250",
         "unitType": "ML.",
         "barcode": "6291031000266",
@@ -145,7 +145,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1403",
-        "name": "Chocolate Milk",
+        "name": "Chocolate",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031000457",
@@ -156,7 +156,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1402",
-        "name": "Chocolate Milk",
+        "name": "Chocolate",
         "unit": "500",
         "unitType": "ML.",
         "barcode": "6291031000495",
@@ -167,7 +167,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1401",
-        "name": "Chocolate Milk",
+        "name": "Chocolate",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031000471",
@@ -178,7 +178,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1428",
-        "name": "Strawberry Milk",
+        "name": "Strawberry",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031000556",
@@ -189,7 +189,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1427",
-        "name": "Strawberry Milk",
+        "name": "Strawberry",
         "unit": "500",
         "unitType": "ML.",
         "barcode": "6291031000594",
@@ -200,7 +200,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1426",
-        "name": "Strawberry Milk",
+        "name": "Strawberry",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031000570",
@@ -585,7 +585,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2678",
-        "name": "Mango Yoghurt",
+        "name": "Mango",
         "unit": "125",
         "unitType": "GRAMS",
         "barcode": "6291031020370",
@@ -596,7 +596,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2679",
-        "name": "Mango Yoghurt",
+        "name": "Mango",
         "unit": "125 X 6",
         "unitType": "GRAMS",
         "barcode": "6291031020455",
@@ -607,7 +607,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3001",
-        "name": "Laban Cool Natural 200ml. - Bottle",
+        "name": "Natural",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031000921",
@@ -618,7 +618,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3005",
-        "name": "Laban Cool Natural",
+        "name": "Natural",
         "unit": "200 x 6",
         "unitType": "ML.",
         "barcode": "6291031000891",
@@ -629,7 +629,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3052",
-        "name": "Laban Methi",
+        "name": "Methi",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031000952",
@@ -640,7 +640,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3054",
-        "name": "Laban Methi",
+        "name": "Methi",
         "unit": "200 x 6",
         "unitType": "ML.",
         "barcode": "6291031000914",
@@ -651,7 +651,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3079",
-        "name": "Laban Jeera",
+        "name": "Jeera",
         "unit": "2",
         "unitType": "LTR.",
         "barcode": "6291031000822",
@@ -662,7 +662,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3076",
-        "name": "Laban Jeera",
+        "name": "Jeera",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031000969",
@@ -673,7 +673,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3080",
-        "name": "Laban Jeera",
+        "name": "Jeera",
         "unit": "200 x 6",
         "unitType": "ML.",
         "barcode": "6291031000907",
@@ -684,7 +684,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3151",
-        "name": "Laban Cool Mango",
+        "name": "Mango",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031002888",
@@ -695,7 +695,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3171",
-        "name": "Laban Cool Strawberry",
+        "name": "Strawberry",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031002871",
@@ -706,7 +706,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3121",
-        "name": "Traditional Laban",
+        "name": "Laban",
         "unit": "2",
         "unitType": "LTR.",
         "barcode": "6291031001706",
@@ -717,7 +717,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3122",
-        "name": "Traditional Laban",
+        "name": "Laban",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031001713",
@@ -728,7 +728,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3123",
-        "name": "Traditional Laban",
+        "name": "Laban",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031001799",
@@ -739,7 +739,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3030",
-        "name": "ProActiv Laban",
+        "name": "Laban",
         "unit": "2",
         "unitType": "LTR.",
         "barcode": "6291031000730",
@@ -750,7 +750,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3026",
-        "name": "ProActiv Laban",
+        "name": "Laban",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031000761",
@@ -761,7 +761,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3027",
-        "name": "ProActiv Laban",
+        "name": "Laban",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031001591",
@@ -772,7 +772,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5204",
-        "name": "Orange Juice",
+        "name": "Orange",
         "unit": "1.75",
         "unitType": "LTR.",
         "barcode": "6291031010029",
@@ -783,7 +783,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5203",
-        "name": "Orange Juice",
+        "name": "Orange",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031010050",
@@ -794,7 +794,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5202",
-        "name": "Orange Juice",
+        "name": "Orange",
         "unit": "500",
         "unitType": "ML.",
         "barcode": "6291031010067",
@@ -805,7 +805,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5201",
-        "name": "Orange Juice",
+        "name": "Orange",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031010104",
@@ -816,7 +816,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5135",
-        "name": "Mango Juice",
+        "name": "Mango",
         "unit": "1.75",
         "unitType": "LTR.",
         "barcode": "6291031002017",
@@ -827,7 +827,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5134",
-        "name": "Mango Juice",
+        "name": "Mango",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031002024",
@@ -838,7 +838,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5133",
-        "name": "Mango Juice",
+        "name": "Mango",
         "unit": "500",
         "unitType": "ML.",
         "barcode": "6291031002031",
@@ -849,7 +849,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5132",
-        "name": "Mango Juice",
+        "name": "Mango",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031002048",
@@ -904,7 +904,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5004",
-        "name": "Apple Juice",
+        "name": "Apple",
         "unit": "1.75",
         "unitType": "LTR.",
         "barcode": "6291031010333",
@@ -915,7 +915,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5003",
-        "name": "Apple Juice",
+        "name": "Apple",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031010340",
@@ -926,7 +926,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5002",
-        "name": "Apple Juice",
+        "name": "Apple",
         "unit": "500",
         "unitType": "ML.",
         "barcode": "6291031010678",
@@ -937,7 +937,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M5001",
-        "name": "Apple Juice",
+        "name": "Apple",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031010357",
@@ -1003,7 +1003,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2442",
-        "name": "Apple Cinnamon Greek Yoghurt.",
+        "name": "Apple Cinnamon",
         "unit": "360",
         "unitType": "GRAMS",
         "barcode": "6291031002796",
@@ -1014,7 +1014,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2452",
-        "name": "Blueberry Greek Yoghurt",
+        "name": "Blueberry",
         "unit": "360",
         "unitType": "GRAMS",
         "barcode": "6291031000747",
@@ -1025,7 +1025,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2422",
-        "name": "Mango Greek Yoghurt 360g.",
+        "name": "Mango",
         "unit": "360",
         "unitType": "GRAMS",
         "barcode": "6291031002772",
@@ -1036,7 +1036,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2432",
-        "name": "Strawberry Greek Yoghurt 360g.",
+        "name": "Strawberry",
         "unit": "360",
         "unitType": "GRAMS",
         "barcode": "6291031000693",
@@ -1047,7 +1047,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2405",
-        "name": "Greek Yoghurt Regular 150g.",
+        "name": "Greek Yoghurt Regular",
         "unit": "150",
         "unitType": "GRAMS",
         "barcode": "6291031032236",
@@ -1069,7 +1069,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2451",
-        "name": "Blueberry Greek Yoghurt",
+        "name": "Blueberry",
         "unit": "150",
         "unitType": "GRAMS",
         "barcode": "6291031000792",
@@ -1080,7 +1080,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2421",
-        "name": "Mango Greek Yoghurt",
+        "name": "Mango",
         "unit": "150",
         "unitType": "GRAMS",
         "barcode": "6291031002765",
@@ -1091,7 +1091,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2431",
-        "name": "Strawberry Greek Yoghurt",
+        "name": "Strawberry",
         "unit": "150",
         "unitType": "GRAMS",
         "barcode": "6291031000709",
@@ -1113,7 +1113,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2502",
-        "name": "Strawberry Greek Yoghurt",
+        "name": "Strawberry",
         "unit": "300",
         "unitType": "ML.",
         "barcode": "6291031002611",
@@ -1124,7 +1124,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2503",
-        "name": "Blueberry Greek Yoghurt",
+        "name": "Blueberry",
         "unit": "300",
         "unitType": "ML.",
         "barcode": "6291031002604",
@@ -1135,7 +1135,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2505",
-        "name": "Apple And Cinnamon With Oats",
+        "name": "Apple & Cinnamon",
         "unit": "300",
         "unitType": "ML.",
         "barcode": "6291031002628",
@@ -1179,7 +1179,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M7000",
-        "name": "Uht Full Fat Milk 1 Ltr",
+        "name": "Full Fat",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031001195",
@@ -1190,7 +1190,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M7026",
-        "name": "Uht Full Fat Milk 1 Ltr X 4",
+        "name": "Full Fat",
         "unit": "1 x 4",
         "unitType": "LTR.",
         "barcode": "6291031001218",
@@ -1201,7 +1201,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "",
-        "name": "Full Cream Milk",
+        "name": "Full Cream",
         "unit": "1 x 12",
         "unitType": "LTR.",
         "barcode": "6291031001188",
@@ -1212,7 +1212,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "",
-        "name": "Uht Low Fat Milk",
+        "name": "Uht Low Fat",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031001232",
@@ -1223,8 +1223,8 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M7032",
-        "name": "Marmum Uht Low Fat Milk 1 Ltr X 4",
-        "unit": "1X4",
+        "name": "Uht Low Fat",
+        "unit": "1 X 4",
         "unitType": "LTR.",
         "barcode": "6291031001249",
         "price": "20.68",
@@ -1234,8 +1234,8 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M7031",
-        "name": "Low Fat Milk 1ltr. X 12",
-        "unit": "12",
+        "name": "Low Fat",
+        "unit": "1 X 12",
         "unitType": "LTR.",
         "barcode": "6291031001225",
         "price": "62.04",
@@ -1245,25 +1245,25 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M7032",
-        "name": "Mozzarella Cheese",
+        "name": "Mozzarella",
         "unit": "500",
         "unitType": "GRAMS",
         "barcode": "6291031001836",
         "price": "17.50",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Cheese Item"
+        "category": "Cheese"
     },
     {
         "internalCode": "M7031",
-        "name": "Mozzarella Cheese",
+        "name": "Mozzarella",
         "unit": "200",
         "unitType": "GRAMS",
         "barcode": "6291031001829",
         "price": "7.50",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Cheese Item"
+        "category": "Cheese"
     },
     {
         "internalCode": "M7033",
@@ -1274,17 +1274,17 @@ export const data:Product[] = [
         "price": "19.00",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Cheese Item"
+        "category": "Cheese"
     },
     {
         "internalCode": "M7034",
-        "name": "Shredded Mozzarella Cheese",
+        "name": "Shredded Mozzarella",
         "unit": "400",
         "unitType": "GRAMS",
         "barcode": "6291031002864",
         "price": "11.00",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Cheese Item"
+        "category": "Cheese"
     }
 ];
