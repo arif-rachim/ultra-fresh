@@ -5,16 +5,17 @@ import {data} from "../data";
 import {motion} from "framer-motion";
 import {theme} from "./Theme";
 import {useStoreValue} from "../components/store/useCreateStore";
-import {useFocusListener} from "../components/RouterPageContainer";
+
 
 
 export default function Product(props: RouteProps) {
     const {appDimension, store} = useAppContext();
     const {params} = props;
+
     const productId = params.get('productId');
     const product = data.find(p => p.barcode === productId);
-    const isFocused = useFocusListener(props.path);
-    console.log('IsFocused',props.path,isFocused);
+   // const isFocused = useFocusListener(props.path);
+
     const total = useStoreValue(store, (value) => {
         return value.shoppingCart.find(s => s.barcode === productId)?.total
     });

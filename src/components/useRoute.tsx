@@ -61,7 +61,11 @@ function getParamsAndComponent( route: [string, (() => JSX.Element)][]) {
         if (filteredComponents.length > 0) {
             const fc = filteredComponents[0];
             params = new Map(Object.entries(fc.params));
-            routeComponent = memo(fc.component);
+            routeComponent = memo(fc.component,(prevProps:any, nextProps:any) => {
+                const paramsAreEqual = mapsAreEqual(prevProps.params,nextProps.params);
+                console.log('comparing',prevProps.params,nextProps.params,paramsAreEqual);
+                return paramsAreEqual;
+            });
             path = fc.path;
         }
     }
@@ -72,3 +76,6 @@ export interface RouteProps{
     params:Map<string,string>,
     path:string
 }
+
+const mapsAreEqual = (m1:Map<string,any>, m2:Map<string,any>) => m1.size === m2.size && Array.from(m1.keys()).every((key) => m1.get(key) === m2.get(key));
+

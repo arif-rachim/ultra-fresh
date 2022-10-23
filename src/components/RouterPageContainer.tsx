@@ -39,7 +39,7 @@ export function RouterPageContainer() {
         {components.map((c, index) => {
             const Component = c.component;
             const isFocused = c.path === path;
-            return <Component key={c.path} params={params} path={c.path} isFocused={isFocused}/>
+            return <Component key={c.path} params={c.params} path={c.path} isFocused={isFocused}/>
         })}
     </div>
     </CurrentActivePathContext.Provider>
@@ -52,7 +52,6 @@ interface PathAbleComponent {
 }
 
 const CurrentActivePathContext = createContext('');
-
 
 export function useFocusListener(path:string){
     const currentActivePath = useContext(CurrentActivePathContext);
