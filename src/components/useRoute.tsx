@@ -1,5 +1,5 @@
 import {routes} from "../routes/routes";
-import {FunctionComponent, useEffect, useState} from "react";
+import {FunctionComponent, useEffect, useState,memo} from "react";
 
 export interface ParamsAndComponent {
     params: Map<string, string>,
@@ -13,9 +13,9 @@ export function useRoute(): ParamsAndComponent {
 
     useEffect(() => {
         const hashChangeListener = () => setParamsRouteComponent(getParamsAndComponent(route));
-        window.onhashchange = hashChangeListener;
-        // eslint-disable-next-line
-    }, []);
+        window.addEventListener('hashchange',hashChangeListener)
+        return () => window.removeEventListener('hashchange',hashChangeListener)
+    }, [route]);
     return paramsAndComponent;
 }
 
@@ -27,10 +27,9 @@ function getHash() {
     return hash
 }
 
-export function EmptyComponent() {
+export const EmptyComponent = memo(function EmptyComponent() {
     return <></>
-}
-
+})
 
 function getParamsAndComponent( route: [string, (() => JSX.Element)][]) {
     const hash = getHash();
@@ -62,7 +61,7 @@ function getParamsAndComponent( route: [string, (() => JSX.Element)][]) {
         if (filteredComponents.length > 0) {
             const fc = filteredComponents[0];
             params = new Map(Object.entries(fc.params));
-            routeComponent = fc.component;
+            routeComponent = memo(fc.component);
             path = fc.path;
         }
     }
@@ -71,6 +70,5 @@ function getParamsAndComponent( route: [string, (() => JSX.Element)][]) {
 
 export interface RouteProps{
     params:Map<string,string>,
-    path:string,
-    isFocused:boolean
+    path:string
 }

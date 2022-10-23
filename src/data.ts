@@ -211,7 +211,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1700",
-        "name": "High Protein Milk",
+        "name": "Plain",
         "unit": "1",
         "unitType": "LTR.",
         "barcode": "6291031002567",
@@ -222,7 +222,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1701",
-        "name": "High Protein Milk",
+        "name": "Plain",
         "unit": "300",
         "unitType": "ML.",
         "barcode": "6291031002574",
@@ -233,7 +233,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1726",
-        "name": "HP Chocolate",
+        "name": "Chocolate",
         "unit": "300",
         "unitType": "ML.",
         "barcode": "6291031002819",
@@ -244,7 +244,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M1727",
-        "name": "HP Strawberry",
+        "name": "Strawberry",
         "unit": "300",
         "unitType": "ML.",
         "barcode": "6291031002826",
@@ -255,7 +255,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2008",
-        "name": "Natural Yoghurt",
+        "name": "Plain",
         "unit": "3.8",
         "unitType": "KG.",
         "barcode": "6291031020813",
@@ -266,7 +266,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2007",
-        "name": "Natural Yoghurt",
+        "name": "Plain",
         "unit": "2",
         "unitType": "KG.",
         "barcode": "6291031020912",
@@ -277,7 +277,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2005",
-        "name": "Natural Yoghurt",
+        "name": "Plain",
         "unit": "1",
         "unitType": "KG.",
         "barcode": "6291031020837",
@@ -288,7 +288,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2003",
-        "name": "Natural Yoghurt",
+        "name": "Plain",
         "unit": "400",
         "unitType": "GRAMS",
         "barcode": "6291031020028",
@@ -299,7 +299,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2002",
-        "name": "Natural Yoghurt",
+        "name": "Plain",
         "unit": "170",
         "unitType": "GRAMS",
         "barcode": "6291031020035",
@@ -310,7 +310,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2009",
-        "name": "Natural Yoghurt",
+        "name": "Plain",
         "unit": "100 x 6",
         "unitType": "GRAMS",
         "barcode": "2000003285129",
@@ -321,7 +321,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2001",
-        "name": "Natural Yoghurt",
+        "name": "Plain",
         "unit": "100",
         "unitType": "GRAMS",
         "barcode": "6291031020127",
@@ -332,7 +332,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2032",
-        "name": "Low Fat Yoghurt",
+        "name": "Low Fat",
         "unit": "2",
         "unitType": "KG.",
         "barcode": "6291031020134",
@@ -343,7 +343,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2030",
-        "name": "Low Fat Yoghurt",
+        "name": "Low Fat",
         "unit": "1",
         "unitType": "KG.",
         "barcode": "6291031020103",
@@ -354,7 +354,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2028",
-        "name": "Low Fat Yoghurt",
+        "name": "Low Fat",
         "unit": "400",
         "unitType": "GRAMS",
         "barcode": "6291031020059",
@@ -365,7 +365,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2027",
-        "name": "Low Fat Yoghurt",
+        "name": "Low Fat",
         "unit": "170",
         "unitType": "GRAMS",
         "barcode": "6291031020042",
@@ -376,7 +376,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2026",
-        "name": "Low Fat Yoghurt",
+        "name": "Low Fat",
         "unit": "100",
         "unitType": "GRAMS",
         "barcode": "6291031001546",
@@ -387,7 +387,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2033",
-        "name": "Low Fat Yoghurt",
+        "name": "Low Fat",
         "unit": "100 x 6",
         "unitType": "GRAMS",
         "barcode": "6291031001553",
@@ -431,7 +431,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2176",
-        "name": "Fresh Cream",
+        "name": "Cream",
         "unit": "100",
         "unitType": "GRAMS",
         "barcode": "6291031001775",
@@ -442,7 +442,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2178",
-        "name": "Fresh Cream Lite",
+        "name": "Cream Lite",
         "unit": "100",
         "unitType": "GRAMS",
         "barcode": "6291031001782",
@@ -508,7 +508,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2903",
-        "name": "Assorted Yoghurt",
+        "name": "Assorted",
         "unit": "125 X 6",
         "unitType": "GRAMS",
         "barcode": "6291031020387",
@@ -519,7 +519,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2648",
-        "name": "Strawberry Yoghurt",
+        "name": "Strawberry",
         "unit": "125",
         "unitType": "GRAMS",
         "barcode": "6291031020202",
@@ -530,7 +530,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2651",
-        "name": "Strawberry Yoghurt",
+        "name": "Strawberry",
         "unit": "125 X 6",
         "unitType": "GRAMS",
         "barcode": "6291031020400",
@@ -541,7 +541,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2618",
-        "name": "Peach Yoghurt",
+        "name": "Peach",
         "unit": "125",
         "unitType": "GRAMS",
         "barcode": "6291031020240",
@@ -552,7 +552,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2619",
-        "name": "Peach Yoghurt",
+        "name": "Peach",
         "unit": "125 X 6",
         "unitType": "GRAMS",
         "barcode": "6291031020424",
@@ -563,7 +563,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2633",
-        "name": "Blueberry Yoghurt",
+        "name": "Blueberry",
         "unit": "125",
         "unitType": "GRAMS",
         "barcode": "6291031020226",
@@ -574,7 +574,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2634",
-        "name": "Blueberry Yoghurt",
+        "name": "Blueberry",
         "unit": "125 X 6",
         "unitType": "GRAMS",
         "barcode": "6291031020417",
@@ -607,25 +607,25 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3001",
-        "name": "Natural",
+        "name": "Plain",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031000921",
         "price": "1.15",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3005",
-        "name": "Natural",
+        "name": "Plain",
         "unit": "200 x 6",
         "unitType": "ML.",
         "barcode": "6291031000891",
         "price": "6.93",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3052",
@@ -636,7 +636,7 @@ export const data:Product[] = [
         "price": "1.15",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3054",
@@ -647,7 +647,7 @@ export const data:Product[] = [
         "price": "6.93",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3079",
@@ -658,7 +658,7 @@ export const data:Product[] = [
         "price": "7.82",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3076",
@@ -669,7 +669,7 @@ export const data:Product[] = [
         "price": "1.15",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3080",
@@ -680,7 +680,7 @@ export const data:Product[] = [
         "price": "6.93",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3151",
@@ -691,7 +691,7 @@ export const data:Product[] = [
         "price": "1.15",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3171",
@@ -702,7 +702,7 @@ export const data:Product[] = [
         "price": "1.15",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Laban Cool And Flavored"
+        "category": "Laban Cool"
     },
     {
         "internalCode": "M3121",
@@ -992,14 +992,14 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M2406",
-        "name": "Greek Yoghurt",
+        "name": "Plain",
         "unit": "360",
         "unitType": "GRAMS",
         "barcode": "6291031032229",
         "price": "8.84",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2442",
@@ -1010,7 +1010,7 @@ export const data:Product[] = [
         "price": "8.84",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2452",
@@ -1021,7 +1021,7 @@ export const data:Product[] = [
         "price": "8.84",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2422",
@@ -1032,7 +1032,7 @@ export const data:Product[] = [
         "price": "8.84",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2432",
@@ -1043,18 +1043,18 @@ export const data:Product[] = [
         "price": "8.84",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2405",
-        "name": "Greek Yoghurt Regular",
+        "name": "Plain",
         "unit": "150",
         "unitType": "GRAMS",
         "barcode": "6291031032236",
         "price": "4.06",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2441",
@@ -1065,7 +1065,7 @@ export const data:Product[] = [
         "price": "4.06",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2451",
@@ -1076,7 +1076,7 @@ export const data:Product[] = [
         "price": "4.06",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2421",
@@ -1087,7 +1087,7 @@ export const data:Product[] = [
         "price": "4.06",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2431",
@@ -1098,7 +1098,7 @@ export const data:Product[] = [
         "price": "4.06",
         "shelfLife": "10",
         "shelfLifeType": "DAYS",
-        "category": "Greek Yoghurt And Flavored"
+        "category": "Greek Yoghurt"
     },
     {
         "internalCode": "M2501",

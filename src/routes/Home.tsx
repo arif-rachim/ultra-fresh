@@ -5,9 +5,10 @@ import {motion} from "framer-motion";
 import {useNavigate} from "../components/useNavigate";
 import {RouteProps} from "../components/useRoute";
 
+
 const itemStyleSheet: CSSProperties = {
-    background: 'radial-gradient(rgba(255,255,255,1),rgba(0,0,0,0.1))',
-    borderRadius: 0,
+    background: 'radial-gradient(rgba(255,255,255,1)  ,rgba(255,255,255,1) )',
+    borderRadius: 10,
     margin: 5,
     padding: 0,
     boxShadow: '0 3px 5px -3px rgba(0,0,0,0.1)',
@@ -21,13 +22,13 @@ const containerStyle: CSSProperties = {
     display: 'flex',
     flexWrap: "wrap",
     alignContent: "space-between",
-    margin: 'auto',
-    background:'white'
+    margin: 'auto'
 };
 
 
 function Home(props:RouteProps) {
     const appContext = useAppContext();
+
     const navigate = useNavigate();
     const imageDimension = Math.floor(appContext.appDimension.width / 3) - 10
     return <div style={containerStyle}>

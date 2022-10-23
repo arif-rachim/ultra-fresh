@@ -1,5 +1,15 @@
-import {createContext, Dispatch, PropsWithChildren, ReactElement, useCallback, useContext, useMemo} from "react";
+import {
+    createContext,
+    Dispatch,
+    PropsWithChildren,
+    ReactElement,
+    useCallback,
+    useContext,
+    useMemo
+} from "react";
 import {maxWidth} from "./RouterPageContainer";
+import {Store} from "./store/useCreateStore";
+import {AppState} from "./AppState";
 
 
 export function useAppContext() {
@@ -14,7 +24,8 @@ interface Dimension {
 interface AppContextType {
     appDimension: Dimension,
     appType: AppType,
-    showModal: <T>(factoryFunction: FactoryFunction<T>) => Promise<T>
+    showModal: <T>(factoryFunction: FactoryFunction<T>) => Promise<T>,
+    store: Store<AppState>
 }
 
 
@@ -31,17 +42,20 @@ const Nothing: any = () => {
 const AppContext = createContext<AppContextType>({
         appDimension: {width: 0, height: 0},
         appType: AppType.Mobile,
-        showModal: Nothing
+        showModal: Nothing,
+        store: {
+            dispatch: Nothing,
+            stateRef: {current: {shoppingCart:[]}}, addListener: (state:any) => Nothing
+        }
     }
 );
 type FactoryFunction<T> = (closePanel: (val: T) => void) => ReactElement;
 
 
-export function AppContextProvider(props: PropsWithChildren<{
-    setModalPanel: Dispatch<ReactElement | false>
+export function AppContextProvider<State extends AppState>(props: PropsWithChildren<{
+    setModalPanel: Dispatch<ReactElement | false>, store: Store<State>
 }>) {
-    const {setModalPanel} = props;
-
+    const {setModalPanel, store} = props;
     const showModal = useCallback((factory: FactoryFunction<any>) => {
         return new Promise<any>(resolve => {
             const closePanel = (value: any) => {
@@ -74,8 +88,8 @@ export function AppContextProvider(props: PropsWithChildren<{
             appType = AppType.Laptop
         }
 
-        return {appDimension, appType, showModal}
-    }, [showModal]);
+        return {appDimension, appType, showModal, store}
+    }, [showModal, store]);
 
 
     return <AppContext.Provider value={contextValue}>

@@ -1,48 +1,41 @@
 import {MutableRefObject, useEffect, useRef, useState} from "react";
 
-type AddReducerCallback = <P, S>(reducerCallback: Callback<P, S>) => () => void;
 type Listener = (param: any) => void
 
-interface Store<T> {
-    stateRef: MutableRefObject<T>,
-    addListener: (state: any) => () => void,
-    dispatch: (type: string, payload: any) => void
+export interface Action{
+    type:string,
+    payload:any,
+    [key:string] : any
 }
 
-type Callback<P, S> = (action: string, payload: P) => (state: S) => S
+export interface Store<S> {
+    stateRef: MutableRefObject<S>,
+    addListener: (state: any) => () => void,
+    dispatch: (action: Action) => void
+}
 
-export function useCreateStore<T>(initial: (addReducer: AddReducerCallback) => () => T): Store<T> {
-    const callbacksRef = useRef<Callback<any, any>[]>([]);
+export function useCreateStore<S>(reducer: (action: Action) => (oldState:S) => S,
+                                                    initializer: S | (() => S) ): Store<S> {
+
     const listenerRef = useRef<Listener[]>([]);
 
-    function dispatch(type: string, payload: any) {
-        const callbacksFunctions = callbacksRef.current.map(cb => {
-            return cb.call(null, type, payload);
-        });
-        let oldVal: any = stateRef.current;
-        for (const cb of callbacksFunctions) {
-            oldVal = cb.call(null, oldVal);
+
+    const [initialState] = useState<S>(() => {
+        let stateInitial: any = initializer;
+        if (isFunction(initializer)) {
+            stateInitial = (initializer as any)();
         }
-        stateRef.current = oldVal;
-        listenerRef.current.forEach(l => l.call(null, stateRef.current))
+        return stateInitial as S;
+    });
+    const stateRef = useRef<S>(initialState);
+
+    function dispatch(action: Action) {
+        const newState = reducer(action)(stateRef.current);
+        stateRef.current = newState;
+        listenerRef.current.forEach(l => l.call(null,newState));
     }
 
-
-    const [initialState] = useState<any>(() => {
-        function addReducer<P, S>(reducerCallback: Callback<P, S>) {
-            callbacksRef.current.push(reducerCallback);
-            return () => {
-                callbacksRef.current.splice(callbacksRef.current.indexOf(reducerCallback), 1)
-            }
-        }
-
-        const stateInitial = initial(addReducer);
-        return stateInitial();
-    });
-
-    const stateRef = useRef(initialState);
-
-    function addListener(selector: (param: any) => any) {
+    function addListener(selector: (param: S) => any) {
         listenerRef.current.push(selector);
         return () => listenerRef.current.splice(listenerRef.current.indexOf(selector, 1))
     }
@@ -50,15 +43,18 @@ export function useCreateStore<T>(initial: (addReducer: AddReducerCallback) => (
     return {dispatch, stateRef, addListener}
 }
 
-export function useStoreValue<T, R>(store: Store<T>, selector: (param: T) => R) {
-    const [value, setValue] = useState<R>(() => selector(store.stateRef.current));
-    const {addListener} = store;
+export function useStoreValue<T, S>(store: Store<T>, selector: (param: T) => S) {
+    const [value, setValue] = useState<S>(() => selector(store.stateRef.current));
+    const {addListener,stateRef} = store;
     useEffect(() => {
         return addListener((newValue: any) => {
             setValue(selector(newValue));
         });
-        // eslint-disable-next-line
-    }, [addListener])
-
+    }, [addListener,selector])
+    useEffect(() => setValue(selector(stateRef.current)), [selector,stateRef])
     return value;
+}
+
+function isFunction(functionToCheck: any) {
+    return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }

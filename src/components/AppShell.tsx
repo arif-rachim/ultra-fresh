@@ -1,8 +1,9 @@
-import {CSSProperties,  ReactElement,  useState} from "react";
+import {CSSProperties, ReactElement, useState} from "react";
 import {AppContextProvider} from "./useAppContext";
 import {AnimatePresence, motion} from "framer-motion";
 import {RouterPageContainer} from "./RouterPageContainer";
-
+import {useCreateStore} from "./store/useCreateStore";
+import {storeReducer} from "./AppState";
 
 
 const shellStyle: CSSProperties = {
@@ -13,7 +14,8 @@ const shellStyle: CSSProperties = {
     flexDirection: 'column',
     alignItems: 'center',
     boxSizing: 'border-box',
-    overflow: 'auto'
+    overflow: 'auto',
+    background:'radial-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.2))'
 }
 
 const modalStyle: CSSProperties = {
@@ -35,27 +37,14 @@ const dialogPanelStyle: CSSProperties = {
     boxShadow: '0 5px 5px -3px rgba(0,0,0,0.1)'
 }
 
-
-
 export default function AppShell() {
     const [modalPanel, setModalPanel] = useState<ReactElement | false>(false);
+    const store = useCreateStore(storeReducer, {
+        shoppingCart : []
+    });
 
-    // const store = useCreateStore((addReducer) => {
-    //     addReducer((action, payload) => state => state);
-    //     return () => {
-    //         return {
-    //             shoppingCart : []
-    //         }
-    //     }
-    // });
-
-    // const addToShoppingCart = useCallback((barcode:string,total:number) => {
-    //     store.dispatch('ADD_TO_SHOPPING_CART',{barcode,total});
-    // },[store])
-
-    return <AppContextProvider setModalPanel={setModalPanel}>
+    return <AppContextProvider setModalPanel={setModalPanel} store={store}>
         <div style={shellStyle}>
-
             <RouterPageContainer/>
             <AnimatePresence>
                 {modalPanel && <motion.div style={modalStyle} initial={{opacity: 0}} animate={{opacity: 1}}
