@@ -1,6 +1,6 @@
 import {RouteProps, useRoute} from "./useRoute";
-import {CSSProperties, FunctionComponent, useEffect, useMemo, useState, createContext, useContext} from "react";
-import {motion, Variants} from "framer-motion";
+import {createContext, CSSProperties, FunctionComponent, useContext, useEffect, useMemo, useState} from "react";
+import {motion, Target} from "framer-motion";
 import {produce} from "immer";
 
 export const maxWidth = 480;
@@ -11,16 +11,16 @@ export const maxWidth = 480;
  */
 export function RouterPageContainer() {
     const [components, setComponents] = useState<PathAbleComponent[]>([]);
-    const {params, routeComponent: RouteComponent, path} = useRoute();
-    const Component = useMemo(() => function RouteComponentContainer(props: {isFocused:boolean} & RouteProps) {
+    const {params, routeComponent: RouteComponent, path, onVisible, onHidden} = useRoute();
+    const Component = useMemo(() => function RouteComponentContainer(props: { isFocused: boolean } & RouteProps) {
         return <motion.div
-            style={{position: 'absolute', left: 0, top: 0, height: '100%', width: '100%', overflow: 'auto'}}
-            variants={routeVariants}
-            initial={'hidden'}
-            animate={props.isFocused ? 'visible' : 'hidden'}
+            initial={onHidden as Target}
+            style={{position: 'absolute',  height: '100%', width: '100%', overflow: 'auto'}}
+            animate={props.isFocused ? onVisible : onHidden}
         >
-            <RouteComponent params={props.params} path={props.path} />
+            <RouteComponent params={props.params} path={props.path}/>
         </motion.div>
+    // eslint-disable-next-line
     }, [RouteComponent]);
 
     useEffect(() => {
@@ -36,42 +36,28 @@ export function RouterPageContainer() {
 
     return <CurrentActivePathContext.Provider value={path}>
         <div style={shellContainerStyle}>
-        {components.map((c, index) => {
-            const Component = c.component;
-            const isFocused = c.path === path;
-            return <Component key={c.path} params={c.params} path={c.path} isFocused={isFocused}/>
-        })}
-    </div>
+            {components.map((c) => {
+                const Component = c.component;
+                const isFocused = c.path === path;
+                return <Component key={c.path} params={c.params} path={c.path} isFocused={isFocused}/>
+            })}
+        </div>
     </CurrentActivePathContext.Provider>
 }
 
 interface PathAbleComponent {
-    component: FunctionComponent<{isFocused:boolean} & RouteProps>,
+    component: FunctionComponent<{ isFocused: boolean } & RouteProps>,
     path: string,
     params: Map<string, string>
 }
 
 const CurrentActivePathContext = createContext('');
 
-export function useFocusListener(path:string){
+export function useFocusListener(path: string) {
     const currentActivePath = useContext(CurrentActivePathContext);
-    const [isFocused,setIsFocused] = useState<boolean>(currentActivePath === path);
-    useEffect(() => setIsFocused(currentActivePath === path),[path,currentActivePath]);
+    const [isFocused, setIsFocused] = useState<boolean>(currentActivePath === path);
+    useEffect(() => setIsFocused(currentActivePath === path), [path, currentActivePath]);
     return isFocused;
-}
-
-const routeVariants: Variants = {
-    visible: {
-        opacity: 1,
-        left: 0,
-        transition: {
-            bounce: false
-        }
-    },
-    hidden: {
-        opacity: 0,
-        left: '-100%'
-    }
 }
 
 
@@ -79,7 +65,7 @@ const shellContainerStyle: CSSProperties = {
     maxWidth: maxWidth,
     height: '100%',
     width: '100%',
-    overflow: 'auto',
+    overflow: 'hidden',
     position: 'relative',
     flexGrow: 1
 }
