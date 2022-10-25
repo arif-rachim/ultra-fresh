@@ -2,8 +2,8 @@ import {useAppContext} from "../components/useAppContext";
 import {RouteProps} from "../components/useRoute";
 import {MdAddShoppingCart, MdOutlineRemoveShoppingCart} from "react-icons/md";
 import {data} from "../data";
-import {AnimatePresence, motion, MotionStyle} from "framer-motion";
-import {ButtonTheme, theme} from "./Theme";
+import {AnimatePresence, motion} from "framer-motion";
+import {ButtonTheme} from "./Theme";
 import {useStoreValue} from "../components/store/useCreateStore";
 import {useEffect, useState} from "react";
 import {Header} from "../components/page-components/Header";
@@ -70,7 +70,7 @@ export default function ProductRoute(props: RouteProps) {
                 background: 'radial-gradient(rgba(255,255,255,1) 70%,rgba(0,0,0,0.1))',
                 borderBottom: '1px solid rgba(0,0,0,0.05)'
             }}>
-                <img src={`/images/${productId}/400/1.pngx`} alt={`Barcode ${productId}`} width={appDimension.width}
+                <img src={`/images/${productId}/400/1.png`} alt={`Barcode ${productId}`} width={appDimension.width}
                      height={appDimension.width}/>
             </div>
 

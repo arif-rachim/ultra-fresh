@@ -37,7 +37,7 @@ function ItemIcon(props: { imageDimension: number, product: Product }) {
                        key={d.barcode} whileTap={{scale: 0.95}} whileHover={{scale: 1.05}}
                        onTap={() => navigate(`/product/${d.barcode}`)}>
         <div style={{display: 'flex', flexDirection: 'column', padding: 5, alignItems: 'center'}}>
-            <img src={`/images/${d.barcode}/THUMB/default.pngx`}
+            <img src={`/images/${d.barcode}/THUMB/default.png`}
                  width={imageDimension - 20} alt={'Barcode '+d.barcode}/>
             <div style={{fontSize: 12, textAlign: 'center'}}>
                 {d.name}
