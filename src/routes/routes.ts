@@ -2,6 +2,7 @@ import {Home} from "./Home";
 import Product from "./Product";
 import {Routes} from "../components/useRoute";
 import Cart from "./Cart";
+import {DeliveryAddress} from "./DeliveryAddress";
 
 export const routes: Routes = {
     'home': {
@@ -48,6 +49,15 @@ export const routes: Routes = {
             transition: {
                 bounce: 0
             }
+        },
+    },
+    'deliveryAddress':{
+        component : DeliveryAddress,
+        onVisible : {
+            right : 0
+        },
+        onHidden : {
+            right : '-100%'
         }
     }
 }

@@ -9,7 +9,6 @@ import {storeReducer} from "./AppState";
 const shellStyle: CSSProperties = {
     width: '100%',
     height: '100%',
-    minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -21,8 +20,8 @@ const shellStyle: CSSProperties = {
 const modalStyle: CSSProperties = {
     backgroundColor: 'rgba(0,0,0,0.1)',
     backdropFilter: 'blur(20px)',
-    width: '100vw',
-    height: '100vh',
+    width: '100%',
+    height: '100%',
     position: 'fixed',
     display: 'flex',
     alignItems: 'center',

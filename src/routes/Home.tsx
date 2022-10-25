@@ -74,7 +74,7 @@ function Home(props: RouteProps) {
         }, 0);
     });
 
-    return <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto'}}>
+    return <div style={{display: 'flex', position:'relative',flexDirection: 'column', height: '100%', overflow: 'auto'}}>
         <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto'}}>
             <div style={containerStyle}>
                 {data.map(d => {
@@ -82,7 +82,7 @@ function Home(props: RouteProps) {
                 })}
             </div>
         </div>
-        <div style={{display: 'flex', justifyContent: 'center', padding: 5}}>
+        <div style={{display: 'flex',justifyContent: 'center',position:'absolute',bottom:0,width:appDimension.width,boxSizing:'border-box', padding: 5,background:'rgba(255,255,255,0.9)',borderTop:'1px solid rgba(0,0,0,0.05)'}}>
             <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
                         animate={{color: itemsInCart > 0 ? '#0045B4' : 'rgba(0,0,0,0.5)'}}
                         style={{position: 'relative'}} onTap={() => {

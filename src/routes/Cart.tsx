@@ -6,12 +6,14 @@ import {useStoreValue} from "../components/store/useCreateStore";
 import {data, Product} from "../data";
 import invariant from "tiny-invariant";
 import {theme} from "./Theme";
+import {useFocusListener} from "../components/RouterPageContainer";
+import {useNavigate} from "../components/useNavigate";
 
 export default function Cart(props:RouteProps) {
     const appContext = useAppContext();
-    //const isFocused = useFocusListener(props.path);
+    const isFocused = useFocusListener(props.path);
     const cartItems = useStoreValue(appContext.store,(state) => state.shoppingCart);
-
+    const navigate = useNavigate();
     return <div style={{backgroundColor: 'rgba(0,0,0,0.4)', height: '100%', display: 'flex', flexDirection: 'column'}}>
         <div style={{display: 'flex', justifyContent: 'center', padding: 10}}>
             <motion.div whileTap={{scale: 0.95}} onTap={() => window.history.back()}>
@@ -56,7 +58,7 @@ export default function Cart(props:RouteProps) {
             }}
                            whileTap={{scale: 0.98}}
                            onTap={() => {
-
+                            navigate('deliveryAddress');
                            }}>
                 <div>Checkout</div>
                 <div style={{marginBottom: -5, marginLeft: 10}}><MdAddShoppingCart/></div>
