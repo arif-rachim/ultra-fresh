@@ -6,6 +6,7 @@ import {useNavigate} from "../components/useNavigate";
 import {RouteProps} from "../components/useRoute";
 import {MdShoppingCart} from "react-icons/md";
 import {useStoreValue} from "../components/store/useCreateStore";
+import {ButtonTheme, theme} from "./Theme";
 
 
 const itemStyleSheet: CSSProperties = {
@@ -36,7 +37,7 @@ function ItemIcon(props: { imageDimension: number, product: Product }) {
                        key={d.barcode} whileTap={{scale: 0.95}} whileHover={{scale: 1.05}}
                        onTap={() => navigate(`/product/${d.barcode}`)}>
         <div style={{display: 'flex', flexDirection: 'column', padding: 5, alignItems: 'center'}}>
-            <img src={`/images/${d.barcode}/THUMB/default.png`}
+            <img src={`/images/${d.barcode}/THUMB/default.pngx`}
                  width={imageDimension - 20} alt={'Barcode '+d.barcode}/>
             <div style={{fontSize: 12, textAlign: 'center'}}>
                 {d.name}
@@ -49,7 +50,7 @@ function ItemIcon(props: { imageDimension: number, product: Product }) {
                     justifyContent:'center',
                     top: -5,
                     right: -5,
-                    backgroundColor: 'darkred',
+                    backgroundColor: theme[ButtonTheme.danger],
                     color: 'white',
                     borderRadius: 20,
                     fontSize:12,
@@ -84,7 +85,7 @@ function Home(props: RouteProps) {
         </div>
         <div style={{display: 'flex',justifyContent: 'center',position:'absolute',bottom:0,width:appDimension.width,boxSizing:'border-box', padding: 5,background:'rgba(255,255,255,0.9)',borderTop:'1px solid rgba(0,0,0,0.05)'}}>
             <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                        animate={{color: itemsInCart > 0 ? '#0045B4' : 'rgba(0,0,0,0.5)'}}
+                        animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
                         style={{position: 'relative'}} onTap={() => {
                 navigate('cart');
             }}>
@@ -94,7 +95,7 @@ function Home(props: RouteProps) {
                         position: 'absolute',
                         top: -3,
                         right: 0,
-                        backgroundColor: 'red',
+                        backgroundColor: theme[ButtonTheme.danger],
                         color: 'white',
                         borderRadius: 25,
                         fontSize: 12,

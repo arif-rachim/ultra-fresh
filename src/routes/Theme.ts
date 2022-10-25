@@ -1,6 +1,17 @@
-const blue = '#00A2E8';
-const red = '#CF1321'
+const blue = '#0295D2';
+const red = '#CF1321';
+const grey = '#6F7785';
+const yellow = '#FFF200';
+
+export enum ButtonTheme {
+    promoted,
+    danger,
+    default
+}
+
+
 export const theme = {
-    promotedBackground : `linear-gradient(${blue},#0093D2)`,
-    dangerBackground : `linear-gradient(${red},#F5212C)`
+    [ButtonTheme.promoted]: blue,
+    [ButtonTheme.danger]: red,
+    [ButtonTheme.default]: grey
 }

@@ -2,7 +2,7 @@ import {Home} from "./Home";
 import Product from "./Product";
 import {Routes} from "../components/useRoute";
 import Cart from "./Cart";
-import {DeliveryAddress} from "./DeliveryAddress";
+import {Shipping} from "./Shipping";
 
 export const routes: Routes = {
     'home': {
@@ -51,8 +51,8 @@ export const routes: Routes = {
             }
         },
     },
-    'deliveryAddress':{
-        component : DeliveryAddress,
+    'shipping':{
+        component : Shipping,
         onVisible : {
             right : 0
         },
