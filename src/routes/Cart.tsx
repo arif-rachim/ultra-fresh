@@ -5,7 +5,7 @@ import {useAppContext} from "../components/useAppContext";
 import {useStoreValue} from "../components/store/useCreateStore";
 import {data, Product} from "../data";
 import invariant from "tiny-invariant";
-import {ButtonTheme, theme} from "./Theme";
+import {ButtonTheme, white} from "./Theme";
 import {useFocusListener} from "../components/RouterPageContainer";
 import {useNavigate} from "../components/useNavigate";
 import {Button} from "../components/page-components/Button";
@@ -48,8 +48,15 @@ export default function Cart(props: RouteProps) {
                 </div>
             })}
         </div>
-        <div style={{backgroundColor: 'white', padding: 10, boxShadow: '0 5px 7px -5px rgba(0,0,0,0.5) inset',display:"flex",flexDirection:'column'}}>
-            <Button title={'Checkout'} icon={MdAddShoppingCart} theme={ButtonTheme.promoted} onTap={() => navigate('shipping')} />
+        <div style={{
+            backgroundColor: white,
+            padding: 10,
+            boxShadow: '0 5px 7px -5px rgba(0,0,0,0.5) inset',
+            display: "flex",
+            flexDirection: 'column'
+        }}>
+            <Button title={'Checkout'} icon={MdAddShoppingCart} theme={ButtonTheme.promoted}
+                    onTap={() => navigate('shipping')}/>
         </div>
     </div>
 }

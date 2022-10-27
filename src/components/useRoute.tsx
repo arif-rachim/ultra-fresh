@@ -6,8 +6,8 @@ export interface ParamsAndComponent {
     params: Map<string, string>,
     routeComponent: FunctionComponent<RouteProps>,
     path: string,
-    onVisible : TargetAndTransition,
-    onHidden : TargetAndTransition
+    onVisible: TargetAndTransition,
+    onHidden: TargetAndTransition
 }
 
 export function useRoute(): ParamsAndComponent {
@@ -44,15 +44,15 @@ interface FilteredComponents {
 
 let defaultOnVisible: TargetAndTransition = {
     opacity: 1,
-    zIndex : 0
+    zIndex: 0
 };
 
 let defaultOnHidden: TargetAndTransition = {
     opacity: 0,
-    zIndex:-1
+    zIndex: -1
 };
 
-function getParamsAndComponent(route: [string, RouteElement | MotionRouteElement][]):ParamsAndComponent {
+function getParamsAndComponent(route: [string, RouteElement | MotionRouteElement][]): ParamsAndComponent {
     const hash = getHash();
     const hashArray = hash.split('/');
     let params = new Map<string, string>();
@@ -62,7 +62,7 @@ function getParamsAndComponent(route: [string, RouteElement | MotionRouteElement
     let onHidden: TargetAndTransition = defaultOnHidden;
     if (hashArray.length > 0) {
         let filteredComponents: FilteredComponents[] = route.map(([path, componentOrMotionComponent]) => {
-            const params: Map<string,any> = new Map();
+            const params: Map<string, any> = new Map();
             let component: RouteElement | undefined;
             let onVisible: TargetAndTransition = defaultOnVisible;
             let onHidden: TargetAndTransition = defaultOnHidden;

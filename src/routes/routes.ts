@@ -3,6 +3,7 @@ import Product from "./Product";
 import {Routes} from "../components/useRoute";
 import Cart from "./Cart";
 import {Shipping} from "./Shipping";
+import Category from "./Category";
 
 export const routes: Routes = {
     'home': {
@@ -36,28 +37,43 @@ export const routes: Routes = {
             }
         },
     },
-    'cart' : {
-        component : Cart,
-        onHidden : {
-            bottom : '-100%',
+    'cart': {
+        component: Cart,
+        onHidden: {
+            bottom: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onVisible : {
-            bottom : 0,
+        onVisible: {
+            bottom: 0,
             transition: {
                 bounce: 0
             }
         },
     },
-    'shipping':{
-        component : Shipping,
-        onVisible : {
-            right : 0
+    'shipping': {
+        component: Shipping,
+        onVisible: {
+            right: 0
         },
-        onHidden : {
-            right : '-100%'
+        onHidden: {
+            right: '-100%'
+        }
+    },
+    'category/$category': {
+        component: Category,
+        onVisible: {
+            right: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidden: {
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
         }
     }
 }

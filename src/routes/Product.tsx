@@ -3,11 +3,11 @@ import {RouteProps} from "../components/useRoute";
 import {MdAddShoppingCart, MdOutlineRemoveShoppingCart} from "react-icons/md";
 import {data} from "../data";
 import {AnimatePresence, motion} from "framer-motion";
-import {ButtonTheme} from "./Theme";
+import {ButtonTheme, white} from "./Theme";
 import {useStoreValue} from "../components/store/useCreateStore";
 import {useEffect, useState} from "react";
 import {Header} from "../components/page-components/Header";
-import {IconType} from "react-icons";
+
 import {Button} from "../components/page-components/Button";
 
 
@@ -29,8 +29,8 @@ function TotalItemsInCartLogo(props: { totalInCart?: number }) {
         display: 'flex',
         marginRight: 20,
         minWidth: 80,
-        paddingBottom:5,
-        paddingRight:2
+        paddingBottom: 5,
+        paddingRight: 2
     }}>
         {props.totalInCart}
     </motion.div>;
@@ -47,14 +47,14 @@ export default function ProductRoute(props: RouteProps) {
 
     const totalInCart = useStoreValue(store, (value) => {
         return value.shoppingCart.find(s => s.barcode === productId)?.total
-    });
+    }, [productId]);
 
     if (!product) {
         return <div>No Product PRODUCT ID {productId}</div>;
     }
 
     return <div style={{
-        backgroundColor: 'white',
+        backgroundColor: white,
         height: '100%',
         width: appDimension.width,
         display: 'flex',
@@ -101,12 +101,13 @@ export default function ProductRoute(props: RouteProps) {
                             store.dispatch({payload: {barcode: product.barcode}, type: 'add_to_cart'})
                         }}/>
                         {totalInCart &&
-                            <Button title={'Remove'} icon={MdOutlineRemoveShoppingCart} theme={ButtonTheme.danger} onTap={() => {
-                                store.dispatch({
-                                    payload: {barcode: product.barcode},
-                                    type: 'remove_from_cart'
-                                })
-                            }} style={{marginTop:10}}/>
+                            <Button title={'Remove'} icon={MdOutlineRemoveShoppingCart} theme={ButtonTheme.danger}
+                                    onTap={() => {
+                                        store.dispatch({
+                                            payload: {barcode: product.barcode},
+                                            type: 'remove_from_cart'
+                                        })
+                                    }} style={{marginTop: 10}}/>
                         }
                     </motion.div>
                 </div>

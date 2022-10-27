@@ -1,12 +1,4 @@
-import {
-    createContext,
-    Dispatch,
-    PropsWithChildren,
-    ReactElement,
-    useCallback,
-    useContext,
-    useMemo
-} from "react";
+import {createContext, Dispatch, PropsWithChildren, ReactElement, useCallback, useContext, useMemo} from "react";
 import {maxWidth} from "./RouterPageContainer";
 import {Store} from "./store/useCreateStore";
 import {AppState} from "./AppState";
@@ -45,7 +37,7 @@ const AppContext = createContext<AppContextType>({
         showModal: Nothing,
         store: {
             dispatch: Nothing,
-            stateRef: {current: {shoppingCart:[]}}, addListener: (state:any) => Nothing
+            stateRef: {current: {shoppingCart: []}}, addListener: (state: any) => Nothing
         }
     }
 );

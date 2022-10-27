@@ -1,13 +1,14 @@
 import {motion} from "framer-motion";
 import {MdArrowBackIos} from "react-icons/md";
+import {white} from "../../routes/Theme";
 
-export function Header(props:{title: string}) {
+export function Header(props: { title: string }) {
     const {title} = props;
     return <div style={{
         display: 'flex',
         alignItems: 'center',
         borderBottom: '1px solid rgba(0,0,0,0.1)',
-        background : 'white',
+        background: white,
         padding: 5,
         paddingLeft: 10,
         paddingRight: 10

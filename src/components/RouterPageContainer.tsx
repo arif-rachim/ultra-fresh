@@ -15,12 +15,12 @@ export function RouterPageContainer() {
     const Component = useMemo(() => function RouteComponentContainer(props: { isFocused: boolean } & RouteProps) {
         return <motion.div
             initial={onHidden as Target}
-            style={{position: 'absolute',  height: '100%', width: '100%', overflow: 'auto'}}
+            style={{position: 'absolute', height: '100%', width: '100%', overflow: 'auto'}}
             animate={props.isFocused ? onVisible : onHidden}
         >
             <RouteComponent params={props.params} path={props.path}/>
         </motion.div>
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [RouteComponent]);
 
     useEffect(() => {

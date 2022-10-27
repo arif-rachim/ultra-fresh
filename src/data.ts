@@ -1,4 +1,4 @@
-export interface Product{
+export interface Product {
     "internalCode": string;
     "name": string;
     "unit": string
@@ -10,7 +10,7 @@ export interface Product{
     "category": string
 }
 
-export const data:Product[] = [
+export const data: Product[] = [
     {
         "internalCode": "M1009",
         "name": "Full Cream",
@@ -761,7 +761,7 @@ export const data:Product[] = [
     },
     {
         "internalCode": "M3027",
-        "name": "Laban",
+        "name": "Low Fat",
         "unit": "200",
         "unitType": "ML.",
         "barcode": "6291031001591",

@@ -14,7 +14,7 @@ const shellStyle: CSSProperties = {
     alignItems: 'center',
     boxSizing: 'border-box',
     overflow: 'auto',
-    background:'radial-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.2))'
+    background: 'radial-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.2))'
 }
 
 const modalStyle: CSSProperties = {
@@ -39,7 +39,7 @@ const dialogPanelStyle: CSSProperties = {
 export default function AppShell() {
     const [modalPanel, setModalPanel] = useState<ReactElement | false>(false);
     const store = useCreateStore(storeReducer, {
-        shoppingCart : []
+        shoppingCart: []
     });
 
     return <AppContextProvider setModalPanel={setModalPanel} store={store}>

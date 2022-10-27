@@ -1,10 +1,12 @@
 import {
-    cloneElement,
-    Dispatch,
+    ComponentType,
+    createElement,
+    DependencyList,
     MutableRefObject,
     PropsWithChildren,
-    SetStateAction,
+    useCallback,
     useEffect,
+    useMemo,
     useRef,
     useState
 } from "react";
@@ -28,7 +30,8 @@ export function useCreateStore<S>(reducer: (action: Action) => (oldState: S) => 
                                   initializer: S | (() => S)): Store<S> {
 
     const listenerRef = useRef<Listener[]>([]);
-
+    const reducerRef = useRef(reducer)
+    reducerRef.current = reducer;
 
     const [initialState] = useState<S>(() => {
         let stateInitial: any = initializer;
@@ -39,46 +42,36 @@ export function useCreateStore<S>(reducer: (action: Action) => (oldState: S) => 
     });
     const stateRef = useRef<S>(initialState);
 
-    function dispatch(action: Action) {
-        const newState = reducer(action)(stateRef.current);
+    const dispatch = useCallback(function dispatch(action: Action) {
+        const newState = reducerRef.current(action)(stateRef.current);
+        if (newState === stateRef.current) {
+            return;
+        }
         stateRef.current = newState;
         listenerRef.current.forEach(l => l.call(null, newState));
-    }
+    }, []);
 
-    function addListener(selector: (param: S) => any) {
+    const addListener = useCallback(function addListener(selector: (param: S) => any) {
         listenerRef.current.push(selector);
         return () => listenerRef.current.splice(listenerRef.current.indexOf(selector, 1))
-    }
+    }, []);
 
-    return {dispatch, stateRef, addListener}
+    return useMemo(() => ({dispatch, stateRef, addListener}), [addListener, dispatch])
 }
 
-function updateNextState<S, T>(setValue: Dispatch<SetStateAction<S>>, selector: (param: T) => S, nextState: any, compareArrayContent: boolean) {
-    setValue(currentValue => {
-        const nextValue = selector(nextState);
-        if (compareArrayContent && Array.isArray(nextValue) && Array.isArray(currentValue) && nextValue.length === currentValue.length) {
-            const isMatch = (currentValue as any[]).reduce((match, val, index) => (match && val === nextValue[index]), true);
-            if (isMatch) {
-                return currentValue;
-            }
-        }
-        return nextValue;
-    });
-}
-
-export function useStoreValue<T, S>(store: Store<T>, selector: (param: T) => S, config?: { compareArrayContent: boolean }) {
+export function useStoreValue<T, S>(store: Store<T>, selector: (param: T) => S, deps?: DependencyList | undefined) {
     const [value, setValue] = useState<S>(() => selector(store.stateRef.current));
-    const compareArrayContent = config?.compareArrayContent ?? false;
+
     const {addListener, stateRef} = store;
-    const propsRef = useRef({compareArrayContent, selector});
-    propsRef.current = {compareArrayContent, selector};
+    const propsRef = useRef({selector});
+    propsRef.current = {selector};
     useEffect(() => {
         return addListener((nextState: any) => {
-            const {compareArrayContent, selector} = propsRef.current;
-            updateNextState(setValue, selector, nextState, compareArrayContent);
+            const {selector} = propsRef.current;
+            setValue(selector(nextState));
         });
-    }, [addListener])
-    useEffect(() => updateNextState(setValue, propsRef.current.selector, stateRef.current, propsRef.current.compareArrayContent), [selector])
+    }, [])
+    useEffect(() => setValue(selector(stateRef.current)), deps)
     return value;
 }
 
@@ -88,32 +81,38 @@ function isFunction(functionToCheck: any) {
 
 type Selector<T, S> = (param: T) => S;
 
-export function StoreValue<T, S>(props: PropsWithChildren<{ store: Store<T>, selector: (Selector<T, S> | Selector<T, S>[]), property: (string | string[]) }>) {
-    const {store, property, selector, children} = props;
-    //const prop: string = property as string;
-    if(Array.isArray(selector) || Array.isArray(property)){
-        if(!(Array.isArray(selector) && Array.isArray(property))){
+interface StoreValueProps<T, S, PropsType> {
+    store: Store<T>,
+    selector: (Selector<T, S> | Selector<T, S>[]),
+    property: (string | string[]),
+    component: ComponentType<PropsType>
+}
+
+export function StoreValue<T, S, PT, Z extends PT>(props: PropsWithChildren<StoreValueProps<T, S, PT> & Z>) {
+    const {store, property, selector, component, ...cp} = props;
+    if (Array.isArray(selector) || Array.isArray(property)) {
+        if (!(Array.isArray(selector) && Array.isArray(property))) {
             throw new Error('Expecting both selector and property are either both array or single');
         }
-        if(selector.length !== property.length){
+        if (selector.length !== property.length) {
             throw new Error('Expecting both selector and property have same array length');
         }
     }
-    const value:any = useStoreValue(store, (param) => {
-        if(Array.isArray(selector)){
+    const value: any = useStoreValue(store, (param) => {
+        if (Array.isArray(selector)) {
             return selector.map(s => s(param));
         }
         return selector(param);
-    },{compareArrayContent:true});
-    const childrenAny: any = children;
-    const childrenProps = {...childrenAny};
-    if(Array.isArray(property)){
-        property.forEach((props,index) => {
+    }, [selector]);
+    const Component: any = component;
+    const childrenProps: any = {...cp};
+    if (Array.isArray(property)) {
+        property.forEach((props, index) => {
             childrenProps[props] = value[index];
         })
-    }else{
+    } else {
         childrenProps[property] = value;
     }
-    return cloneElement(childrenAny, childrenProps)
+    return createElement(Component, childrenProps)
 
 }
