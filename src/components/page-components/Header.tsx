@@ -1,6 +1,6 @@
 import {motion} from "framer-motion";
-import {MdArrowBackIos} from "react-icons/md";
 import {white} from "../../routes/Theme";
+import {IoChevronBackOutline} from "react-icons/io5";
 
 export function Header(props: { title: string }) {
     const {title} = props;
@@ -9,15 +9,17 @@ export function Header(props: { title: string }) {
         alignItems: 'center',
         borderBottom: '1px solid rgba(0,0,0,0.1)',
         background: white,
-        padding: 5,
         paddingLeft: 10,
-        paddingRight: 10
+        padding:5,
+        paddingTop:7,
+        paddingRight: 20,
+        color:'rgba(0,0,0,0.6)'
     }}>
         <motion.div onTap={() => window.history.back()}
                     whileHover={{scale: 1.05}}
                     whileTap={{scale: 0.95}}>
-            <MdArrowBackIos style={{fontSize: 30}}/>
+            <IoChevronBackOutline style={{fontSize: 26}}/>
         </motion.div>
-        <div style={{fontSize: 26, lineHeight: 1, marginBottom: 5}}>{title}</div>
+        <div style={{fontSize: 18,fontWeight:'bold', lineHeight: 1, marginBottom: 2,marginLeft:10}}>{title}</div>
     </div>;
 }

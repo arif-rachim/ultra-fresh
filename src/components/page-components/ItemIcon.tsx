@@ -3,11 +3,9 @@ import {blueDarken, white} from "../../routes/Theme";
 import {motion} from "framer-motion";
 
 const itemStyleSheet: CSSProperties = {
-    background: white,
-    borderRadius: 10,
-    margin: 5,
-    padding: 0,
-    boxShadow: '0 3px 5px -3px rgba(0,0,0,0.1)',
+    margin:5,
+    marginTop:0,
+    boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -20,10 +18,17 @@ export function ItemIcon<T extends { barcode: string, name: string }>(props: { i
                        key={item.barcode} whileTap={{scale: 0.95}} whileHover={{scale: 1.05}}
                        animate={{background: selected ? blueDarken : white, color: selected ? white : blueDarken}}
                        onTap={() => props.onTap(item)}>
-        <div style={{display: 'flex', flexDirection: 'column', padding: 5, alignItems: 'center'}}>
-            <img src={`/images/${item.barcode}/THUMB/default.png`}
-                 width={imageDimension - 20} alt={'Barcode ' + item.barcode}/>
-            <div style={{fontSize: 12, textAlign: 'center'}}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div style={{
+                borderRadius:5,
+                padding: 10,
+                boxShadow: '0 0px 5px 0 rgba(0,0,0,0.03)',
+                border: '1px solid rgba(0,0,0,0.05)'
+            }}>
+                <img src={`/images/${item.barcode}/THUMB/default.png`}
+                     width={imageDimension - 20} alt={'Barcode ' + item.barcode}/>
+            </div>
+            <div style={{fontSize: 12, textAlign: 'center',marginTop:5}}>
                 {item.name}
             </div>
         </div>

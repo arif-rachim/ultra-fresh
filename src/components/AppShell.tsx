@@ -14,7 +14,7 @@ const shellStyle: CSSProperties = {
     alignItems: 'center',
     boxSizing: 'border-box',
     overflow: 'auto',
-    background: 'radial-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.2))'
+    background: 'radial-gradient(rgba(0,0,0,0.01),rgba(0,0,0,0.02))'
 }
 
 const modalStyle: CSSProperties = {
