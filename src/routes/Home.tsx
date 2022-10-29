@@ -51,7 +51,7 @@ function Home(props: RouteProps) {
                 paddingRight:5}}>
             <div style={{display:'flex',flexDirection:'column',margin:5}}>
                 <div style={{fontSize:20,color:'rgba(0,0,0,0.6)'}}>Ultra Fresh</div>
-                <div style={{fontSize:12,color:'rgba(0,0,0,0.6)'}}>by Marmoom</div>
+                <div style={{fontSize:12,color:'rgba(0,0,0,0.6)'}}>by Marmum</div>
             </div>
             <div style={{display:'flex',flexDirection:'column',flexGrow:1,justifyContent:'center',padding:10}}>
                 <div style={{display:"flex",border:'1px solid rgba(0,0,0,0.1)',borderRadius:20,paddingLeft:10,alignItems:'center'}}>
@@ -72,7 +72,6 @@ function Home(props: RouteProps) {
             padding: 5,
             background: 'rgba(255,255,255,0.9)',
             borderTop: '1px solid rgba(0,0,0,0.05)',
-
         }}>
             <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
                         animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
