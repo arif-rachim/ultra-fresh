@@ -4,9 +4,10 @@ import {data, Product} from "../data";
 import {useAppContext} from "../components/useAppContext";
 import {Header} from "../components/page-components/Header";
 import {Store, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
-import {AnimatePresence, motion} from "framer-motion";
-import {blue, blueDarken, white, yellow} from "./Theme";
+import {motion} from "framer-motion";
+import {blue, blueDarken, white} from "./Theme";
 import {MdAddCircle, MdCancel} from "react-icons/md";
+import {AppState} from "../components/AppState";
 
 
 function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: string }, selectedStore: Store<any>, selected?: boolean }) {
@@ -16,8 +17,8 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
                        animate={{
                            opacity: 1,
                            top: 0,
-                           background: selected ? yellow : white,
-                           color: selected ? blueDarken : blueDarken
+                           background: selected ? blueDarken : white,
+                           color: selected ? white : blueDarken
                        }}
                        exit={{opacity: 0, top: -10}}
                        key={unit.unit + unit.unitType} style={{
@@ -25,10 +26,68 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
         margin: 5,
         padding: 5,
         borderRadius: 5,
-        fontSize: 12
+        fontSize: 16,
+        textDecoration: 'underline'
     }} onTap={() => {
         selectedStore.dispatch({payload: unit, type: 'UNIT_SELECTED'})
     }}>{unit.unit} {unit.unitType}</motion.div>;
+}
+
+function AddRemoveButton(props: { totalInCart: number, store: Store<AppState>, selectedProduct?: Product }) {
+    const {totalInCart, store, selectedProduct} = props;
+    return <motion.div layoutId={'addRemoveContainer'} style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid rgba(0,0,0,0.1)',
+        borderRadius: 50,
+        background: 'rgba(255,255,255,0.8)',
+        position: 'relative'
+    }}>
+
+        {totalInCart > 0 &&
+            <motion.div layoutId={'cancelButton'} style={{
+                color: blue,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 56
+
+            }} whileTap={{scale: 0.95}} onTap={() => {
+                store.dispatch({type: 'remove_from_cart', payload: {barcode: selectedProduct?.barcode}})
+            }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+                <MdCancel/>
+            </motion.div>
+        }
+        {totalInCart > 0 &&
+            <motion.div layoutId={'totalInCartLabel'} style={{
+                width: '100%',
+                fontSize: 46,
+                marginLeft: 20,
+                marginRight: 20,
+                minWidth: 30
+            }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+                {totalInCart}
+            </motion.div>
+        }
+        <motion.div layoutId={'addButton'} style={{
+            background: blue,
+            color:white,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 56,
+            borderRadius:60,
+            border:'1px solid rgba(0,0,0,0.1)'
+        }} whileTap={{scale: 0.95}} onTap={() => {
+            store.dispatch({type: 'add_to_cart', payload: {barcode: selectedProduct?.barcode}})
+        }}>
+            <MdAddCircle/>
+            <div style={{fontSize: 20, whiteSpace: 'nowrap',padding:10}}>
+                Add To Cart
+            </div>
+        </motion.div>
+    </motion.div>;
 }
 
 export default function Category(props: RouteProps) {
@@ -63,7 +122,7 @@ export default function Category(props: RouteProps) {
         return state;
     }, {
         selectedGroup: groups[0],
-        selectedUnit: {unit: '', unitType: '', barcode: '',image:1}
+        selectedUnit: {unit: '', unitType: '', barcode: '', image: 1}
     });
     const {selectedGroup, selectedUnit} = useStoreValue(selectedStore, p => p);
     useEffect(() => {
@@ -96,6 +155,118 @@ export default function Category(props: RouteProps) {
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <Header title={category ?? ''}/>
         <div style={{
+            height: '100%',
+            padding: 10,
+            boxShadow: '0 7px 10px -10px rgba(0,0,0,0.2) inset',
+        }}>
+            <img src={`/images/${selectedProduct?.barcode}/400/default.png`}
+                 height={appDimension.width * 0.6} alt={'Barcode ' + selectedProduct?.barcode}/>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+                paddingBottom: 10
+            }}>
+                <div style={{display: 'flex'}}>
+                    <div style={{
+                        background: 'radial-gradient(rgba(255,255,255,0.9),rgba(0,0,0,0.1))',
+                        boxShadow: '0 0 3px 1px rgba(0,0,0,0.1) inset',
+                        borderRadius: iconsWidth,
+                        padding: 10,
+                        height: iconsWidth - 20,
+                        width: iconsWidth - 20,
+                        margin: 10,
+                        boxSizing: 'border-box',
+                        display: 'flex'
+                    }}>
+                        <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/1.png`}
+                                    height={iconsWidth - 40}
+                                    alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
+                                    whileHover={{scale: 1.05}}/>
+                    </div>
+                    <div style={{
+                        background: 'rgba(255,255,255,0.9)',
+                        borderRadius: iconsWidth,
+                        padding: 10,
+                        height: iconsWidth - 20,
+                        width: iconsWidth - 20,
+                        margin: 10,
+                        boxSizing: 'border-box',
+                        display: 'flex'
+                    }}>
+                        <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/2.png`}
+                                    height={iconsWidth - 40}
+                                    alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
+                                    whileHover={{scale: 1.05}}/>
+                    </div>
+                    <div style={{
+                        background: 'rgba(255,255,255,0.9)',
+                        borderRadius: iconsWidth,
+                        padding: 10,
+                        height: iconsWidth - 20,
+                        width: iconsWidth - 20,
+                        margin: 10,
+                        boxSizing: 'border-box',
+                        display: 'flex'
+                    }}>
+                        <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/3.png`}
+                                    height={iconsWidth - 40}
+                                    alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
+                                    whileHover={{scale: 1.05}}/>
+                    </div>
+                    <div style={{
+                        background: 'rgba(255,255,255,0.9)',
+                        borderRadius: iconsWidth,
+                        padding: 10,
+                        height: iconsWidth - 20,
+                        width: iconsWidth - 20,
+                        margin: 10,
+                        boxSizing: 'border-box',
+                        display: 'flex'
+                    }}>
+                        <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/4.png`}
+                                    height={iconsWidth - 40}
+                                    alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
+                                    whileHover={{scale: 1.05}}/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <div style={{
+                flexGrow: 1,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column'
+            }}>
+                <div style={{display: 'flex', marginBottom: 10}}>
+                    <AddRemoveButton totalInCart={totalInCart} store={store} selectedProduct={selectedProduct}/>
+                </div>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+
+                {units.map(unit => {
+                    return <UnitSelector unit={unit} selectedStore={selectedStore} key={unit.unit + unit.unitType}
+                                         selected={selectedUnit.unit === unit.unit && selectedUnit.unitType === unit.unitType}/>
+                })}
+
+            </div>
+        </div>
+        <div style={{
+            display: 'flex',
+            overflow: 'hidden',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            borderBottom: '1px solid rgba(0,0,0,0.1)',
+            borderTop: '1px solid rgba(0,0,0,0.2)',
+            backgroundColor: blueDarken,
+            flexShrink: 0,
+            height: 5
+        }}>
+        </div>
+        <div style={{
             display: 'flex',
             flexWrap: "wrap",
             alignContent: "space-between",
@@ -110,151 +281,8 @@ export default function Category(props: RouteProps) {
                                              }}/>
             })}
         </div>
-        <div style={{
-            display: 'flex',
-            overflow: 'hidden',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            height: 35,
-            maxHeight: 35,
-            borderBottom: '1px solid rgba(0,0,0,0.1)',
-            borderTop: '1px solid rgba(0,0,0,0.2)',
-            backgroundColor: blueDarken,
-            flexShrink: 0,
-        }}>
-            <AnimatePresence>
-                {units.map(unit => {
-                    return <UnitSelector unit={unit} selectedStore={selectedStore} key={unit.unit + unit.unitType}
-                                         selected={selectedUnit.unit === unit.unit && selectedUnit.unitType === unit.unitType}/>
-                })}
-            </AnimatePresence>
-        </div>
 
-        <div style={{
-            height: '100%',
-            padding: 10,
-            boxShadow: '0 7px 10px -3px rgba(0,0,0,0.2) inset',
-        }}>
-            <img src={`/images/${selectedProduct?.barcode}/400/default.png`}
-                 width={appDimension.width - 20} alt={'Barcode ' + selectedProduct?.barcode}/>
-            <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center',position:'absolute',bottom:0,paddingBottom:10}}>
-                <AnimatePresence>
-                    <div style={{display: 'flex'}}>
-                        <div style={{
-                            background: 'radial-gradient(rgba(255,255,255,0.9),rgba(0,0,0,0.1))',
-                            boxShadow:'0 0 3px 1px rgba(0,0,0,0.1) inset',
-                            borderRadius: iconsWidth,
-                            padding: 10,
-                            height: iconsWidth - 20,
-                            width: iconsWidth - 20,
-                            margin: 10,
-                            boxSizing: 'border-box',
-                            display: 'flex'
-                        }}>
-                            <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/1.png`}
-                                        height={iconsWidth - 40}
-                                        alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
-                                        whileHover={{scale: 1.05}}/>
-                        </div>
-                        <div style={{
-                            background: 'rgba(255,255,255,0.9)',
-                            borderRadius: iconsWidth,
-                            padding: 10,
-                            height: iconsWidth - 20,
-                            width: iconsWidth - 20,
-                            margin: 10,
-                            boxSizing: 'border-box',
-                            display: 'flex'
-                        }}>
-                            <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/2.png`}
-                                        height={iconsWidth - 40}
-                                        alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
-                                        whileHover={{scale: 1.05}}/>
-                        </div>
-                        <div style={{
-                            background: 'rgba(255,255,255,0.9)',
-                            borderRadius: iconsWidth,
-                            padding: 10,
-                            height: iconsWidth - 20,
-                            width: iconsWidth - 20,
-                            margin: 10,
-                            boxSizing: 'border-box',
-                            display: 'flex'
-                        }}>
-                            <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/3.png`}
-                                        height={iconsWidth - 40}
-                                        alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
-                                        whileHover={{scale: 1.05}}/>
-                        </div>
-                        <div style={{
-                            background: 'rgba(255,255,255,0.9)',
-                            borderRadius: iconsWidth,
-                            padding: 10,
-                            height: iconsWidth - 20,
-                            width: iconsWidth - 20,
-                            margin: 10,
-                            boxSizing: 'border-box',
-                            display: 'flex'
-                        }}>
-                            <motion.img src={`/images/${selectedProduct?.barcode}/THUMB/4.png`}
-                                        height={iconsWidth - 40}
-                                        alt={'Barcode ' + selectedProduct?.barcode} whileTap={{scale: 0.95}}
-                                        whileHover={{scale: 1.05}}/>
-                        </div>
 
-                    </div>
-                    <motion.div layoutId={'addRemoveContainer'} style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        border: '1px solid rgba(0,0,0,0.1)',
-                        borderRadius: 50,
-                        background: 'rgba(255,255,255,0.8)',
-                        position:'relative'
-                    }} >
-
-                        {totalInCart > 0 &&
-                            <motion.div layoutId={'cancelButton'} style={{
-                                color: blue,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontSize: 56
-
-                            }} whileTap={{scale: 0.95}} onTap={() => {
-                                store.dispatch({type: 'remove_from_cart', payload: {barcode: selectedProduct?.barcode}})
-                            }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                                <MdCancel/>
-                            </motion.div>
-                        }
-                        {totalInCart > 0 &&
-                            <motion.div layoutId={'totalInCartLabel'} style={{
-                                width: '100%',
-                                fontSize: 46,
-                                marginLeft: 20,
-                                marginRight: 20,
-                                minWidth: 30
-                            }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                                {totalInCart}
-                            </motion.div>
-                        }
-                        <motion.div layoutId={'addButton'} style={{
-
-                            color: blue,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 56
-                        }} whileTap={{scale: 0.95}} onTap={() => {
-                            store.dispatch({type: 'add_to_cart', payload: {barcode: selectedProduct?.barcode}})
-                        }}>
-                            <MdAddCircle/>
-                        </motion.div>
-
-                    </motion.div>
-                </AnimatePresence>
-            </div>
-        </div>
     </div>
 }
 
@@ -263,12 +291,13 @@ const itemStyleSheet: CSSProperties = {
     background: white,
     borderRadius: 10,
     margin: 5,
-    marginBottom: 0,
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 0,
+    marginTop: 0,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    flexGrow: 1,
     padding: 0,
     display: 'flex',
-    flexDirection:'column',
+    flexDirection: 'column',
     alignItems: 'center',
     position: 'relative',
     border: '1px solid rgba(0,0,0,0.1)',
@@ -278,20 +307,30 @@ const itemStyleSheet: CSSProperties = {
 
 function CategoryIconSelector<T extends { barcode: string, name: string }>(props: { imageDimension: number, item: T, onTap: (item: T) => void, selected?: boolean }) {
     const {imageDimension, item, selected} = props;
-    return <motion.div style={{...itemStyleSheet, width: imageDimension, height: imageDimension + 10}}
+    return <motion.div style={{...itemStyleSheet, height: imageDimension + 10}}
                        key={item.barcode}
                        animate={{background: selected ? blueDarken : white, color: selected ? white : blueDarken}}
                        onTap={() => props.onTap(item)}>
-            <motion.img src={`/images/${item.barcode}/THUMB/default.png`}
-                        style={{marginTop:5}}
-                        width={imageDimension - 20} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
-                        whileHover={{scale: 1.05}}/>
-            <div style={{fontSize: 10, textAlign: 'center',textOverflow:'ellipsis',position:'absolute',bottom:0,height:25,display:'flex',alignItems:'center',justifyContent:'center'}}>
-                {item.name}
-            </div>
+        <motion.img src={`/images/${item.barcode}/THUMB/default.png`}
+                    style={{marginTop: 5}}
+                    width={imageDimension - 20} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
+                    whileHover={{scale: 1.05}}/>
+        <div style={{
+            fontSize: 10,
+            textAlign: 'center',
+            textOverflow: 'ellipsis',
+            position: 'absolute',
+            bottom: 0,
+            height: 25,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+        }}>
+            {item.name}
+        </div>
 
         {selected &&
-            <div style={{background: blueDarken, position: 'absolute', bottom: -2, width: '100%', height: 3}}/>
+            <div style={{background: blueDarken, position: 'absolute', top: -2, width: '100%', height: 3}}/>
         }
     </motion.div>;
 }

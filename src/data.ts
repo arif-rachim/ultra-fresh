@@ -1058,7 +1058,7 @@ export const data: Product[] = [
     },
     {
         "internalCode": "M2441",
-        "name": "Apple Cinnamon Greek",
+        "name": "Apple Cinnamon",
         "unit": "150",
         "unitType": "GRAMS",
         "barcode": "6291031002789",
