@@ -5,7 +5,7 @@ import {useAppContext} from "../components/useAppContext";
 import {Header} from "../components/page-components/Header";
 import {Store, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
 import {AnimatePresence, motion} from "framer-motion";
-import {blue, blueDarken, white, yellow} from "./Theme";
+import {blue, blueDarken, red, white, yellow} from "./Theme";
 import {MdAddCircle, MdCancel} from "react-icons/md";
 import {AppState} from "../components/AppState";
 
@@ -26,9 +26,9 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
         padding: 5,
         borderRadius: 5,
         fontSize: 12,
-        textDecoration: 'underline',
-        textAlign: 'right',
-        whiteSpace: 'nowrap'
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        border:'1px dashed rgba(0,0,0,0.1)'
     }} onTap={() => {
         selectedStore.dispatch({payload: unit, type: 'UNIT_SELECTED'})
     }}>{unit.unit} {unit.unitType}</motion.div>;
@@ -48,7 +48,7 @@ function AddRemoveButton(props: { totalInCart: number, store: Store<AppState>, s
 
         {totalInCart > 0 &&
             <motion.div layoutId={'cancelButton'} style={{
-                color: blue,
+                color: red,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -182,52 +182,43 @@ export default function Category(props: RouteProps) {
                     </div>
                 })}
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
+            <div style={{display: "flex", alignItems: 'flex-end'}}>
                 <div style={{
-                    fontSize: 26,
-                    margin: '10px 110px 5px 10px'
-                }}>{selectedProduct?.unit} {selectedProduct?.unitType} {selectedProduct?.category} {selectedProduct?.name}</div>
-                <div style={{fontSize: 18, margin: '0px 10px'}}>AED {selectedProduct?.price}</div>
-                <div style={{
-                    fontSize: 16,
-                    fontWeight: 'bold',
-                    background: yellow,
-                    padding: 10,
-                    margin: '10px 110px 10px 10px',
-                    borderRadius: 10
-                }}>{selectedProduct?.shelfLife} {selectedProduct?.shelfLifeType} Shelf Life
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flexGrow: 1
+                }}>
+                    <div style={{
+                        fontSize: 26,
+                    }}>{selectedProduct?.unit} {selectedProduct?.unitType}</div>
+                    <div style={{
+                        fontSize: 26,
+                        marginBottom:10
+                    }}>{selectedProduct?.category} {selectedProduct?.name}</div>
+                    <div style={{fontSize: 18, marginBottom:10}}>AED {selectedProduct?.price}</div>
+                    <div style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        background: yellow,
+                        padding: 10,
+                        marginBottom:10,
+                        borderRadius: 10
+                    }}>{selectedProduct?.shelfLife} {selectedProduct?.shelfLifeType} Shelf Life
+                    </div>
+                    <div style={{display:'flex'}}>
+                        <AddRemoveButton totalInCart={totalInCart} store={store} selectedProduct={selectedProduct}/>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            position: 'absolute',
-            bottom: 90,
-            width: appDimension.width
-        }}>
-            <div style={{
-                flexGrow: 1,
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-            }}>
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <AddRemoveButton totalInCart={totalInCart} store={store} selectedProduct={selectedProduct}/>
-                </div>
-            </div>
-            <div style={{display: 'flex', flexDirection: 'column', flexShrink: 0, marginRight: 10}}>
-                {units.map(unit => {
-                    return <UnitSelector unit={unit} selectedStore={selectedStore} key={unit.unit + unit.unitType}
-                                         selected={selectedUnit.unit === unit.unit && selectedUnit.unitType === unit.unitType}/>
-                })}
+                <div style={{display: 'flex', flexDirection: 'column', flexShrink: 0,marginLeft:10}}>
+                    {units.map(unit => {
+                        return <UnitSelector unit={unit} selectedStore={selectedStore} key={unit.unit + unit.unitType}
+                                             selected={selectedUnit.unit === unit.unit && selectedUnit.unitType === unit.unitType}/>
+                    })}
 
+                </div>
             </div>
         </div>
+
         <div style={{
             display: 'flex',
             overflow: 'hidden',
