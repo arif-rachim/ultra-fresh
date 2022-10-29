@@ -4,7 +4,7 @@ import {data, Product} from "../data";
 import {useAppContext} from "../components/useAppContext";
 import {Header} from "../components/page-components/Header";
 import {Store, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
-import {motion} from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 import {blue, blueDarken, white, yellow} from "./Theme";
 import {MdAddCircle, MdCancel} from "react-icons/md";
 import {AppState} from "../components/AppState";
@@ -22,13 +22,13 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
                        }}
                        exit={{opacity: 0, top: -10}}
                        key={unit.unit + unit.unitType} style={{
-        marginTop:10,
+        marginTop: 10,
         padding: 5,
         borderRadius: 5,
         fontSize: 12,
         textDecoration: 'underline',
         textAlign: 'right',
-        whiteSpace:'nowrap'
+        whiteSpace: 'nowrap'
     }} onTap={() => {
         selectedStore.dispatch({payload: unit, type: 'UNIT_SELECTED'})
     }}>{unit.unit} {unit.unitType}</motion.div>;
@@ -160,25 +160,46 @@ export default function Category(props: RouteProps) {
             padding: '30px 10px 10px 10px',
             boxShadow: '0 7px 10px -10px rgba(0,0,0,0.2) inset',
         }}>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <img src={`/images/${selectedProduct?.barcode}/400/default.png`}
-                     height={appDimension.width * 0.7} alt={'Barcode ' + selectedProduct?.barcode}/>
-            </div>
-            <div style={{display:'flex'}}>
-                {Array.from({length:4}).map((_,index) => {
+            <AnimatePresence>
+                <div style={{display: 'flex', justifyContent: 'center', position: 'relative'}}>
+                    <div>
+                        <motion.img src={`/images/${selectedProduct?.barcode}/400/default.png`}
+                                    style={{position: 'relative'}}
+                                    height={appDimension.width * 0.7} alt={'Barcode ' + selectedProduct?.barcode}
+                                    key={selectedProduct?.barcode}
+                                    initial={{opacity: 0}}
+                                    animate={{opacity: 1}}
+                                    layoutId={selectedProduct?.barcode}
+                        />
+                    </div>
+                </div>
+            </AnimatePresence>
+            <div style={{display: 'flex'}}>
+                {Array.from({length: 4}).map((_, index) => {
                     return <div key={index}>
-                        <img src={`/images/${selectedProduct?.barcode}/THUMB/${index+1}.png`} height={70}
+                        <img src={`/images/${selectedProduct?.barcode}/THUMB/${index + 1}.png`} height={70}
                              alt={'Barcode ' + selectedProduct?.barcode}/>
                     </div>
                 })}
             </div>
             <div style={{
                 display: 'flex',
-                flexDirection:'column'
+                flexDirection: 'column'
             }}>
-                <div style={{fontSize:26,margin:'10px 110px 5px 10px'}}>{selectedProduct?.unit} {selectedProduct?.unitType} {selectedProduct?.category} {selectedProduct?.name}</div>
-                <div style={{fontSize:18,margin:'0px 10px'}}>AED {selectedProduct?.price}</div>
-                <div style={{fontSize:16,fontWeight:'bold',background:yellow,padding:10,margin:'10px 110px 10px 10px',borderRadius:10}}>{selectedProduct?.shelfLife} {selectedProduct?.shelfLifeType} Shelf Life</div>
+                <div style={{
+                    fontSize: 26,
+                    margin: '10px 110px 5px 10px'
+                }}>{selectedProduct?.unit} {selectedProduct?.unitType} {selectedProduct?.category} {selectedProduct?.name}</div>
+                <div style={{fontSize: 18, margin: '0px 10px'}}>AED {selectedProduct?.price}</div>
+                <div style={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    background: yellow,
+                    padding: 10,
+                    margin: '10px 110px 10px 10px',
+                    borderRadius: 10
+                }}>{selectedProduct?.shelfLife} {selectedProduct?.shelfLifeType} Shelf Life
+                </div>
             </div>
         </div>
         <div style={{
@@ -199,7 +220,7 @@ export default function Category(props: RouteProps) {
                     <AddRemoveButton totalInCart={totalInCart} store={store} selectedProduct={selectedProduct}/>
                 </div>
             </div>
-            <div style={{display: 'flex', flexDirection: 'column',flexShrink:0,marginRight:10}}>
+            <div style={{display: 'flex', flexDirection: 'column', flexShrink: 0, marginRight: 10}}>
                 {units.map(unit => {
                     return <UnitSelector unit={unit} selectedStore={selectedStore} key={unit.unit + unit.unitType}
                                          selected={selectedUnit.unit === unit.unit && selectedUnit.unitType === unit.unitType}/>
