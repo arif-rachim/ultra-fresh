@@ -37,7 +37,8 @@ const AppContext = createContext<AppContextType>({
         showModal: Nothing,
         store: {
             dispatch: Nothing,
-            stateRef: {current: {shoppingCart: []}}, addListener: (state: any) => Nothing
+            stateRef: {current: {shoppingCart: []}}, addListener: (state: any) => Nothing,
+            setState : Nothing
         }
     }
 );
@@ -83,8 +84,7 @@ export function AppContextProvider<State extends AppState>(props: PropsWithChild
         return {appDimension, appType, showModal, store}
     }, [showModal, store]);
 
-
-    return <AppContext.Provider value={contextValue}>
+    return <AppContext.Provider value={contextValue as any}>
         {props.children}
     </AppContext.Provider>
 }

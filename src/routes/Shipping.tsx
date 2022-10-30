@@ -10,15 +10,7 @@ import {useCallback} from "react";
 
 
 export function Shipping(props: RouteProps) {
-    const store = useCreateStore((action) => produce(state => {
-        if (action.type === 'update') {
-            const stateAny = state as any;
-            stateAny[action.payload.key] = action.payload.value;
-            const errorsAny = state.errors as any;
-            errorsAny[action.payload.key] = action.payload.value === '' ? 'Value is required' : '';
-        }
-
-    }), {
+    const store = useCreateStore({
         firstName: '',
         lastName: '',
         addressLine1: '',
@@ -43,7 +35,15 @@ export function Shipping(props: RouteProps) {
             phone: '',
             note: '',
         }
-    });
+    },(action) => produce(state => {
+        if (action.type === 'update') {
+            const stateAny = state as any;
+            stateAny[action.payload.key] = action.payload.value;
+            const errorsAny = state.errors as any;
+            errorsAny[action.payload.key] = action.payload.value === '' ? 'Value is required' : '';
+        }
+
+    }));
     const update = useCallback((key: string, value: any) => store.dispatch({
         type: 'update',
         payload: {key, value}

@@ -144,7 +144,10 @@ export default function Category(props: RouteProps) {
     const {appDimension, store} = useAppContext();
     let totalBox = groups.length < 6 ? 6 : groups.length;
     const imageDimension = Math.floor(appDimension.width / totalBox) - 10;
-    const selectedStore = useCreateStore((action) => state => {
+    const selectedStore = useCreateStore({
+        selectedGroup: groups[0],
+        selectedUnit: {unit: '', unitType: '', barcode: '', image: 1}
+    },(action) => state => {
         if (action.type === 'GROUP_SELECTED') {
             if (JSON.stringify(state.selectedGroup) !== JSON.stringify(action.payload)) {
                 return {...state, selectedGroup: action.payload}
@@ -156,9 +159,6 @@ export default function Category(props: RouteProps) {
             }
         }
         return state;
-    }, {
-        selectedGroup: groups[0],
-        selectedUnit: {unit: '', unitType: '', barcode: '', image: 1}
     });
     const {selectedGroup, selectedUnit} = useStoreValue(selectedStore, p => p);
     useEffect(() => {

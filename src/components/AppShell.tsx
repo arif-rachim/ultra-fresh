@@ -5,7 +5,6 @@ import {RouterPageContainer} from "./RouterPageContainer";
 import {useCreateStore} from "./store/useCreateStore";
 import {storeReducer} from "./AppState";
 
-
 const shellStyle: CSSProperties = {
     width: '100%',
     height: '100%',
@@ -38,9 +37,9 @@ const dialogPanelStyle: CSSProperties = {
 
 export default function AppShell() {
     const [modalPanel, setModalPanel] = useState<ReactElement | false>(false);
-    const store = useCreateStore(storeReducer, {
+    const store = useCreateStore( {
         shoppingCart: []
-    });
+    },storeReducer);
 
     return <AppContextProvider setModalPanel={setModalPanel} store={store}>
         <div style={shellStyle}>

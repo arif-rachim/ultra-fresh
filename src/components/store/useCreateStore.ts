@@ -23,11 +23,11 @@ export interface Action {
 export interface Store<S> {
     stateRef: MutableRefObject<S>,
     addListener: (state: any) => () => void,
-    dispatch: (action: Action) => void
+    dispatch: (action: Action) => void,
+    setState:(newStateOrCallback:S | ((currentState:S) => S)) => void
 }
 
-export function useCreateStore<S>(reducer: (action: Action) => (oldState: S) => S,
-                                  initializer: S | (() => S)): Store<S> {
+export function useCreateStore<S>(initializer: S | (() => S),reducer?: (action: Action) => (oldState: S) => S): Store<S> {
 
     const listenerRef = useRef<Listener[]>([]);
     const reducerRef = useRef(reducer)
@@ -43,7 +43,23 @@ export function useCreateStore<S>(reducer: (action: Action) => (oldState: S) => 
     const stateRef = useRef<S>(initialState);
 
     const dispatch = useCallback(function dispatch(action: Action) {
+        if(reducerRef.current === undefined){
+            throw new Error('You cannot use dispatch when there is no reducer defined in store')
+        }
         const newState = reducerRef.current(action)(stateRef.current);
+        if (newState === stateRef.current) {
+            return;
+        }
+        stateRef.current = newState;
+        listenerRef.current.forEach(l => l.call(null, newState));
+    }, []);
+
+    const setState = useCallback(function setState(param: S | ((param: S) => S)) {
+        let newState: S = param as S;
+        if (isFunction(param)) {
+            const functionParam = param as (param: S) => S
+            newState = functionParam(stateRef.current)
+        }
         if (newState === stateRef.current) {
             return;
         }
@@ -56,7 +72,7 @@ export function useCreateStore<S>(reducer: (action: Action) => (oldState: S) => 
         return () => listenerRef.current.splice(listenerRef.current.indexOf(selector, 1))
     }, []);
 
-    return useMemo(() => ({dispatch, stateRef, addListener}), [addListener, dispatch])
+    return useMemo(() => ({dispatch, stateRef, addListener, setState}), [addListener, dispatch, setState])
 }
 
 export function useStoreValue<T, S>(store: Store<T>, selector: (param: T) => S, deps?: DependencyList | undefined) {
