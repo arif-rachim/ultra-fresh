@@ -50,8 +50,8 @@ function Home(props: RouteProps) {
         <div style={{boxSizing:'border-box',borderBottom:'1px solid rgba(0,0,0,0.08)',position:'absolute',top:0,background: 'rgba(255,255,255,0.9)',width: appDimension.width,display:'flex',paddingLeft:5,
                 paddingRight:5}}>
             <div style={{display:'flex',flexDirection:'column',margin:5}}>
-                <div style={{fontSize:20,color:'rgba(0,0,0,0.6)'}}>Ultra Fresh</div>
-                <div style={{fontSize:12,color:'rgba(0,0,0,0.6)'}}>by Marmum</div>
+                <div style={{fontSize:20,color:'rgba(0,0,0,0.6)',whiteSpace:'nowrap'}}>Ultra Fresh</div>
+                <div style={{fontSize:12,color:'rgba(0,0,0,0.6)',whiteSpace:'nowrap'}}>by Marmum</div>
             </div>
             <div style={{display:'flex',flexDirection:'column',flexGrow:1,justifyContent:'center',padding:10}}>
                 <div style={{display:"flex",border:'1px solid rgba(0,0,0,0.1)',borderRadius:20,paddingLeft:10,alignItems:'center'}}>
