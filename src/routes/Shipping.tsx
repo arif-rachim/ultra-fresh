@@ -1,32 +1,23 @@
 import {RouteProps} from "../components/useRoute";
 import {Header} from "../components/page-components/Header";
 import {Button} from "../components/page-components/Button";
-import {MdCancel, MdSave} from "react-icons/md";
-import {ButtonTheme, white} from "./Theme";
+import {MdOutlinePayments} from "react-icons/md";
+import {ButtonTheme} from "./Theme";
 import {Input} from "../components/page-components/Input";
 import {StoreValue, useCreateStore} from "../components/store/useCreateStore";
 import {produce} from "immer";
 import {useCallback} from "react";
-
+import {useAppContext} from "../components/useAppContext";
+import {useNavigate} from "../components/useNavigate";
 
 export function Shipping(props: RouteProps) {
-    const store = useCreateStore({
-        firstName: '',
-        lastName: '',
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        country: '',
-        email: '',
-        phone: '',
-        note: '',
+    const {store:appStore} = useAppContext();
+    const store = useCreateStore( {
+        ...appStore.stateRef.current.shippingAddress,
         errors: {
             firstName: '',
             lastName: '',
             addressLine1: '',
-            addressLine2: '',
             city: '',
             state: '',
             zipCode: '',
@@ -67,6 +58,8 @@ export function Shipping(props: RouteProps) {
         },false);
         return !hasError;
     }, [store.stateRef]);
+    const navigate = useNavigate();
+
     return <div
         style={{
             height: '100%',
@@ -76,7 +69,17 @@ export function Shipping(props: RouteProps) {
             flexDirection: 'column'
         }}>
         <Header title={'Shipping Address'}/>
-        <div style={{display: 'flex',background:'white',flexDirection: 'column', overflow: 'auto', height: '100%'}}>
+        <div style={{display: 'flex', flexDirection:'row-reverse',marginRight:20,marginTop:10}}>
+            <Button title={'Proceed'} onTap={() => {
+                if (validate()) {
+                    appStore.setState(produce(state => {
+                        state.shippingAddress = store.stateRef.current;
+                    }));
+                    navigate('payment')
+                }
+            }} theme={ButtonTheme.promoted} icon={MdOutlinePayments}/>
+        </div>
+        <div style={{display: 'flex',background:'white',flexDirection: 'column',margin:'10px 20px',borderRadius:5}}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
                 <StoreValue store={store} selector={[p => p.firstName, p => p.errors.firstName]}
                             property={['value', 'error']} component={Input} title={'First Name'}
@@ -92,8 +95,8 @@ export function Shipping(props: RouteProps) {
                             placeholder={'Type address line 1'}
                             onChange={e => update('addressLine1', e.target.value)}/>
 
-                <StoreValue store={store} selector={[p => p.addressLine2, p => p.errors.addressLine2]}
-                            property={['value', 'error']} component={Input} title={'Address line 2 (optional)'}
+                <StoreValue store={store} selector={p => p.addressLine2}
+                            property={'value'} component={Input} title={'Address line 2 (optional)'}
                             placeholder={'Type address line 2'}
                             onChange={e => update('addressLine2', e.target.value)}/>
 
@@ -138,20 +141,19 @@ export function Shipping(props: RouteProps) {
                             component={Input} title={'Note (optional)'} placeholder={'eg : Doorbell number is 33'}
                             onChange={e => update('note', e.target.value)}/>
 
-                <div style={{display: 'flex', padding: 10}}>
-                    <div style={{display: 'flex', flexDirection: 'column', width: '50%'}}>
-                        <Button title={'Save'} onTap={() => {
-                            if (validate()) {
-                                console.log("WE CAN PROCEEED !")
-                            }
-                        }} theme={ButtonTheme.promoted} icon={MdSave}/>
-                    </div>
-                    <div style={{display: 'flex', flexDirection: 'column', width: '50%', marginLeft: 10}}>
-                        <Button title={'Cancel'} onTap={() => window.history.back()} icon={MdCancel}
-                                theme={ButtonTheme.default}/>
-                    </div>
-                </div>
+
             </div>
+
+        </div>
+        <div style={{display: 'flex', flexDirection:'row-reverse',marginRight:20,marginBottom:10}}>
+            <Button title={'Proceed'} onTap={() => {
+                if (validate()) {
+                    appStore.setState(produce(state => {
+                        state.shippingAddress = store.stateRef.current;
+                    }));
+                    navigate('payment')
+                }
+            }} theme={ButtonTheme.promoted} icon={MdOutlinePayments}/>
         </div>
     </div>
 }

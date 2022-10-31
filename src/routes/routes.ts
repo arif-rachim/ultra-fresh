@@ -4,6 +4,7 @@ import {Routes} from "../components/useRoute";
 import Cart from "./Cart";
 import {Shipping} from "./Shipping";
 import Category from "./Category";
+import Payment from "./Payment";
 
 export const routes: Routes = {
     'home': {
@@ -55,10 +56,16 @@ export const routes: Routes = {
     'shipping': {
         component: Shipping,
         onVisible: {
-            right: 0
+            right: 0,
+            transition: {
+                bounce: 0
+            }
         },
         onHidden: {
-            right: '-100%'
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
         }
     },
     'category/$category': {
@@ -75,5 +82,21 @@ export const routes: Routes = {
                 bounce: 0
             }
         }
+    },
+    'payment':{
+        component : Payment,
+        onVisible: {
+            right: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidden: {
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        }
     }
+
 }

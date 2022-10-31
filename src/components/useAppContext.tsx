@@ -37,8 +37,25 @@ const AppContext = createContext<AppContextType>({
         showModal: Nothing,
         store: {
             dispatch: Nothing,
-            stateRef: {current: {shoppingCart: []}}, addListener: (state: any) => Nothing,
-            setState : Nothing
+            stateRef: {
+                current: {
+                    shoppingCart: [],
+                    shippingAddress: {
+                        addressLine2 : '',
+                        state : '',
+                        addressLine1 : '',
+                        city : '',
+                        firstName : '',
+                        country : '',
+                        email : '',
+                        lastName : '',
+                        note : '',
+                        phone : '',
+                        zipCode : ''
+                    }
+                }
+            }, addListener: (state: any) => Nothing,
+            setState: Nothing
         }
     }
 );
