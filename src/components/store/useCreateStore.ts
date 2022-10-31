@@ -77,17 +77,17 @@ export function useCreateStore<S>(initializer: S | (() => S),reducer?: (action: 
 
 export function useStoreValue<T, S>(store: Store<T>, selector: (param: T) => S, deps?: DependencyList | undefined) {
     const [value, setValue] = useState<S>(() => selector(store.stateRef.current));
-
     const {addListener, stateRef} = store;
     const propsRef = useRef({selector});
     propsRef.current = {selector};
+
     useEffect(() => {
         return addListener((nextState: any) => {
             const {selector} = propsRef.current;
             setValue(selector(nextState));
         });
-    }, [])
-    useEffect(() => setValue(selector(stateRef.current)), deps)
+    }, deps)
+    useEffect(() => setValue(propsRef.current.selector(stateRef.current)), deps)
     return value;
 }
 

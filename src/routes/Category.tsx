@@ -4,14 +4,17 @@ import {data, Product} from "../data";
 import {useAppContext} from "../components/useAppContext";
 import {Header} from "../components/page-components/Header";
 import {Store, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
-import {motion} from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 import {blue, blueDarken, red, white, yellow} from "./Theme";
 import {MdAddCircle, MdCancel} from "react-icons/md";
-import {AppState} from "../components/AppState";
-
+import {IoCheckmarkCircle} from "react-icons/io5";
 
 function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: string }, selectedStore: Store<any>, selected?: boolean }) {
     const {selectedStore, unit, selected} = props;
+    const {store: globalStore} = useAppContext();
+    const hasValue = useStoreValue(globalStore, p => {
+        return (p.shoppingCart.find(c => c.barcode === unit.barcode)?.total ?? 0) > 0
+    });
     return <motion.div layout whileTap={{scale: 0.95}}
                        initial={{opacity: 0, top: -10}}
                        animate={{
@@ -28,68 +31,103 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
         fontSize: 12,
         textAlign: 'center',
         whiteSpace: 'nowrap',
-        border: '1px dashed rgba(0,0,0,0.1)'
+        border: '1px dashed rgba(0,0,0,0.1)',
+        display: 'flex'
     }} onTap={() => {
         selectedStore.dispatch({payload: unit, type: 'UNIT_SELECTED'})
-    }}>{unit.unit} {unit.unitType}</motion.div>;
+    }}>
+        <div style={{flexGrow: 1}}>
+            {unit.unit} {unit.unitType}
+        </div>
+
+        {hasValue &&
+            <div
+                style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginLeft: 2,
+                    fontSize: 16,
+                    marginTop: -2
+                }}>
+                <IoCheckmarkCircle/>
+            </div>
+        }
+
+
+    </motion.div>;
 }
 
-function AddRemoveButton(props: { totalInCart: number, store: Store<AppState>, selectedProduct?: Product }) {
-    const {totalInCart, store, selectedProduct} = props;
-    return <motion.div layoutId={'addRemoveContainer'} style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        border: '1px solid rgba(0,0,0,0.1)',
-        borderRadius: 50,
-        background: 'rgba(255,255,255,0.8)',
-        position: 'relative'
-    }}>
+export function AddRemoveButton(props: { barcode?: string, size?: 'small' | 'normal' }) {
+    const {barcode, size} = props;
+    const {store} = useAppContext();
 
-        {totalInCart > 0 &&
-            <motion.div layoutId={'cancelButton'} style={{
-                color: red,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 36
-
-            }} whileTap={{scale: 0.95}} onTap={() => {
-                store.dispatch({type: 'remove_from_cart', payload: {barcode: selectedProduct?.barcode}})
-            }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                <MdCancel/>
-            </motion.div>
-        }
-        {totalInCart > 0 &&
-            <motion.div layoutId={'totalInCartLabel'} style={{
-                width: '100%',
-                fontSize: 26,
-                marginLeft: 20,
-                marginRight: 20,
-                textAlign: 'center',
-                minWidth: 30
-            }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                {totalInCart}
-            </motion.div>
-        }
-        <motion.div layoutId={'addButton'} style={{
-            background: blue,
-            color: white,
+    const totalInCart = useStoreValue(store, (value) => {
+        const total = value.shoppingCart.find(s => s.barcode === barcode)?.total;
+        return total;
+    }, [barcode]) ?? 0;
+    const fontSize = size === 'small' ? 26 : 36;
+    const labelFontSize = size === 'small' ? 9 : 18;
+    const totalInCartFont = size === 'small' ? 20 : 30;
+    const textMinWidth = size === 'small' ? 25 : 45;
+    return <AnimatePresence>
+        <motion.div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: 36,
-            borderRadius: 60,
-            border: '1px solid rgba(0,0,0,0.1)'
-        }} whileTap={{scale: 0.95}} onTap={() => {
-            store.dispatch({type: 'add_to_cart', payload: {barcode: selectedProduct?.barcode}})
-        }}>
-            <MdAddCircle/>
-            <div style={{fontSize: 18, whiteSpace: 'nowrap', margin: '5px 10px 5px 5px'}}>
-                Add To Cart
-            </div>
+            border: '1px solid rgba(0,0,0,0.1)',
+            borderRadius: 50,
+            background: 'rgba(255,255,255,0.8)',
+            position: 'relative'
+        }} layoutId={`container-${barcode}-${size}`}>
+            {totalInCart > 0 &&
+                <motion.div style={{
+                    color: red,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize
+                }} layoutId={`cancel-${barcode}-${size}`} whileTap={{scale: 0.95}} onTap={() => {
+                    store.dispatch({type: 'remove_from_cart', payload: {barcode}})
+                }} initial={{opacity: 0}} animate={{opacity: 1}}>
+                    <MdCancel/>
+                </motion.div>
+            }
+            {totalInCart > 0 &&
+                <motion.div layoutId={`label-${barcode}-${size}`} style={{
+                    width: '100%',
+                    marginLeft: 10,
+                    marginRight: 10,
+                    textAlign: 'center',
+                    minWidth: textMinWidth,
+                    fontWeight: 'bold',
+                    color: 'rgba(0,0,0,0.7)',
+                    fontSize: totalInCartFont
+                }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+                    {totalInCart}
+                </motion.div>
+            }
+            <motion.div layoutId={`add-${barcode}-${size}`} style={{
+                background: size === 'small' ? white : blue,
+                color: size === 'small' ? blue : white,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize,
+                borderRadius: 60,
+                border: '1px solid rgba(0,0,0,0.1)'
+            }} whileTap={{scale: 0.95}} onTap={() => {
+                store.dispatch({type: 'add_to_cart', payload: {barcode}})
+            }}>
+                <MdAddCircle/>
+                {size !== 'small' &&
+                    <div style={{fontSize: labelFontSize, whiteSpace: 'nowrap', margin: '5px 10px 5px 5px'}}>
+                        Add To Cart
+                    </div>}
+            </motion.div>
         </motion.div>
-    </motion.div>;
+    </AnimatePresence>
 }
 
 function ImageSlider(props: { selectedProduct?: Product }) {
@@ -147,7 +185,7 @@ export default function Category(props: RouteProps) {
     const selectedStore = useCreateStore({
         selectedGroup: groups[0],
         selectedUnit: {unit: '', unitType: '', barcode: '', image: 1}
-    },(action) => state => {
+    }, (action) => state => {
         if (action.type === 'GROUP_SELECTED') {
             if (JSON.stringify(state.selectedGroup) !== JSON.stringify(action.payload)) {
                 return {...state, selectedGroup: action.payload}
@@ -184,9 +222,7 @@ export default function Category(props: RouteProps) {
     }, [units])
     const selectedProduct = data.find(d => d.barcode === selectedUnit.barcode);
     const productId = selectedProduct?.barcode;
-    const totalInCart = useStoreValue(store, (value) => {
-        return value.shoppingCart.find(s => s.barcode === productId)?.total
-    }, [productId]) ?? 0;
+
 
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
 
@@ -231,7 +267,9 @@ export default function Category(props: RouteProps) {
                     }}>{selectedProduct?.shelfLife} {selectedProduct?.shelfLifeType} Shelf Life
                     </div>
                     <div style={{display: 'flex'}}>
-                        <AddRemoveButton totalInCart={totalInCart} store={store} selectedProduct={selectedProduct}/>
+
+                        <AddRemoveButton barcode={selectedProduct?.barcode}/>
+
                     </div>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', flexShrink: 0, marginLeft: 10}}>

@@ -1,4 +1,4 @@
-import {MdAddShoppingCart, MdCancel} from "react-icons/md";
+import {MdAddShoppingCart, MdCancel, MdDelete, MdDeleteOutline} from "react-icons/md";
 import {motion} from "framer-motion";
 import {RouteProps} from "../components/useRoute";
 import {useAppContext} from "../components/useAppContext";
@@ -10,10 +10,12 @@ import {useFocusListener} from "../components/RouterPageContainer";
 import {useNavigate} from "../components/useNavigate";
 import {Button} from "../components/page-components/Button";
 
+import {AddRemoveButton} from "./Category";
+
 export default function Cart(props: RouteProps) {
     const appContext = useAppContext();
     const isFocused = useFocusListener(props.path);
-    const cartItems = useStoreValue(appContext.store, (state) => state.shoppingCart);
+    const cartItems = useStoreValue(appContext.store, (state) => state.shoppingCart,[isFocused]);
     const navigate = useNavigate();
     return <div style={{backgroundColor: 'rgba(0,0,0,0.4)', height: '100%', display: 'flex', flexDirection: 'column'}}>
         <div style={{display: 'flex', justifyContent: 'center', padding: 10}}>
@@ -21,6 +23,7 @@ export default function Cart(props: RouteProps) {
                 <MdCancel fontSize={35} style={{color: 'rgba(255,255,255,0.8)'}}/>
             </motion.div>
         </div>
+
         <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -31,20 +34,28 @@ export default function Cart(props: RouteProps) {
             borderTopRightRadius: 20,
             padding: 20
         }}>
+            <div style={{fontSize:16,fontWeight:'bold',color:'rgba(0,0,0,0.5)',marginBottom:10,paddingLeft:5}}>Your Items (16)</div>
             {cartItems.map(ci => {
                 const item: Product | undefined = data.find(c => c.barcode === ci.barcode);
                 invariant(item);
                 return <div key={ci.barcode} style={{
                     display: 'flex',
-                    alignItems: 'flex-end',
                     borderBottom: '1px solid rgba(0,0,0,0.1)',
                     padding: 5
                 }}>
-                    <div style={{flexGrow: 1, fontSize: 14}}>{item.category} {item.name} </div>
-                    <div style={{width: 100, textAlign: 'right', fontSize: 12}}>{item.unit} {item.unitType} </div>
-                    <div style={{width: 50, textAlign: 'right', fontSize: 12}}>{item.price}</div>
-                    <div style={{marginLeft: 10, fontSize: 12}}>x</div>
-                    <div style={{width: 20, textAlign: 'center', fontSize: 12}}>{ci.total}</div>
+                    <div>
+                        <img src={`/images/${item.barcode}/THUMB/default.png`}
+                              alt={'Barcode ' + item.barcode} height={50}/>
+                    </div>
+                    <div style={{flexGrow:1}}>
+                        <div style={{flexGrow: 1, fontSize: 14}}>{item.category} {item.name} </div>
+                        <div style={{flexGrow: 1, fontSize: 14,fontWeight:'bold'}}>AED {item.price}</div>
+                        <div style={{fontSize: 12}}>{item.unit} {item.unitType} </div>
+                        <div style={{fontSize: 12}}>{item.barcode}</div>
+                    </div>
+                    <div style={{display:'flex',flexDirection:'column'}}>
+                        <AddRemoveButton barcode={item.barcode} size={'small'} key={`button-${item.barcode}`}/>
+                    </div>
                 </div>
             })}
         </div>
