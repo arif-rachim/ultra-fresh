@@ -1,6 +1,6 @@
 import {RouteProps} from "../components/useRoute";
 import {CSSProperties, useEffect, useMemo} from "react";
-import {data, Product} from "../data";
+import {data} from "../data";
 import {useAppContext} from "../components/useAppContext";
 import {Header} from "../components/page-components/Header";
 import {Store, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
@@ -8,6 +8,7 @@ import {AnimatePresence, motion} from "framer-motion";
 import {blue, blueDarken, red, white, yellow} from "./Theme";
 import {MdAddCircle, MdCancel} from "react-icons/md";
 import {IoCheckmarkCircle} from "react-icons/io5";
+import {Product} from "../components/AppState";
 
 function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: string }, selectedStore: Store<any>, selected?: boolean }) {
     const {selectedStore, unit, selected} = props;
@@ -179,7 +180,7 @@ export default function Category(props: RouteProps) {
         }, [])
     }, [category]);
 
-    const {appDimension, store} = useAppContext();
+    const {appDimension} = useAppContext();
     let totalBox = groups.length < 6 ? 6 : groups.length;
     const imageDimension = Math.floor(appDimension.width / totalBox) - 10;
     const selectedStore = useCreateStore({
@@ -221,8 +222,6 @@ export default function Category(props: RouteProps) {
         }
     }, [units])
     const selectedProduct = data.find(d => d.barcode === selectedUnit.barcode);
-    const productId = selectedProduct?.barcode;
-
 
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
 

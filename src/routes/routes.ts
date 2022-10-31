@@ -2,7 +2,7 @@ import {Home} from "./Home";
 import Product from "./Product";
 import {Routes} from "../components/useRoute";
 import Cart from "./Cart";
-import {Shipping} from "./Shipping";
+import {ShippingAddress} from "./ShippingAddress";
 import Category from "./Category";
 import Payment from "./Payment";
 
@@ -54,7 +54,7 @@ export const routes: Routes = {
         },
     },
     'shipping': {
-        component: Shipping,
+        component: ShippingAddress,
         onVisible: {
             right: 0,
             transition: {

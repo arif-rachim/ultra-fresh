@@ -1,5 +1,5 @@
 import {useAppContext} from "../components/useAppContext";
-import {data, Product} from "../data";
+import {data} from "../data";
 import {useMemo} from "react";
 import {motion} from "framer-motion";
 import {useNavigate} from "../components/useNavigate";
@@ -9,6 +9,8 @@ import {ButtonTheme, theme, white} from "./Theme";
 import {ItemIcon} from "../components/page-components/ItemIcon";
 import {GiCrown} from "react-icons/gi";
 import {IoPersonOutline,IoCartOutline,IoHomeOutline,IoListCircleOutline,IoSearchCircleOutline} from "react-icons/io5";
+import {Product} from "../components/AppState";
+import {AiOutlineOrderedList} from "react-icons/ai";
 
 function Home(props: RouteProps) {
     const {store, appDimension} = useAppContext();
@@ -97,6 +99,14 @@ function Home(props: RouteProps) {
                 <IoPersonOutline style={{fontSize: 28}} />
                 <div style={{fontSize:12}}>Account</div>
             </motion.div>
+
+            <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
+                        animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+                        style={{position: 'relative',alignItems:'center',display:'flex',flexDirection:'column'}}>
+                <AiOutlineOrderedList style={{fontSize: 28}} />
+                <div style={{fontSize:12}}>Order Status</div>
+            </motion.div>
+
             <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
                         animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
                         style={{position: 'relative',alignItems:'center',display:'flex',flexDirection:'column'}} onTap={() => {

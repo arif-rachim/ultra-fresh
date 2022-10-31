@@ -3,7 +3,7 @@ import {motion} from "framer-motion";
 import {RouteProps} from "../components/useRoute";
 import {useAppContext} from "../components/useAppContext";
 import {useStoreValue} from "../components/store/useCreateStore";
-import {data, Product} from "../data";
+import {data} from "../data";
 import invariant from "tiny-invariant";
 import {ButtonTheme, white} from "./Theme";
 import {useNavigate} from "../components/useNavigate";
@@ -11,6 +11,7 @@ import {Button} from "../components/page-components/Button";
 
 import {AddRemoveButton} from "./Category";
 import {useMemo} from "react";
+import {Product} from "../components/AppState";
 
 export function useSubTotalCart() {
     const cartItems = useItemsInCart();

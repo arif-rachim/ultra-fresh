@@ -52,6 +52,12 @@ const AppContext = createContext<AppContextType>({
                         note : '',
                         phone : '',
                         zipCode : ''
+                    },
+                    orders:[],
+                    cardInfo : {
+                        cardNumber : '',
+                        cardHolderName : '',
+                        validUntil : ''
                     }
                 }
             }, addListener: (state: any) => Nothing,
@@ -59,8 +65,8 @@ const AppContext = createContext<AppContextType>({
         }
     }
 );
-type FactoryFunction<T> = (closePanel: (val: T) => void) => ReactElement;
 
+type FactoryFunction<T> = (closePanel: (val: T) => void) => ReactElement;
 
 export function AppContextProvider<State extends AppState>(props: PropsWithChildren<{
     setModalPanel: Dispatch<ReactElement | false>, store: Store<State>

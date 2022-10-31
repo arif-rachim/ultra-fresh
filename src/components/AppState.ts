@@ -1,12 +1,31 @@
 import {Action} from "./store/useCreateStore";
 import {produce} from "immer";
+import {data} from "../data";
+import invariant from "tiny-invariant";
 
-interface CartItem {
-    barcode: string,
+export interface Product {
+    internalCode: string;
+    name: string;
+    unit: string
+    unitType: string;
+    barcode: string;
+    price: string;
+    shelfLife: string;
+    shelfLifeType: string;
+    category: string
+}
+
+export interface CartItem extends Product{
     total: number
 }
 
-interface Address {
+export interface CardInfo{
+    cardNumber: string;
+    validUntil: string;
+    cardHolderName: string;
+}
+
+export interface Address {
     firstName: string,
     lastName: string,
     addressLine1: string,
@@ -19,21 +38,54 @@ interface Address {
     phone: string,
     note: string
 }
+export interface Payment{
+    time:string,
+    method : 'visa'|'master'|'apple'|'google',
+    referenceCode : string,
+    status:'received'|'void',
+    amount:string,
+    currency:string
+}
+
+export interface Shipping{
+    id : string,
+    orderId : string,
+    lineItem:CartItem[],
+    shippingDate : string,
+    status : 'dispatched' | 'delivered' | 'returned',
+    remarks : string[],
+    captain : string,
+    captainMobileNo : string
+}
+
+export interface Order{
+    id : string,
+    date : string,
+    lineItem:CartItem[],
+    subTotal:string,
+    shippingAddress:Address,
+    payment : Payment,
+    shippingStatus : Shipping[]
+    status : 'placed' | 'accepted' | 'dispatched' | 'all-delivered'| 'partial-delivered' | 'canceled'
+}
 
 export interface AppState {
     shoppingCart: CartItem[];
-    shippingAddress: Address
+    shippingAddress: Address,
+    cardInfo : CardInfo,
+    orders:Order[]
 }
 
 export const storeReducer = (action: Action) => produce((oldState: AppState) => {
-
     if (action.type === 'add_to_cart') {
         const itemIndex = oldState.shoppingCart.findIndex(s => s.barcode === action.payload.barcode);
+        const product:Product | undefined = data.find(d => d.barcode === action.payload.barcode);
         if (itemIndex >= 0) {
             oldState.shoppingCart[itemIndex].total += 1;
         } else {
+            invariant(product);
             oldState.shoppingCart.push({
-                barcode: action.payload.barcode,
+                ...product,
                 total: 1
             })
         }

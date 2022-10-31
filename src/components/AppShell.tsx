@@ -39,6 +39,11 @@ export default function AppShell() {
     const [modalPanel, setModalPanel] = useState<ReactElement | false>(false);
     const store = useCreateStore( {
         shoppingCart: [],
+        cardInfo : {
+            cardNumber : '',
+            validUntil : '',
+            cardHolderName : ''
+        },
         shippingAddress : {
             firstName: '',
             lastName: '',
@@ -51,7 +56,8 @@ export default function AppShell() {
             email: '',
             phone: '',
             note: '',
-        }
+        },
+        orders :[]
     },storeReducer);
 
     return <AppContextProvider setModalPanel={setModalPanel} store={store}>

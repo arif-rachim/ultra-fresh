@@ -1,14 +1,5 @@
-export interface Product {
-    "internalCode": string;
-    "name": string;
-    "unit": string
-    "unitType": string;
-    "barcode": string;
-    "price": string;
-    "shelfLife": string;
-    "shelfLifeType": string;
-    "category": string
-}
+import {Product} from "./components/AppState";
+
 
 export const data: Product[] = [
     {

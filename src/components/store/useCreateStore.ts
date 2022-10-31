@@ -1,4 +1,5 @@
 import {
+    cloneElement,
     ComponentType,
     createElement,
     DependencyList,
@@ -104,16 +105,18 @@ interface StoreValueProps<T, S, PropsType> {
     component: ComponentType<PropsType>
 }
 
-export function StoreValue<T, S, PT, Z extends PT>(props: PropsWithChildren<StoreValueProps<T, S, PT> & Z>) {
+
+interface StoreValueInjectorProps<T, S> {
+    store: Store<T>,
+    selector: (Selector<T, S> | Selector<T, S>[]),
+    property: (string | string[])
+}
+
+
+
+export function StoreValueHOC<T, S, PT, Z extends PT>(props: PropsWithChildren<StoreValueProps<T, S, PT> & Z>) {
     const {store, property, selector, component, ...cp} = props;
-    if (Array.isArray(selector) || Array.isArray(property)) {
-        if (!(Array.isArray(selector) && Array.isArray(property))) {
-            throw new Error('Expecting both selector and property are either both array or single');
-        }
-        if (selector.length !== property.length) {
-            throw new Error('Expecting both selector and property have same array length');
-        }
-    }
+    validateSelectorAndProperty(selector, property);
     const value: any = useStoreValue(store, (param) => {
         if (Array.isArray(selector)) {
             return selector.map(s => s(param));
@@ -130,5 +133,38 @@ export function StoreValue<T, S, PT, Z extends PT>(props: PropsWithChildren<Stor
         childrenProps[property] = value;
     }
     return createElement(Component, childrenProps)
+
+}
+
+function validateSelectorAndProperty<S, T>(selector: Selector<T,S> | (Selector<T, S>[]), property: string | string[]) {
+    if (Array.isArray(selector) || Array.isArray(property)) {
+        if (!(Array.isArray(selector) && Array.isArray(property))) {
+            throw new Error('Expecting both selector and property are either both array or single');
+        }
+        if (selector.length !== property.length) {
+            throw new Error('Expecting both selector and property have same array length');
+        }
+    }
+}
+
+export function StoreValue<T, S>(props: PropsWithChildren<StoreValueInjectorProps<T, S>>) {
+    const {store, property, selector,children} = props;
+    validateSelectorAndProperty(selector, property);
+    const value: any = useStoreValue(store, (param) => {
+        if (Array.isArray(selector)) {
+            return selector.map(s => s(param));
+        }
+        return selector(param);
+    }, [selector]);
+    const cp = (children as any).props;
+    const childrenProps: any = {...cp};
+    if (Array.isArray(property)) {
+        property.forEach((props, index) => {
+            childrenProps[props] = value[index];
+        })
+    } else {
+        childrenProps[property] = value;
+    }
+    return cloneElement((children as any), childrenProps)
 
 }

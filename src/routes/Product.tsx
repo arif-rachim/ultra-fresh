@@ -44,7 +44,6 @@ export default function ProductRoute(props: RouteProps) {
     const productId = params.get('productId');
     const product = data.find(p => p.barcode === productId);
 
-
     const totalInCart = useStoreValue(store, (value) => {
         return value.shoppingCart.find(s => s.barcode === productId)?.total
     }, [productId]);
