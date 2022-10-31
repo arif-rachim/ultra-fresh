@@ -6,8 +6,23 @@ interface CartItem {
     total: number
 }
 
+interface Address {
+    firstName: string,
+    lastName: string,
+    addressLine1: string,
+    addressLine2: string,
+    city: string,
+    state: string,
+    zipCode: string,
+    country: string,
+    email: string,
+    phone: string,
+    note: string
+}
+
 export interface AppState {
     shoppingCart: CartItem[];
+    shippingAddress: Address
 }
 
 export const storeReducer = (action: Action) => produce((oldState: AppState) => {

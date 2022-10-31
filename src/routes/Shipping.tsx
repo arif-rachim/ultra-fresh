@@ -49,8 +49,24 @@ export function Shipping(props: RouteProps) {
         payload: {key, value}
     }), [store]);
     const validate = useCallback(() => {
-        return true;
-    }, []);
+
+        store.setState(produce(state => {
+            state.errors.firstName = isNotEmptyText(state.firstName) ? '' : 'First name is required';
+            state.errors.lastName = isNotEmptyText(state.lastName) ? '' : 'Last name is required';
+            state.errors.addressLine1 = isNotEmptyText(state.addressLine1) ? '' : 'Address is required';
+            state.errors.city = isNotEmptyText(state.city) ? '' : 'City is required';
+            state.errors.country = isNotEmptyText(state.country) ? '' : 'Country is required';
+            state.errors.state = isNotEmptyText(state.state) ? '' : 'State is required';
+            state.errors.zipCode = isNotEmptyText(state.zipCode) ? '' : 'ZipCode is required';
+            state.errors.email = isNotEmptyText(state.email) ? '' : 'Email is required';
+            state.errors.phone = isNotEmptyText(state.phone) ? '' : 'Phone is required';
+        }));
+        const state = store.stateRef.current;
+        const hasError = Object.keys(state.errors).reduce((hasError,key) => {
+            return hasError || ((state.errors as any)[key]).toString().length > 0
+        },false);
+        return !hasError;
+    }, [store.stateRef]);
     return <div
         style={{
             height: '100%',
@@ -60,7 +76,7 @@ export function Shipping(props: RouteProps) {
             flexDirection: 'column'
         }}>
         <Header title={'Shipping Address'}/>
-        <div style={{display: 'flex', flexDirection: 'column', overflow: 'auto', height: '100%'}}>
+        <div style={{display: 'flex',background:'white',flexDirection: 'column', overflow: 'auto', height: '100%'}}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
                 <StoreValue store={store} selector={[p => p.firstName, p => p.errors.firstName]}
                             property={['value', 'error']} component={Input} title={'First Name'}
@@ -77,7 +93,7 @@ export function Shipping(props: RouteProps) {
                             onChange={e => update('addressLine1', e.target.value)}/>
 
                 <StoreValue store={store} selector={[p => p.addressLine2, p => p.errors.addressLine2]}
-                            property={['value', 'error']} component={Input} title={'Address line 2'}
+                            property={['value', 'error']} component={Input} title={'Address line 2 (optional)'}
                             placeholder={'Type address line 2'}
                             onChange={e => update('addressLine2', e.target.value)}/>
 
@@ -119,14 +135,14 @@ export function Shipping(props: RouteProps) {
                             onChange={e => update('phone', e.target.value)}/>
 
                 <StoreValue store={store} selector={[p => p.note, p => p.errors.note]} property={['value', 'error']}
-                            component={Input} title={'Note'} placeholder={'eg : Doorbell number is 33'}
+                            component={Input} title={'Note (optional)'} placeholder={'eg : Doorbell number is 33'}
                             onChange={e => update('note', e.target.value)}/>
 
-                <div style={{display: 'flex', padding: 10, background: white}}>
+                <div style={{display: 'flex', padding: 10}}>
                     <div style={{display: 'flex', flexDirection: 'column', width: '50%'}}>
                         <Button title={'Save'} onTap={() => {
                             if (validate()) {
-
+                                console.log("WE CAN PROCEEED !")
                             }
                         }} theme={ButtonTheme.promoted} icon={MdSave}/>
                     </div>
@@ -138,4 +154,17 @@ export function Shipping(props: RouteProps) {
             </div>
         </div>
     </div>
+}
+
+function isNotEmptyText(text:string|undefined|null){
+    if(text === undefined){
+        return false;
+    }
+    if(text === null){
+        return false;
+    }
+    if(text === ''){
+        return false;
+    }
+    return text.toString().trim() !== '';
 }

@@ -1,4 +1,4 @@
-import {MdAddShoppingCart, MdCancel, MdDelete, MdDeleteOutline} from "react-icons/md";
+import {MdAddShoppingCart, MdCancel} from "react-icons/md";
 import {motion} from "framer-motion";
 import {RouteProps} from "../components/useRoute";
 import {useAppContext} from "../components/useAppContext";
@@ -51,7 +51,6 @@ export default function Cart(props: RouteProps) {
                         <div style={{flexGrow: 1, fontSize: 14}}>{item.category} {item.name} </div>
                         <div style={{flexGrow: 1, fontSize: 14,fontWeight:'bold'}}>AED {item.price}</div>
                         <div style={{fontSize: 12}}>{item.unit} {item.unitType} </div>
-                        <div style={{fontSize: 12}}>{item.barcode}</div>
                     </div>
                     <div style={{display:'flex',flexDirection:'column'}}>
                         <AddRemoveButton barcode={item.barcode} size={'small'} key={`button-${item.barcode}`}/>
@@ -64,10 +63,15 @@ export default function Cart(props: RouteProps) {
             padding: 10,
             boxShadow: '0 5px 7px -5px rgba(0,0,0,0.5) inset',
             display: "flex",
-            flexDirection: 'column'
         }}>
+            <div style={{display:'flex',flexDirection:'column',flexGrow:1}}>
+                <div style={{fontSize:12}}>Subtotal</div>
+                <div style={{fontWeight:'bold',fontSize:18}}>AED 112.60</div>
+            </div>
+            <div>
             <Button title={'Checkout'} icon={MdAddShoppingCart} theme={ButtonTheme.promoted}
                     onTap={() => navigate('shipping')}/>
+            </div>
         </div>
     </div>
 }

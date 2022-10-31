@@ -6,8 +6,7 @@ export function Input(props: { title: string, placeholder: string, value?: strin
     return <div style={{
         display: 'flex',
         flexDirection: 'column',
-        padding: 10,
-        background: 'linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.8))',
+        padding: '5px 10px',
         borderBottom: '1px solid rgba(0,0,0,0.05)'
     }}>
         <div style={{paddingLeft: 5, fontWeight: 'bold', fontSize: 13}}>{props.title}</div>

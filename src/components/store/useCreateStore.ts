@@ -69,7 +69,7 @@ export function useCreateStore<S>(initializer: S | (() => S),reducer?: (action: 
 
     const addListener = useCallback(function addListener(selector: (param: S) => any) {
         listenerRef.current.push(selector);
-        return () => listenerRef.current.splice(listenerRef.current.indexOf(selector, 1))
+        return () => listenerRef.current = listenerRef.current.filter(l => l!== selector)
     }, []);
 
     return useMemo(() => ({dispatch, stateRef, addListener, setState}), [addListener, dispatch, setState])
