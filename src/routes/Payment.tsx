@@ -25,7 +25,7 @@ export default function Payment(props: RouteProps) {
     const localStore = useCreateStore({
         ...cardInfo,
         cvv: '',
-        errors:{
+        errors: {
             cardNumber: '',
             validUntil: '',
             cvv: '',
@@ -34,7 +34,7 @@ export default function Payment(props: RouteProps) {
     });
     const isFocused = useFocusListener(props.path);
     useEffect(() => {
-        if(!isFocused){
+        if (!isFocused) {
             localStore.setState(produce(s => {
                 s.cardHolderName = '';
                 s.validUntil = '';
@@ -42,12 +42,12 @@ export default function Payment(props: RouteProps) {
                 s.cardNumber = '';
             }))
         }
-    },[isFocused]);
+    }, [isFocused]);
 
     const navigate = useNavigate();
 
     const performPayment = useCallback(() => {
-        if(!validate()){
+        if (!validate()) {
             return;
         }
 
@@ -106,9 +106,9 @@ export default function Payment(props: RouteProps) {
             state.errors.validUntil = isNotEmptyText(state.validUntil) ? '' : 'Valid until is required';
         }));
         const state = localStore.stateRef.current;
-        const hasError = Object.keys(state.errors).reduce((hasError,key) => {
+        const hasError = Object.keys(state.errors).reduce((hasError, key) => {
             return hasError || ((state.errors as any)[key]).toString().length > 0
-        },false);
+        }, false);
         return !hasError;
     }, [localStore]);
 
@@ -188,17 +188,19 @@ export default function Payment(props: RouteProps) {
                 borderRadius: 5,
                 boxShadow: '0 3px 5px -3px rgba(0,0,0,0.2)'
             }}>
-                <StoreValue store={localStore} selector={[(s) => s.cardNumber,(s) => s.errors.cardNumber]} property={['value','error']}>
+                <StoreValue store={localStore} selector={[(s) => s.cardNumber, (s) => s.errors.cardNumber]}
+                            property={['value', 'error']}>
                     <Input title={'Card Number'} placeholder={'Enter your card Number here'} onChange={(e) => {
                         localStore.setState(produce(old => {
                             old.cardNumber = e.target.value;
-                            old.errors.cardNumber = e.target.value === '' ?  'Card Number is required'  : '';
+                            old.errors.cardNumber = e.target.value === '' ? 'Card Number is required' : '';
                         }));
                     }}/>
                 </StoreValue>
                 <div style={{display: 'flex'}}>
                     <div style={{width: '70%'}}>
-                        <StoreValue store={localStore} selector={[s => s.validUntil,s => s.errors.validUntil]} property={['value','error']} >
+                        <StoreValue store={localStore} selector={[s => s.validUntil, s => s.errors.validUntil]}
+                                    property={['value', 'error']}>
                             <Input title={'Valid Until'} placeholder={'Valid Until'} onChange={(e) => {
                                 localStore.setState(produce(s => {
                                     s.validUntil = e.target.value;
@@ -208,7 +210,8 @@ export default function Payment(props: RouteProps) {
                         </StoreValue>
                     </div>
                     <div style={{width: '30%'}}>
-                        <StoreValue store={localStore} selector={[s => s.cvv,s => s.errors.cvv]} property={['value','error']}>
+                        <StoreValue store={localStore} selector={[s => s.cvv, s => s.errors.cvv]}
+                                    property={['value', 'error']}>
                             <Input title={'CVV'} placeholder={'xxx'} onChange={(e) => {
                                 localStore.setState(produce(s => {
                                     s.cvv = e.target.value;
@@ -218,11 +221,12 @@ export default function Payment(props: RouteProps) {
                         </StoreValue>
                     </div>
                 </div>
-                <StoreValue store={localStore} selector={[s => s.cardHolderName,s => s.errors.cardHolderName]} property={['value','error']}>
+                <StoreValue store={localStore} selector={[s => s.cardHolderName, s => s.errors.cardHolderName]}
+                            property={['value', 'error']}>
                     <Input title={'Card Holder Name'} placeholder={'Enter your card Number here'} onChange={(e) => {
                         localStore.setState(produce(s => {
                             s.cardHolderName = e.target.value;
-                            s.errors.cardHolderName = e.target.value === '' ?  'Card Name is required'  : '';
+                            s.errors.cardHolderName = e.target.value === '' ? 'Card Name is required' : '';
                         }))
                     }}/>
                 </StoreValue>

@@ -1,4 +1,3 @@
-import {Header} from "../components/page-components/Header";
 import {MainHeaderSearchPanel, useCategoriesList} from "./CategoryList";
 import {useAppContext} from "../components/useAppContext";
 import {useNavigate} from "../components/useNavigate";
@@ -49,15 +48,23 @@ function CategoryLineRenderer(props: { category: string }) {
         {groups.map(group => {
             return <div style={{display: 'flex', flexDirection: 'column', width: imageDimension, flexShrink: 0}}
                         key={group.name}>
-                <motion.div style={{display: 'flex', alignItems: 'center', justifyContent: 'center',border:'1px solid rgba(0,0,0,0.05)',marginLeft:5,marginRight:5,borderRadius:5}} onTap={() => {
+                <motion.div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(0,0,0,0.05)',
+                    marginLeft: 5,
+                    marginRight: 5,
+                    borderRadius: 5
+                }} onTap={() => {
                     navigate(`product-with-category/${category}/${group.name}`);
                 }} whileTap={{scale: 0.95}}
                             whileHover={{scale: 1.05}}>
                     <motion.img src={`/images/${group.barcode}/THUMB/default.png`}
-                                style={{marginTop: 5,marginBottom:5}}
+                                style={{marginTop: 5, marginBottom: 5}}
                                 height={70}
                                 width={70}
-                                alt={'Barcode ' + group.barcode} />
+                                alt={'Barcode ' + group.barcode}/>
                 </motion.div>
                 <div style={{
                     fontSize: 12,
@@ -65,7 +72,7 @@ function CategoryLineRenderer(props: { category: string }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     textAlign: 'center',
-                    marginTop:5
+                    marginTop: 5
                 }}>
                     {group.name}
                 </div>

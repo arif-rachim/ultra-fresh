@@ -37,14 +37,14 @@ const dialogPanelStyle: CSSProperties = {
 
 export default function AppShell() {
     const [modalPanel, setModalPanel] = useState<ReactElement | false>(false);
-    const store = useCreateStore( {
+    const store = useCreateStore({
         shoppingCart: [],
-        cardInfo : {
-            cardNumber : '',
-            validUntil : '',
-            cardHolderName : ''
+        cardInfo: {
+            cardNumber: '',
+            validUntil: '',
+            cardHolderName: ''
         },
-        shippingAddress : {
+        shippingAddress: {
             firstName: '',
             lastName: '',
             addressLine1: '',
@@ -57,8 +57,8 @@ export default function AppShell() {
             phone: '',
             note: '',
         },
-        orders :[]
-    },storeReducer);
+        orders: []
+    }, storeReducer);
 
     return <AppContextProvider setModalPanel={setModalPanel} store={store}>
         <div style={shellStyle}>

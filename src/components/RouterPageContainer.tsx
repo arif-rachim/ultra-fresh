@@ -11,7 +11,15 @@ export const maxWidth = 480;
  */
 export function RouterPageContainer() {
     const componentsRef = useRef<PathAbleComponent[]>([]);
-    const {params, routeComponent: RouteComponent, path, animateIn, animateOut,initial,routeFooterComponent:RouteFooterComponent} = useRoute();
+    const {
+        params,
+        routeComponent: RouteComponent,
+        path,
+        animateIn,
+        animateOut,
+        initial,
+        routeFooterComponent: RouteFooterComponent
+    } = useRoute();
     const currentAnimateOutRef = useRef(animateOut); //
     currentAnimateOutRef.current = animateOut;
     const Component = useMemo(() => function RouteComponentContainer(props: { isFocused: boolean } & RouteProps) {
@@ -19,10 +27,10 @@ export function RouterPageContainer() {
         const beforeIsFocused = usePreviousValue(isFocused);
         const changeToFocused = (beforeIsFocused !== isFocused) && isFocused;
         const changeToBlurred = (beforeIsFocused !== isFocused) && !isFocused;
-        if(changeToBlurred){
+        if (changeToBlurred) {
             //console.log('A panel is blurred');
         }
-        if(changeToFocused){
+        if (changeToFocused) {
             //console.log('A panel is focused');
         }
 
@@ -38,9 +46,9 @@ export function RouterPageContainer() {
     }, [RouteComponent]);
 
     const componentIndex = componentsRef.current.findIndex(c => c.path === path);
-    if(componentIndex < 0){
+    if (componentIndex < 0) {
         componentsRef.current.push({params, path, component: Component})
-    }else{
+    } else {
         componentsRef.current[componentIndex].params = params;
     }
 
@@ -52,15 +60,15 @@ export function RouterPageContainer() {
             overflow: 'hidden',
             position: 'relative',
             flexGrow: 1,
-            display:'flex',
-            flexDirection:'column'
+            display: 'flex',
+            flexDirection: 'column'
         }}>
             {componentsRef.current.map((c) => {
                 const Component = c.component;
                 const isFocused = c.path === path;
                 return <Component key={c.path} params={c.params} path={c.path} isFocused={isFocused}/>
             })}
-            <div style={{position:'absolute',bottom:0,width:'100%'}}>
+            <div style={{position: 'absolute', bottom: 0, width: '100%'}}>
                 <RouteFooterComponent path={path} params={params}/>
             </div>
         </div>

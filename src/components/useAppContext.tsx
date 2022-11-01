@@ -41,23 +41,23 @@ const AppContext = createContext<AppContextType>({
                 current: {
                     shoppingCart: [],
                     shippingAddress: {
-                        addressLine2 : '',
-                        state : '',
-                        addressLine1 : '',
-                        city : '',
-                        firstName : '',
-                        country : '',
-                        email : '',
-                        lastName : '',
-                        note : '',
-                        phone : '',
-                        zipCode : ''
+                        addressLine2: '',
+                        state: '',
+                        addressLine1: '',
+                        city: '',
+                        firstName: '',
+                        country: '',
+                        email: '',
+                        lastName: '',
+                        note: '',
+                        phone: '',
+                        zipCode: ''
                     },
-                    orders:[],
-                    cardInfo : {
-                        cardNumber : '',
-                        cardHolderName : '',
-                        validUntil : ''
+                    orders: [],
+                    cardInfo: {
+                        cardNumber: '',
+                        cardHolderName: '',
+                        validUntil: ''
                     }
                 }
             }, addListener: (state: any) => Nothing,

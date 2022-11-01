@@ -15,11 +15,11 @@ export interface Product {
     category: string
 }
 
-export interface CartItem extends Product{
+export interface CartItem extends Product {
     total: number
 }
 
-export interface CardInfo{
+export interface CardInfo {
     cardNumber: string;
     validUntil: string;
     cardHolderName: string;
@@ -38,48 +38,49 @@ export interface Address {
     phone: string,
     note: string
 }
-export interface Payment{
-    time:string,
-    method : 'visa'|'master'|'apple'|'google',
-    referenceCode : string,
-    status:'received'|'void',
-    amount:string,
-    currency:string
+
+export interface Payment {
+    time: string,
+    method: 'visa' | 'master' | 'apple' | 'google',
+    referenceCode: string,
+    status: 'received' | 'void',
+    amount: string,
+    currency: string
 }
 
-export interface Shipping{
-    id : string,
-    orderId : string,
-    lineItem:CartItem[],
-    shippingDate : string,
-    status : 'Dispatched' | 'Delivered' | 'Returned',
-    remarks : string[],
-    captain : string,
-    captainMobileNo : string
+export interface Shipping {
+    id: string,
+    orderId: string,
+    lineItem: CartItem[],
+    shippingDate: string,
+    status: 'Dispatched' | 'Delivered' | 'Returned',
+    remarks: string[],
+    captain: string,
+    captainMobileNo: string
 }
 
-export interface Order{
-    id : string,
-    date : string,
-    lineItem:CartItem[],
-    subTotal:string,
-    shippingAddress:Address,
-    payment : Payment,
-    shippingStatus : Shipping[]
-    status : 'Placed' | 'Accepted' | 'Dispatched' | 'Delivered'| 'Partial Delivered' | 'Canceled'
+export interface Order {
+    id: string,
+    date: string,
+    lineItem: CartItem[],
+    subTotal: string,
+    shippingAddress: Address,
+    payment: Payment,
+    shippingStatus: Shipping[]
+    status: 'Placed' | 'Accepted' | 'Dispatched' | 'Delivered' | 'Partial Delivered' | 'Canceled'
 }
 
 export interface AppState {
     shoppingCart: CartItem[];
     shippingAddress: Address,
-    cardInfo : CardInfo,
-    orders:Order[]
+    cardInfo: CardInfo,
+    orders: Order[]
 }
 
 export const storeReducer = (action: Action) => produce((oldState: AppState) => {
     if (action.type === 'add_to_cart') {
         const itemIndex = oldState.shoppingCart.findIndex(s => s.barcode === action.payload.barcode);
-        const product:Product | undefined = data.find(d => d.barcode === action.payload.barcode);
+        const product: Product | undefined = data.find(d => d.barcode === action.payload.barcode);
         if (itemIndex >= 0) {
             oldState.shoppingCart[itemIndex].total += 1;
         } else {

@@ -3,13 +3,22 @@ import {useAppContext} from "../useAppContext";
 import {useStoreValue} from "../store/useCreateStore";
 import {motion} from "framer-motion";
 import {ButtonTheme, theme, white} from "../../routes/Theme";
-import {IoCartOutline, IoHomeOutline, IoListCircleOutline, IoPersonOutline} from "react-icons/io5";
-import {GiCrown} from "react-icons/gi";
+import {
+    IoCart,
+    IoCartOutline,
+    IoHome,
+    IoHomeOutline,
+    IoListCircle,
+    IoListCircleOutline,
+    IoPerson,
+    IoPersonOutline
+} from "react-icons/io5";
 import {AiOutlineOrderedList} from "react-icons/ai";
 import {RouteProps} from "../useRoute";
 
-export function FooterNavigation(props:RouteProps) {
+export function FooterNavigation(props: RouteProps) {
     const navigate = useNavigate();
+    const path = props.path;
     const {store, appDimension} = useAppContext();
     const itemsInCart = useStoreValue(store, state => {
         return state.shoppingCart.reduce((acc, item) => {
@@ -28,51 +37,45 @@ export function FooterNavigation(props:RouteProps) {
         borderTop: '1px solid rgba(0,0,0,0.05)',
     }}>
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                    style={{position: 'relative', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
+                    animate={{color: path === 'home' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+                    style={{
+                        position: 'relative',
+                        alignItems: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        fontSize: 28
+                    }}
                     onTap={() => navigate('home')}>
-            <IoHomeOutline style={{fontSize: 28}}/>
+            {path === 'home' ? <IoHome/> : <IoHomeOutline/>}
             <div style={{fontSize: 12}}>Home</div>
         </motion.div>
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                    style={{position: 'relative', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
+                    animate={{color: path === 'categories' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+                    style={{
+                        position: 'relative',
+                        alignItems: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        fontSize: 28
+                    }}
                     onTap={() => navigate('categories')}>
-            <IoListCircleOutline style={{fontSize: 28}}/>
+            {path === 'categories' ? <IoListCircle/> : <IoListCircleOutline/>}
             <div style={{fontSize: 12}}>Categories</div>
         </motion.div>
-        <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                    style={{position: 'relative', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
-                    onTap={() => navigate('reward')}>
-            <GiCrown style={{fontSize: 28}}/>
-            <div style={{fontSize: 12}}>Reward</div>
-        </motion.div>
-        <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                    style={{position: 'relative', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
-                    onTap={() => navigate('user-account')}>
-            <IoPersonOutline style={{fontSize: 28}}/>
-            <div style={{fontSize: 12}}>Account</div>
-        </motion.div>
 
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                    style={{position: 'relative', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
-                    onTap={() => {
-                        navigate('history');
-                    }}>
-            <AiOutlineOrderedList style={{fontSize: 28}}/>
-            <div style={{fontSize: 12}}>Order Status</div>
-        </motion.div>
-
-        <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                    style={{position: 'relative', alignItems: 'center', display: 'flex', flexDirection: 'column'}}
+                    animate={{color: path === 'cart' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+                    style={{
+                        position: 'relative',
+                        alignItems: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        fontSize: 28
+                    }}
                     onTap={() => {
                         navigate('cart');
                     }}>
-            <IoCartOutline style={{fontSize: 28}}/>
+            {path === 'cart' ? <IoCart/> : <IoCartOutline/>}
             <div style={{fontSize: 12}}>Cart</div>
             {itemsInCart > 0 &&
                 <div style={{
@@ -92,6 +95,37 @@ export function FooterNavigation(props:RouteProps) {
                     {itemsInCart}
                 </div>
             }
+        </motion.div>
+
+        <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
+                    animate={{color: path === 'history' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+                    style={{
+                        position: 'relative',
+                        alignItems: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        fontSize: 28
+                    }}
+                    onTap={() => {
+                        navigate('history');
+                    }}>
+            {path === 'history' ? <AiOutlineOrderedList/> : <AiOutlineOrderedList/>}
+            <div style={{fontSize: 12}}>Order Status</div>
+        </motion.div>
+
+
+        <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
+                    animate={{color: path === 'user-account' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+                    style={{
+                        position: 'relative',
+                        alignItems: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        fontSize: 28
+                    }}
+                    onTap={() => navigate('user-account')}>
+            {path === 'user-account' ? <IoPerson/> : <IoPersonOutline/>}
+            <div style={{fontSize: 12}}>Account</div>
         </motion.div>
     </div>
 }

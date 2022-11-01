@@ -11,9 +11,9 @@ import {useAppContext} from "../components/useAppContext";
 import {useNavigate} from "../components/useNavigate";
 
 export function ShippingAddress(props: RouteProps) {
-    const {store:appStore} = useAppContext();
-    const shippingAddress = useStoreValue(appStore,s => s.shippingAddress);
-    const store = useCreateStore( {
+    const {store: appStore} = useAppContext();
+    const shippingAddress = useStoreValue(appStore, s => s.shippingAddress);
+    const store = useCreateStore({
         ...shippingAddress,
         errors: {
             firstName: '',
@@ -27,7 +27,7 @@ export function ShippingAddress(props: RouteProps) {
             phone: '',
             note: '',
         }
-    },(action) => produce(state => {
+    }, (action) => produce(state => {
         if (action.type === 'update') {
             const stateAny = state as any;
             stateAny[action.payload.key] = action.payload.value;
@@ -36,8 +36,8 @@ export function ShippingAddress(props: RouteProps) {
         }
     }));
     useEffect(() => {
-        store.setState(old => ({...old,...shippingAddress}))
-    },[shippingAddress])
+        store.setState(old => ({...old, ...shippingAddress}))
+    }, [shippingAddress])
     const update = useCallback((key: string, value: any) => store.dispatch({
         type: 'update',
         payload: {key, value}
@@ -55,9 +55,9 @@ export function ShippingAddress(props: RouteProps) {
             state.errors.phone = isNotEmptyText(state.phone) ? '' : 'Phone is required';
         }));
         const state = store.stateRef.current;
-        const hasError = Object.keys(state.errors).reduce((hasError,key) => {
+        const hasError = Object.keys(state.errors).reduce((hasError, key) => {
             return hasError || ((state.errors as any)[key]).toString().length > 0
-        },false);
+        }, false);
         return !hasError;
     }, [store]);
     const navigate = useNavigate();
@@ -70,18 +70,26 @@ export function ShippingAddress(props: RouteProps) {
             display: 'flex',
             flexDirection: 'column'
         }}>
-        <Header title={'Shipping Address'}/>
-        <div style={{display: 'flex', flexDirection:'row-reverse',marginRight:20,marginTop:10}}>
-            <Button title={'Proceed'} onTap={() => {
-                if (validate()) {
-                    appStore.setState(produce(state => {
-                        state.shippingAddress = store.stateRef.current;
-                    }));
-                    navigate('payment')
-                }
-            }} theme={ButtonTheme.promoted} icon={MdOutlinePayments}/>
-        </div>
-        <div style={{display: 'flex',background:'white',flexDirection: 'column',margin:'10px 20px',borderRadius:5}}>
+        <Header title={'Shipping Address'}>
+            <div style={{flexGrow: 1, flexDirection: 'row-reverse', display: 'flex'}}>
+                <Button title={'Proceed'} onTap={() => {
+                    if (validate()) {
+                        appStore.setState(produce(state => {
+                            state.shippingAddress = store.stateRef.current;
+                        }));
+                        navigate('payment')
+                    }
+                }} theme={ButtonTheme.promoted} icon={MdOutlinePayments}/>
+            </div>
+        </Header>
+        <div style={{
+            display: 'flex',
+            background: 'white',
+            flexDirection: 'column',
+            margin: '0px 0px',
+            flexGrow: 1,
+            overflow: 'auto'
+        }}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
                 <StoreValueHOC store={store} selector={[p => p.firstName, p => p.errors.firstName]}
                                property={['value', 'error']} component={Input} title={'First Name'}
@@ -131,11 +139,13 @@ export function ShippingAddress(props: RouteProps) {
                                        onChange={e => update('country', e.target.value)}/>
                     </div>
                 </div>
-                <StoreValueHOC store={store} selector={[p => p.email, p => p.errors.email]} property={['value', 'error']}
+                <StoreValueHOC store={store} selector={[p => p.email, p => p.errors.email]}
+                               property={['value', 'error']}
                                component={Input} title={'Email'} placeholder={'Type email address here'}
                                onChange={e => update('email', e.target.value)}/>
 
-                <StoreValueHOC store={store} selector={[p => p.phone, p => p.errors.phone]} property={['value', 'error']}
+                <StoreValueHOC store={store} selector={[p => p.phone, p => p.errors.phone]}
+                               property={['value', 'error']}
                                component={Input} title={'Phone'} placeholder={'Type phone number here'}
                                onChange={e => update('phone', e.target.value)}/>
 
@@ -145,29 +155,29 @@ export function ShippingAddress(props: RouteProps) {
 
 
             </div>
+            <div style={{display: 'flex', flexDirection: 'row-reverse', margin: 10}}>
+                <Button title={'Proceed'} onTap={() => {
+                    if (validate()) {
+                        appStore.setState(produce(state => {
+                            state.shippingAddress = store.stateRef.current;
+                        }));
+                        navigate('payment')
+                    }
+                }} theme={ButtonTheme.promoted} icon={MdOutlinePayments}/>
+            </div>
+        </div>
 
-        </div>
-        <div style={{display: 'flex', flexDirection:'row-reverse',marginRight:20,marginBottom:10}}>
-            <Button title={'Proceed'} onTap={() => {
-                if (validate()) {
-                    appStore.setState(produce(state => {
-                        state.shippingAddress = store.stateRef.current;
-                    }));
-                    navigate('payment')
-                }
-            }} theme={ButtonTheme.promoted} icon={MdOutlinePayments}/>
-        </div>
     </div>
 }
 
-export function isNotEmptyText(text:string|undefined|null){
-    if(text === undefined){
+export function isNotEmptyText(text: string | undefined | null) {
+    if (text === undefined) {
         return false;
     }
-    if(text === null){
+    if (text === null) {
         return false;
     }
-    if(text === ''){
+    if (text === '') {
         return false;
     }
     return text.toString().trim() !== '';

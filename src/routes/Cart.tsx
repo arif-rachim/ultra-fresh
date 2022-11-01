@@ -1,4 +1,4 @@
-import {MdCancel, MdOutlinePayments} from "react-icons/md";
+import {MdOutlinePayments} from "react-icons/md";
 import {motion} from "framer-motion";
 import {RouteProps} from "../components/useRoute";
 import {useAppContext} from "../components/useAppContext";
@@ -12,6 +12,7 @@ import {Button} from "../components/page-components/Button";
 import {AddRemoveButton} from "./ProductWithCategory";
 import {useMemo} from "react";
 import {Product} from "../components/AppState";
+import {IoClose} from "react-icons/io5";
 
 export function useSubTotalCart() {
     const cartItems = useItemsInCart();
@@ -41,42 +42,42 @@ export default function Cart(props: RouteProps) {
     const cartItems = useItemsInCart();
     const subTotal = useSubTotalCart();
     const isEmpty = cartItems.length === 0;
-    return <div style={{backgroundColor: 'rgba(0,0,0,0.4)', height: '100%', display: 'flex', flexDirection: 'column'}}>
-        <div style={{display: 'flex', justifyContent: 'center', padding: 10}}>
-            <motion.div whileTap={{scale: 0.95}} onTap={() => window.history.back()}>
-                <MdCancel fontSize={35} style={{color: 'rgba(255,255,255,0.8)'}}/>
+    return <div style={{
+        background: 'radial-gradient(rgba(255,255,255,0.8),rgba(255,255,255,1))',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'auto'
+    }}>
+        <div style={{display: 'flex', flexDirection: 'row-reverse', margin: 10}}>
+            <motion.div style={{fontSize: 36, color: 'rgba(0,0,0,0.6)'}} whileTap={{scale: 0.95}}
+                        onTap={() => window.history.back()}>
+                <IoClose/>
             </motion.div>
         </div>
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            background: 'radial-gradient(rgba(255,255,255,0.8),rgba(255,255,255,1))',
-            flexGrow:1,
-            overflow: 'auto',
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            padding: 20
-        }}>
-
-            {isEmpty &&
-                <div style={{margin:20}}>
-                    <div style={{fontSize:36,color:'rgba(0,0,0,0.6)',marginBottom:10}}>
-                        Its Empty
-                    </div>
-                    <div>
-                        Your shopping cart does not currently contain any items. You are free to begin adding products, and at any time you wish, you can return to this page in order to examine the rundown of the products that you have decided to buy.
-                    </div>
+        {isEmpty &&
+            <div style={{margin: 20, marginBottom: 30}}>
+                <div style={{fontSize: 36, color: 'rgba(0,0,0,0.6)', marginBottom: 10}}>
+                    Its Empty
                 </div>
-            }
-
-            <div style={{
-                fontSize: 16,
-                fontWeight: 'bold',
-                color: 'rgba(0,0,0,0.5)',
-                marginBottom: 10,
-                paddingLeft: 5
-            }}>Your Items ({cartItems.length})
+                <div>
+                    Your shopping cart does not currently contain any items. You are free to begin adding products, and
+                    at any time you wish, you can return to this page in order to examine the rundown of the products
+                    that you have decided to buy.
+                </div>
             </div>
+        }
+        <div style={{
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: 'rgba(0,0,0,0.5)',
+            paddingBottom: 10,
+            borderBottom: '1px solid rgba(0,0,0,0.1)',
+            paddingLeft: 20
+        }}>Your Items ({cartItems.length})
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'auto'}}>
+
             {cartItems.map(ci => {
                 return <div key={ci.barcode} style={{
                     display: 'flex',
@@ -92,12 +93,12 @@ export default function Cart(props: RouteProps) {
                         <div style={{flexGrow: 1, fontSize: 14, fontWeight: 'bold'}}>AED {ci.price}</div>
                         <div style={{fontSize: 12}}>{ci.unit} {ci.unitType} </div>
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', marginRight: 10}}>
                         <AddRemoveButton barcode={ci.barcode} size={'small'} key={`button-${ci.barcode}`}/>
                     </div>
                 </div>
             })}
-            <div style={{display: 'flex', padding: 10, borderBottom: '1px solid rgba(0,0,0,0.1)'}}>
+            <div style={{display: 'flex', padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,0.1)'}}>
                 <div style={{flexGrow: 1}}></div>
                 <div style={{display: 'flex', flexDirection: 'column'}}>
                     <div style={{fontSize: 12}}>Subtotal</div>
@@ -107,10 +108,10 @@ export default function Cart(props: RouteProps) {
         </div>
         <div style={{
             backgroundColor: white,
-            padding: 10,
+            padding: '10px 20px',
             borderTop: '1px solid rgba(0,0,0,0.05)',
             display: "flex",
-            marginBottom:52
+            marginBottom: 52
         }}>
             <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                 <div style={{fontSize: 12}}>Subtotal</div>

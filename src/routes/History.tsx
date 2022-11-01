@@ -14,36 +14,42 @@ export default function History(props: RouteProps) {
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <Header title={'Order Status'}/>
         {isEmpty &&
-            <div style={{margin:20}}>
-                <div style={{fontSize:36,color:'rgba(0,0,0,0.6)',marginBottom:10}}>
+            <div style={{margin: 20}}>
+                <div style={{fontSize: 36, color: 'rgba(0,0,0,0.6)', marginBottom: 10}}>
                     Its Empty
                 </div>
                 <div>
-                The reason why it is empty is because you have not yet placed any orders. After placing an order, you can return to this page at any time to view details regarding that order as well as its history.
+                    The reason why it is empty is because you have not yet placed any orders. After placing an order,
+                    you can return to this page at any time to view details regarding that order as well as its history.
                 </div>
             </div>
         }
 
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{display: 'flex', flexDirection: 'column', paddingTop: 10}}>
             {orders.map((order) => {
                 return <motion.div key={order.id} style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    margin: '5px 10px',
+                    margin: '10px 20px',
                     background: white,
                     border: '1px solid rgba(0,0,0,0.05)',
                     padding: 20
-                }} whileTap={{scale:0.98}} onTap={() => navigate(`order-detail/${order.id}`)}>
-                    <div style={{display: 'flex',alignItems:'flex-end',borderBottom:'1px solid rgba(0,0,0,0.1)',paddingBottom:10}}>
+                }} whileTap={{scale: 0.98}} onTap={() => navigate(`order-detail/${order.id}`)}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'flex-end',
+                        borderBottom: '1px solid rgba(0,0,0,0.1)',
+                        paddingBottom: 10
+                    }}>
                         <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                             <div style={{fontSize: 12}}>Code : {order.id}</div>
                             <div style={{fontSize: 16}}>{formatDateTime(order.date)}</div>
                         </div>
-                        <div style={{fontWeight:'bold'}}>
+                        <div style={{fontWeight: 'bold'}}>
                             AED {order.subTotal}
                         </div>
                     </div>
-                    <div style={{fontWeight:'bold',fontSize:14,marginTop:10}}>
+                    <div style={{fontWeight: 'bold', fontSize: 14, marginTop: 10}}>
                         {order.status}
                     </div>
                 </motion.div>

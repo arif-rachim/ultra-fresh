@@ -9,7 +9,7 @@ export interface ParamsAndComponent {
     path: string,
     animateIn: TargetAndTransition,
     animateOut: TargetAndTransition,
-    initial:Target
+    initial: Target
 }
 
 export function useRoute(): ParamsAndComponent {
@@ -43,7 +43,7 @@ interface FilteredComponents {
     footerComponent?: RouteElement,
     animateIn: TargetAndTransition,
     animateOut: TargetAndTransition,
-    initial : Target
+    initial: Target
 }
 
 let defaultOnVisible: Target = {
@@ -65,7 +65,7 @@ function getParamsAndComponent(route: [string, RouteElement | MotionRouteElement
     let path: string = '';
     let animateIn: TargetAndTransition = defaultOnVisible;
     let animateOut: TargetAndTransition = defaultOnHidden;
-    let initial:Target = defaultOnHidden;
+    let initial: Target = defaultOnHidden;
     if (hashArray.length > 0) {
         let filteredComponents: FilteredComponents[] = route.map(([path, componentOrMotionComponent]) => {
             const params: Map<string, any> = new Map();
@@ -128,7 +128,7 @@ interface MotionRouteElement {
     footerComponent?: RouteElement,
     animateIn: TargetAndTransition,
     animateOut: TargetAndTransition,
-    initial : Target
+    initial: Target
 }
 
 export interface Routes {

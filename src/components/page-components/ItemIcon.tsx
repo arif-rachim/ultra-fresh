@@ -3,8 +3,8 @@ import {blueDarken, white} from "../../routes/Theme";
 import {motion} from "framer-motion";
 
 const itemStyleSheet: CSSProperties = {
-    margin:5,
-    marginTop:0,
+    margin: 5,
+    marginTop: 0,
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
@@ -20,7 +20,7 @@ export function ItemIcon<T extends { barcode: string, name: string }>(props: { i
                        onTap={() => props.onTap(item)}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <div style={{
-                borderRadius:5,
+                borderRadius: 5,
                 padding: 10,
                 boxShadow: '0 0px 5px 0 rgba(0,0,0,0.03)',
                 border: '1px solid rgba(0,0,0,0.05)'
@@ -28,7 +28,7 @@ export function ItemIcon<T extends { barcode: string, name: string }>(props: { i
                 <img src={`/images/${item.barcode}/THUMB/default.png`}
                      width={imageDimension - 20} alt={'Barcode ' + item.barcode}/>
             </div>
-            <div style={{fontSize: 12, textAlign: 'center',marginTop:5}}>
+            <div style={{fontSize: 12, textAlign: 'center', marginTop: 5}}>
                 {item.name}
             </div>
         </div>

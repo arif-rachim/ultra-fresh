@@ -11,7 +11,6 @@ import {
     useRef,
     useState
 } from "react";
-import {useWhichChange} from "../page-components/useWhichChange";
 
 type Listener = (param: any) => void
 
@@ -26,10 +25,10 @@ export interface Store<S> {
     stateRef: MutableRefObject<S>,
     addListener: (state: any) => () => void,
     dispatch: (action: Action) => void,
-    setState:(newStateOrCallback:S | ((currentState:S) => S)) => void
+    setState: (newStateOrCallback: S | ((currentState: S) => S)) => void
 }
 
-export function useCreateStore<S>(initializer: S | (() => S),reducer?: (action: Action) => (oldState: S) => S): Store<S> {
+export function useCreateStore<S>(initializer: S | (() => S), reducer?: (action: Action) => (oldState: S) => S): Store<S> {
 
     const listenerRef = useRef<Listener[]>([]);
     const reducerRef = useRef(reducer)
@@ -45,7 +44,7 @@ export function useCreateStore<S>(initializer: S | (() => S),reducer?: (action: 
     const stateRef = useRef<S>(initialState);
 
     const dispatch = useCallback(function dispatch(action: Action) {
-        if(reducerRef.current === undefined){
+        if (reducerRef.current === undefined) {
             throw new Error('You cannot use dispatch when there is no reducer defined in store')
         }
         const newState = reducerRef.current(action)(stateRef.current);
@@ -71,7 +70,7 @@ export function useCreateStore<S>(initializer: S | (() => S),reducer?: (action: 
 
     const addListener = useCallback(function addListener(selector: (param: S) => any) {
         listenerRef.current.push(selector);
-        return () => listenerRef.current = listenerRef.current.filter(l => l!== selector)
+        return () => listenerRef.current = listenerRef.current.filter(l => l !== selector)
     }, []);
 
     return useMemo(() => ({dispatch, stateRef, addListener, setState}), [addListener, dispatch, setState])
@@ -114,7 +113,6 @@ interface StoreValueInjectorProps<T, S> {
 }
 
 
-
 export function StoreValueHOC<T, S, PT, Z extends PT>(props: PropsWithChildren<StoreValueProps<T, S, PT> & Z>) {
     const {store, property, selector, component, ...cp} = props;
     validateSelectorAndProperty(selector, property);
@@ -137,7 +135,7 @@ export function StoreValueHOC<T, S, PT, Z extends PT>(props: PropsWithChildren<S
 
 }
 
-function validateSelectorAndProperty<S, T>(selector: Selector<T,S> | (Selector<T, S>[]), property: string | string[]) {
+function validateSelectorAndProperty<S, T>(selector: Selector<T, S> | (Selector<T, S>[]), property: string | string[]) {
     if (Array.isArray(selector) || Array.isArray(property)) {
         if (!(Array.isArray(selector) && Array.isArray(property))) {
             throw new Error('Expecting both selector and property are either both array or single');
@@ -149,7 +147,7 @@ function validateSelectorAndProperty<S, T>(selector: Selector<T,S> | (Selector<T
 }
 
 export function StoreValue<T, S>(props: PropsWithChildren<StoreValueInjectorProps<T, S>>) {
-    const {store, property, selector,children} = props;
+    const {store, property, selector, children} = props;
     validateSelectorAndProperty(selector, property);
     const value: any = useStoreValue(store, (param) => {
         if (Array.isArray(selector)) {

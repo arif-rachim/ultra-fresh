@@ -211,7 +211,7 @@ export default function ProductWithCategory(props: RouteProps) {
             const selectedGroup = groups.find(g => g.name === group) ?? groups[0];
             selectedStore.dispatch({type: 'GROUP_SELECTED', payload: selectedGroup})
         }
-    }, [groups,group])
+    }, [groups, group])
 
     const units = useMemo(() => {
         return data.filter(d => d.category === selectedGroup.category && d.name === selectedGroup.name).map(p => ({

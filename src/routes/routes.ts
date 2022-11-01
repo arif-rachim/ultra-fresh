@@ -10,13 +10,13 @@ import OrderDetail from "./OrderDetail";
 import {ProductListGroupedByCategory} from "./ProductListGroupedByCategory";
 import {FooterNavigation} from "../components/page-components/FooterNavigation";
 import {UserAccount} from "./UserAccount";
-import {Reward} from "./Reward";
 import {SignIn} from "./SignIn";
+import {Register} from "./Register";
 
 export const routes: Routes = {
     'categories': {
         component: CategoryList,
-        footerComponent:FooterNavigation,
+        footerComponent: FooterNavigation,
         animateIn: {
             left: 0,
             transition: {
@@ -30,12 +30,12 @@ export const routes: Routes = {
             }
         },
         initial: {
-            left:'-100%'
+            left: '-100%'
         }
     },
-    'home' : {
+    'home': {
         component: ProductListGroupedByCategory,
-        footerComponent:FooterNavigation,
+        footerComponent: FooterNavigation,
         animateIn: {
             left: 0,
             transition: {
@@ -49,7 +49,7 @@ export const routes: Routes = {
             }
         },
         initial: {
-            left:'-100%'
+            left: '-100%'
         }
     },
     'product-detail/$productId': {
@@ -67,12 +67,12 @@ export const routes: Routes = {
             }
         },
         initial: {
-            right:'-100%'
+            right: '-100%'
         }
     },
     'cart': {
         component: Cart,
-        footerComponent:FooterNavigation,
+        footerComponent: FooterNavigation,
         animateOut: {
             bottom: '-100%',
             transition: {
@@ -86,7 +86,7 @@ export const routes: Routes = {
             }
         },
         initial: {
-            bottom:'-100%'
+            bottom: '-100%'
         }
     },
     'shipping': {
@@ -104,7 +104,7 @@ export const routes: Routes = {
             }
         },
         initial: {
-            right:'-100%'
+            right: '-100%'
         }
     },
     'product-with-category/$category/$group': {
@@ -122,11 +122,11 @@ export const routes: Routes = {
             }
         },
         initial: {
-            right:'-100%'
+            right: '-100%'
         }
     },
-    'payment':{
-        component : Payment,
+    'payment': {
+        component: Payment,
         animateIn: {
             right: 0,
             transition: {
@@ -140,12 +140,12 @@ export const routes: Routes = {
             }
         },
         initial: {
-            right:'-100%'
+            right: '-100%'
         }
     },
-    'history':{
-        component : History,
-        footerComponent:FooterNavigation,
+    'history': {
+        component: History,
+        footerComponent: FooterNavigation,
         animateIn: {
             right: 0,
             transition: {
@@ -159,11 +159,11 @@ export const routes: Routes = {
             }
         },
         initial: {
-            right:'-100%'
+            right: '-100%'
         }
     },
-    'order-detail/$id':{
-        component : OrderDetail,
+    'order-detail/$id': {
+        component: OrderDetail,
         animateIn: {
             right: 0,
             transition: {
@@ -177,12 +177,12 @@ export const routes: Routes = {
             }
         },
         initial: {
-            right:'-100%'
+            right: '-100%'
         }
     },
-    'user-account' : {
-        component : UserAccount,
-        footerComponent:FooterNavigation,
+    'user-account': {
+        component: UserAccount,
+        footerComponent: FooterNavigation,
         animateIn: {
             right: 0,
             transition: {
@@ -196,43 +196,42 @@ export const routes: Routes = {
             }
         },
         initial: {
-            right:'-100%'
+            right: '-100%'
         }
     },
-    'reward' : {
-        component : Reward,
-        footerComponent:FooterNavigation,
+    'sign-in': {
+        component: SignIn,
+        initial: {
+            top: '-100%'
+        },
         animateIn: {
-            right: 0,
+            top: 0,
             transition: {
                 bounce: 0
             }
         },
         animateOut: {
-            right: '-100%',
+            top: '-100%',
+            transition: {
+                bounce: 0
+            }
+        }
+    },
+    'register': {
+        component: Register,
+        initial: {
+            top: '-100%'
+        },
+        animateIn: {
+            top: 0,
             transition: {
                 bounce: 0
             }
         },
-        initial: {
-            right:'-100%'
-        }
-    },
-    'sign-in' : {
-        component : SignIn,
-        initial : {
-            top : '-100%'
-        },
-        animateIn : {
-            top : 0,
-            transition : {
-                bounce : 0
-            }
-        },
-        animateOut : {
-            top : '-100%',
-            transition : {
-                bounce : 0
+        animateOut: {
+            top: '-100%',
+            transition: {
+                bounce: 0
             }
         }
     }

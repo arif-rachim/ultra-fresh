@@ -12,18 +12,27 @@ export default function OrderDetail(props: RouteProps) {
     invariant(order);
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <Header title={`Order Detail ${order.id}`}/>
-        <div style={{padding:10,borderBottom:'1px solid rgba(0,0,0,0.1)'}}>
-            <div style={{display:'flex',alignItems:'flex-end'}}>
-                <div style={{fontSize:14,marginRight:10}}>Transaction Date :</div> {formatDateTime(order.date)}
+        <div style={{padding: 20, borderBottom: '1px solid rgba(0,0,0,0.1)'}}>
+            <div style={{display: 'flex', alignItems: 'flex-end', marginBottom: 5}}>
+                <div style={{fontSize: 14, marginRight: 10}}>Transaction Date :</div>
+                {formatDateTime(order.date)}
             </div>
-            <div  style={{display:'flex',alignItems:'flex-end'}}>
-                <div style={{fontSize:14,marginRight:10}}>Order Status :</div> {order.status}
+            <div style={{display: 'flex', alignItems: 'flex-end', marginBottom: 5}}>
+                <div style={{fontSize: 14, marginRight: 10}}>Order Status :</div>
+                {order.status}
             </div>
-            <div  style={{display:'flex',alignItems:'flex-end'}}>
-                <div style={{fontSize:14,marginRight:10}}>Sub total :</div> AED {order.subTotal}
+            <div style={{display: 'flex', alignItems: 'flex-end', marginBottom: 5}}>
+                <div style={{fontSize: 14, marginRight: 10}}>Sub total :</div>
+                AED {order.subTotal}
             </div>
         </div>
-        <div style={{padding: '0 20px 20px 20px', height: '100%', overflow: 'auto', display: 'flex', flexDirection: 'column'}}>
+        <div style={{
+            padding: '0 20px 20px 20px',
+            height: '100%',
+            overflow: 'auto',
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
 
             <div style={{marginTop: 10}}>
                 {order.lineItem.map((item, index) => {

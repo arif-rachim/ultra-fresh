@@ -1,23 +1,30 @@
 import {ChangeEventHandler, CSSProperties} from "react";
-import {ButtonTheme, theme, white} from "../../routes/Theme";
-interface InputStyle{
-    containerStyle?:CSSProperties,
-    titleStyle? : CSSProperties,
-    inputStyle? : CSSProperties,
-    errorStyle? : CSSProperties
-}
-export function Input(props: { title: string, placeholder: string, value?: string, onChange?: ChangeEventHandler<HTMLInputElement> | undefined, error?: string,style?:InputStyle }) {
+import {ButtonTheme, theme} from "../../routes/Theme";
 
-    const {error, value,style} = props;
+interface InputStyle {
+    containerStyle?: CSSProperties,
+    titleStyle?: CSSProperties,
+    inputStyle?: CSSProperties,
+    errorStyle?: CSSProperties
+}
+
+export function Input(props: { title: string, placeholder: string, value?: string, onChange?: ChangeEventHandler<HTMLInputElement> | undefined, error?: string, style?: InputStyle }) {
+
+    const {error, value, style} = props;
     return <div style={{
         display: 'flex',
         flexDirection: 'column',
         padding: '5px 10px',
         borderBottom: '1px solid rgba(0,0,0,0.05)',
-        position:'relative',
+        position: 'relative',
         ...style?.containerStyle
     }}>
-        <div style={{paddingLeft: 5, fontWeight: 'bold', fontSize: 13,color:'rgba(0,0,0,0.6)',...style?.titleStyle}}>{props.title}</div>
+        <div style={{
+            paddingLeft: 5,
+            fontWeight: 'bold',
+            fontSize: 13,
+            color: 'rgba(0,0,0,0.6)', ...style?.titleStyle
+        }}>{props.title}</div>
         <input style={{
             backgroundColor: 'rgba(0,0,0,0.03)',
             border: `1px solid ${error ? theme[ButtonTheme.danger] : 'rgba(0,0,0,0.01)'}`,
@@ -32,7 +39,7 @@ export function Input(props: { title: string, placeholder: string, value?: strin
             fontSize: 12,
             textAlign: 'right',
             color: theme[ButtonTheme.danger],
-            height : 10,
+            height: 10,
             ...style?.errorStyle
         }}>{props.error}</div>
     </div>;
