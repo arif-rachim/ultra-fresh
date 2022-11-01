@@ -7,14 +7,9 @@ import {RouteProps} from "../components/useRoute";
 import {ItemIcon} from "../components/page-components/ItemIcon";
 import {IoSearchCircleOutline} from "react-icons/io5";
 import {Product} from "../components/AppState";
-import {FooterNavigation} from "../components/page-components/FooterNavigation";
 
 
-export function CategoryList(props: RouteProps) {
-    const {store, appDimension} = useAppContext();
-    const navigate = useNavigate();
-    const imageDimension = Math.floor(appDimension.width / 3) - 10;
-
+export function useCategoriesList() {
     const categories = useMemo(() => {
         const categories = data.reduce((categories: { id: string, label: string, barcode: string }[], product: Product, index: number, source: Product[]) => {
             if (categories.findIndex(c => c.id === product.category) < 0) {
@@ -24,6 +19,14 @@ export function CategoryList(props: RouteProps) {
         }, []);
         return Array.from(categories);
     }, []);
+    return categories;
+}
+
+export function CategoryList(props: RouteProps) {
+    const {appDimension} = useAppContext();
+    const navigate = useNavigate();
+    const imageDimension = Math.floor(appDimension.width / 3) - 10;
+    const categories = useCategoriesList();
     return <div
         style={{display: 'flex', position: 'relative', flexDirection: 'column', height: '100%', overflow: 'auto'}}>
         <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto'}}>

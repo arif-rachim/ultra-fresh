@@ -55,8 +55,6 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
                 <IoCheckmarkCircle/>
             </div>
         }
-
-
     </motion.div>;
 }
 
@@ -165,8 +163,7 @@ function ImageSlider(props: { selectedProduct?: Product }) {
     </div>;
 }
 
-export default function ProductWithCategory(props: RouteProps) {
-    const category = props.params.get('category');
+export function useGroupFromCategory(category: string) {
     const groups = useMemo(() => {
         return data.filter(p => p.category === category).reduce((result: { name: string, category: string, barcode: string }[], product: Product, index: number) => {
             if (result.findIndex(r => r.name === product.name && r.category === product.category) < 0) {
@@ -179,6 +176,12 @@ export default function ProductWithCategory(props: RouteProps) {
             return result;
         }, [])
     }, [category]);
+    return groups;
+}
+
+export default function ProductWithCategory(props: RouteProps) {
+    const category = props.params.get('category');
+    const groups = useGroupFromCategory(category ?? '');
 
     const {appDimension} = useAppContext();
     let totalBox = groups.length < 6 ? 6 : groups.length;
@@ -224,14 +227,11 @@ export default function ProductWithCategory(props: RouteProps) {
     const selectedProduct = data.find(d => d.barcode === selectedUnit.barcode);
 
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-
         <Header title={category ?? ''}/>
-
         <div style={{
             height: '100%',
             padding: '30px 0px 10px 0px',
             boxShadow: '0 7px 10px -10px rgba(0,0,0,0.2) inset',
-
         }}>
             <ImageSlider selectedProduct={selectedProduct}/>
         </div>
@@ -266,9 +266,7 @@ export default function ProductWithCategory(props: RouteProps) {
                     }}>{selectedProduct?.shelfLife} {selectedProduct?.shelfLifeType} Shelf Life
                     </div>
                     <div style={{display: 'flex'}}>
-
                         <AddRemoveButton barcode={selectedProduct?.barcode}/>
-
                     </div>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', flexShrink: 0, marginLeft: 10}}>
