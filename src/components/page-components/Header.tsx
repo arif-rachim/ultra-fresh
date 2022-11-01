@@ -7,7 +7,7 @@ export function Header(props: { title: string }) {
     return <div style={{
         display: 'flex',
         alignItems: 'center',
-        borderBottom: '1px solid rgba(0,0,0,0.1)',
+        borderBottom: '1px solid rgba(0,0,0,0.05)',
         background: white,
         paddingLeft: 10,
         padding:5,

@@ -102,7 +102,9 @@ function Home(props: RouteProps) {
 
             <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
                         animate={{color: itemsInCart > 0 ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                        style={{position: 'relative',alignItems:'center',display:'flex',flexDirection:'column'}}>
+                        style={{position: 'relative',alignItems:'center',display:'flex',flexDirection:'column'}} onTap={() => {
+                            navigate('history');
+            }}>
                 <AiOutlineOrderedList style={{fontSize: 28}} />
                 <div style={{fontSize:12}}>Order Status</div>
             </motion.div>

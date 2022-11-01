@@ -1,4 +1,4 @@
-import {MdOutlinePayments, MdCancel} from "react-icons/md";
+import {MdCancel, MdOutlinePayments} from "react-icons/md";
 import {motion} from "framer-motion";
 import {RouteProps} from "../components/useRoute";
 import {useAppContext} from "../components/useAppContext";
@@ -17,7 +17,7 @@ export function useSubTotalCart() {
     const cartItems = useItemsInCart();
     const subTotal = useMemo(() => cartItems.reduce((total, ci) => {
         return total + (ci.total * parseFloat(ci.price));
-    }, 0).toFixed(2),[cartItems]);
+    }, 0).toFixed(2), [cartItems]);
     return subTotal;
 }
 
@@ -56,7 +56,14 @@ export default function Cart(props: RouteProps) {
             borderTopRightRadius: 20,
             padding: 20
         }}>
-            <div style={{fontSize:16,fontWeight:'bold',color:'rgba(0,0,0,0.5)',marginBottom:10,paddingLeft:5}}>Your Items ({cartItems.length})</div>
+            <div style={{
+                fontSize: 16,
+                fontWeight: 'bold',
+                color: 'rgba(0,0,0,0.5)',
+                marginBottom: 10,
+                paddingLeft: 5
+            }}>Your Items ({cartItems.length})
+            </div>
             {cartItems.map(ci => {
                 return <div key={ci.barcode} style={{
                     display: 'flex',
@@ -65,32 +72,39 @@ export default function Cart(props: RouteProps) {
                 }}>
                     <div>
                         <img src={`/images/${ci.barcode}/THUMB/default.png`}
-                              alt={'Barcode ' + ci.barcode} height={50}/>
+                             alt={'Barcode ' + ci.barcode} height={50}/>
                     </div>
-                    <div style={{flexGrow:1}}>
+                    <div style={{flexGrow: 1}}>
                         <div style={{flexGrow: 1, fontSize: 14}}>{ci.category} {ci.name} </div>
-                        <div style={{flexGrow: 1, fontSize: 14,fontWeight:'bold'}}>AED {ci.price}</div>
+                        <div style={{flexGrow: 1, fontSize: 14, fontWeight: 'bold'}}>AED {ci.price}</div>
                         <div style={{fontSize: 12}}>{ci.unit} {ci.unitType} </div>
                     </div>
-                    <div style={{display:'flex',flexDirection:'column'}}>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
                         <AddRemoveButton barcode={ci.barcode} size={'small'} key={`button-${ci.barcode}`}/>
                     </div>
                 </div>
             })}
+            <div style={{display: 'flex', padding: 10, borderBottom: '1px solid rgba(0,0,0,0.1)'}}>
+                <div style={{flexGrow: 1}}></div>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div style={{fontSize: 12}}>Subtotal</div>
+                    <div style={{fontWeight: 'bold', fontSize: 18}}>AED {subTotal}</div>
+                </div>
+            </div>
         </div>
         <div style={{
             backgroundColor: white,
             padding: 10,
-            boxShadow: '0 5px 7px -5px rgba(0,0,0,0.5) inset',
+            borderTop: '1px solid rgba(0,0,0,0.05)',
             display: "flex",
         }}>
-            <div style={{display:'flex',flexDirection:'column',flexGrow:1}}>
-                <div style={{fontSize:12}}>Subtotal</div>
-                <div style={{fontWeight:'bold',fontSize:18}}>AED {subTotal}</div>
+            <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+                <div style={{fontSize: 12}}>Subtotal</div>
+                <div style={{fontWeight: 'bold', fontSize: 18}}>AED {subTotal}</div>
             </div>
             <div>
-            <Button title={'Proceed'} icon={MdOutlinePayments} theme={ButtonTheme.promoted}
-                    onTap={() => navigate('shipping')}/>
+                <Button title={'Proceed'} icon={MdOutlinePayments} theme={ButtonTheme.promoted}
+                        onTap={() => navigate('shipping')}/>
             </div>
         </div>
     </div>

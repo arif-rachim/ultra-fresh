@@ -52,7 +52,7 @@ export interface Shipping{
     orderId : string,
     lineItem:CartItem[],
     shippingDate : string,
-    status : 'dispatched' | 'delivered' | 'returned',
+    status : 'Dispatched' | 'Delivered' | 'Returned',
     remarks : string[],
     captain : string,
     captainMobileNo : string
@@ -66,7 +66,7 @@ export interface Order{
     shippingAddress:Address,
     payment : Payment,
     shippingStatus : Shipping[]
-    status : 'placed' | 'accepted' | 'dispatched' | 'all-delivered'| 'partial-delivered' | 'canceled'
+    status : 'Placed' | 'Accepted' | 'Dispatched' | 'Delivered'| 'Partial Delivered' | 'Canceled'
 }
 
 export interface AppState {

@@ -69,7 +69,7 @@ export default function Payment(props: RouteProps) {
                     status: 'received',
                     time: new Date().toISOString()
                 },
-                status: 'placed',
+                status: 'Placed',
                 id: nanoid(),
                 date: new Date().toISOString(),
                 subTotal,
@@ -77,6 +77,7 @@ export default function Payment(props: RouteProps) {
                 shippingStatus: [],
                 lineItem: original(state.shoppingCart) as CartItem[],
             }
+
             state.orders.push(order);
             state.shoppingCart = [];
 

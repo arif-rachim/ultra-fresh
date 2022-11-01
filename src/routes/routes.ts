@@ -5,6 +5,8 @@ import Cart from "./Cart";
 import {ShippingAddress} from "./ShippingAddress";
 import Category from "./Category";
 import Payment from "./Payment";
+import History from "./History";
+import OrderDetail from "./OrderDetail";
 
 export const routes: Routes = {
     'home': {
@@ -85,6 +87,36 @@ export const routes: Routes = {
     },
     'payment':{
         component : Payment,
+        onVisible: {
+            right: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidden: {
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        }
+    },
+    'history':{
+        component : History,
+        onVisible: {
+            right: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidden: {
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        }
+    },
+    'order-detail/$id':{
+        component : OrderDetail,
         onVisible: {
             right: 0,
             transition: {
