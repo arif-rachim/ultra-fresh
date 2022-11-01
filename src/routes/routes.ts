@@ -16,238 +16,205 @@ export const routes: Routes = {
     'home': {
         component: CategoryList,
         footerComponent:FooterNavigation,
-        onVisible: {
+        animateIn: {
             left: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             left: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            left:'-100%'
         }
     },
     categories : {
         component: ProductListGroupedByCategory,
         footerComponent:FooterNavigation,
-        onVisible: {
+        animateIn: {
             left: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             left: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            left:'-100%'
         }
     },
     'product-detail/$productId': {
         component: ProductDetail,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     },
     'cart': {
         component: Cart,
         footerComponent:FooterNavigation,
-        onHidden: {
+        animateOut: {
             bottom: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onVisible: {
+        animateIn: {
             bottom: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            bottom:'-100%'
         }
     },
     'shipping': {
         component: ShippingAddress,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     },
     'product-with-category/$category': {
         component: ProductWithCategory,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     },
     'payment':{
         component : Payment,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     },
     'history':{
         component : History,
         footerComponent:FooterNavigation,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     },
     'order-detail/$id':{
         component : OrderDetail,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     },
     'user-account' : {
         component : UserAccount,
         footerComponent:FooterNavigation,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     },
     'reward' : {
         component : Reward,
         footerComponent:FooterNavigation,
-        onVisible: {
+        animateIn: {
             right: 0,
             transition: {
                 bounce: 0
             }
         },
-        onHidden: {
+        animateOut: {
             right: '-100%',
             transition: {
                 bounce: 0
             }
         },
-        onHidingPrevElement: {
-            left:'100%',
-            transition: {
-                bounce: 0
-            }
+        initial: {
+            right:'-100%'
         }
     }
 

@@ -1,14 +1,15 @@
 import {routes} from "../routes/routes";
 import {ComponentType, memo, MemoExoticComponent, useEffect, useState} from "react";
-import {TargetAndTransition} from "framer-motion";
+import {Target, TargetAndTransition} from "framer-motion";
 
 export interface ParamsAndComponent {
     params: Map<string, string>,
     routeComponent: ComponentType<RouteProps>,
     routeFooterComponent: ComponentType<RouteProps>
     path: string,
-    onVisible: TargetAndTransition,
-    onHidden: TargetAndTransition
+    animateIn: TargetAndTransition,
+    animateOut: TargetAndTransition,
+    initial:Target
 }
 
 export function useRoute(): ParamsAndComponent {
@@ -40,16 +41,17 @@ interface FilteredComponents {
     path: string,
     component: RouteElement,
     footerComponent?: RouteElement,
-    onVisible: TargetAndTransition,
-    onHidden: TargetAndTransition
+    animateIn: TargetAndTransition,
+    animateOut: TargetAndTransition,
+    initial : Target
 }
 
-let defaultOnVisible: TargetAndTransition = {
+let defaultOnVisible: Target = {
     opacity: 1,
     zIndex: 0
 };
 
-let defaultOnHidden: TargetAndTransition = {
+let defaultOnHidden: Target = {
     opacity: 0,
     zIndex: -1
 };
@@ -61,24 +63,27 @@ function getParamsAndComponent(route: [string, RouteElement | MotionRouteElement
     let routeComponent: MemoExoticComponent<RouteElement> = memo(EmptyComponent);
     let routeFooterComponent: MemoExoticComponent<RouteElement> = memo(EmptyComponent);
     let path: string = '';
-    let onVisible: TargetAndTransition = defaultOnVisible;
-    let onHidden: TargetAndTransition = defaultOnHidden;
+    let animateIn: TargetAndTransition = defaultOnVisible;
+    let animateOut: TargetAndTransition = defaultOnHidden;
+    let initial:Target = defaultOnHidden;
     if (hashArray.length > 0) {
         let filteredComponents: FilteredComponents[] = route.map(([path, componentOrMotionComponent]) => {
             const params: Map<string, any> = new Map();
             let component: RouteElement | undefined;
             let footerComponent: RouteElement | undefined;
-            let onVisible: TargetAndTransition = defaultOnVisible;
-            let onHidden: TargetAndTransition = defaultOnHidden;
+            let animateIn: TargetAndTransition = defaultOnVisible;
+            let animateOut: TargetAndTransition = defaultOnHidden;
+            let initial: Target = defaultOnHidden;
             if ('component' in componentOrMotionComponent) {
                 component = (componentOrMotionComponent as MotionRouteElement).component;
                 footerComponent = (componentOrMotionComponent as MotionRouteElement).footerComponent;
-                onVisible = (componentOrMotionComponent as MotionRouteElement).onVisible;
-                onHidden = (componentOrMotionComponent as MotionRouteElement).onHidden;
+                animateIn = (componentOrMotionComponent as MotionRouteElement).animateIn;
+                animateOut = (componentOrMotionComponent as MotionRouteElement).animateOut;
+                initial = (componentOrMotionComponent as MotionRouteElement).initial;
             } else {
                 component = componentOrMotionComponent as RouteElement;
             }
-            return {paths: path.split('/'), component, params, path, onVisible, onHidden, footerComponent}
+            return {paths: path.split('/'), component, params, path, animateIn, initial, animateOut, footerComponent}
         });
         for (let i = 0; i < hashArray.length; i++) {
             const value = hashArray[i];
@@ -101,11 +106,12 @@ function getParamsAndComponent(route: [string, RouteElement | MotionRouteElement
             routeComponent = memo(fc.component, (prevProps: any, nextProps: any) => mapsAreEqual(prevProps.params, nextProps.params));
             routeFooterComponent = memo(fc.footerComponent ?? EmptyComponent, (prevProps: any, nextProps: any) => mapsAreEqual(prevProps.params, nextProps.params));
             path = fc.path;
-            onVisible = fc.onVisible;
-            onHidden = fc.onHidden;
+            animateIn = fc.animateIn;
+            animateOut = fc.animateOut;
+            initial = fc.initial;
         }
     }
-    return {routeComponent, params, path, onVisible, onHidden, routeFooterComponent};
+    return {routeComponent, params, path, animateIn, animateOut, initial, routeFooterComponent};
 }
 
 export interface RouteProps {
@@ -120,9 +126,9 @@ export type RouteElement = ComponentType<RouteProps>;
 interface MotionRouteElement {
     component: RouteElement,
     footerComponent?: RouteElement,
-    onVisible: TargetAndTransition,
-    onHidden: TargetAndTransition,
-    onHidingPrevElement : TargetAndTransition
+    animateIn: TargetAndTransition,
+    animateOut: TargetAndTransition,
+    initial : Target
 }
 
 export interface Routes {

@@ -1,7 +1,6 @@
 import {RouteProps, useRoute} from "./useRoute";
 import {createContext, FunctionComponent, useContext, useEffect, useMemo, useRef, useState} from "react";
-import {motion, Target} from "framer-motion";
-import {produce} from "immer";
+import {motion} from "framer-motion";
 import {usePreviousValue} from "./page-components/usePreviousValue";
 
 export const maxWidth = 480;
@@ -11,18 +10,17 @@ export const maxWidth = 480;
  * @constructor
  */
 export function RouterPageContainer() {
-    //const [components, setComponents] = useState<PathAbleComponent[]>([]);
     const componentsRef = useRef<PathAbleComponent[]>([]);
-    const {params, routeComponent: RouteComponent, path, onVisible, onHidden,routeFooterComponent:RouteFooterComponent} = useRoute();
+    const {params, routeComponent: RouteComponent, path, animateIn, animateOut,initial,routeFooterComponent:RouteFooterComponent} = useRoute();
     const Component = useMemo(() => function RouteComponentContainer(props: { isFocused: boolean } & RouteProps) {
         const {isFocused} = props;
         const beforeIsFocused = usePreviousValue(isFocused);
         const changeToFocused = (beforeIsFocused !== isFocused) && isFocused;
         const changeToBlurred = (beforeIsFocused !== isFocused) && !isFocused;
         return <motion.div
-            initial={onHidden as Target}
+            initial={initial}
             style={{position: 'absolute', height: '100%', width: '100%', overflow: 'auto'}}
-            animate={changeToFocused ? onVisible : changeToBlurred ? onHidden : {}}
+            animate={changeToFocused ? animateIn : changeToBlurred ? animateOut : {}}
         >
             <RouteComponent params={props.params} path={props.path}/>
         </motion.div>
