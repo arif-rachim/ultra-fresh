@@ -10,8 +10,20 @@ export default function History(props: RouteProps) {
     const {store} = useAppContext();
     const orders = useStoreValue(store, s => s.orders);
     const navigate = useNavigate();
+    const isEmpty = orders.length === 0
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-        <Header title={'History'}/>
+        <Header title={'Order Status'}/>
+        {isEmpty &&
+            <div style={{margin:20}}>
+                <div style={{fontSize:36,color:'rgba(0,0,0,0.6)',marginBottom:10}}>
+                    Its Empty
+                </div>
+                <div>
+                The reason why it is empty is because you have not yet placed any orders. After placing an order, you can return to this page at any time to view details regarding that order as well as its history.
+                </div>
+            </div>
+        }
+
         <div style={{display: 'flex', flexDirection: 'column'}}>
             {orders.map((order) => {
                 return <motion.div key={order.id} style={{

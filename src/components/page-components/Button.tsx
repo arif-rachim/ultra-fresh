@@ -5,7 +5,7 @@ import {motion, MotionStyle} from "framer-motion";
 export function Button(props: { onTap: () => void, title: string, icon: IconType, theme?: ButtonTheme, style?: MotionStyle }) {
     const Icon: IconType = props.icon;
     const buttonTheme = props.theme ?? ButtonTheme.default;
-    return <motion.button style={{
+    return <motion.button layout style={{
         minWidth: 0,
         fontSize: 18,
         border: '1px solid rgba(0,0,0,0.03)',

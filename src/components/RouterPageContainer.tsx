@@ -20,10 +20,10 @@ export function RouterPageContainer() {
         const changeToFocused = (beforeIsFocused !== isFocused) && isFocused;
         const changeToBlurred = (beforeIsFocused !== isFocused) && !isFocused;
         if(changeToBlurred){
-            console.log('A panel is blurred');
+            //console.log('A panel is blurred');
         }
         if(changeToFocused){
-            console.log('A panel is focused');
+            //console.log('A panel is focused');
         }
 
         return <motion.div

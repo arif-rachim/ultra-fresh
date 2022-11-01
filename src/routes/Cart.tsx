@@ -40,6 +40,7 @@ export default function Cart(props: RouteProps) {
     const navigate = useNavigate();
     const cartItems = useItemsInCart();
     const subTotal = useSubTotalCart();
+    const isEmpty = cartItems.length === 0;
     return <div style={{backgroundColor: 'rgba(0,0,0,0.4)', height: '100%', display: 'flex', flexDirection: 'column'}}>
         <div style={{display: 'flex', justifyContent: 'center', padding: 10}}>
             <motion.div whileTap={{scale: 0.95}} onTap={() => window.history.back()}>
@@ -56,6 +57,18 @@ export default function Cart(props: RouteProps) {
             borderTopRightRadius: 20,
             padding: 20
         }}>
+
+            {isEmpty &&
+                <div style={{margin:20}}>
+                    <div style={{fontSize:36,color:'rgba(0,0,0,0.6)',marginBottom:10}}>
+                        Its Empty
+                    </div>
+                    <div>
+                        Your shopping cart does not currently contain any items. You are free to begin adding products, and at any time you wish, you can return to this page in order to examine the rundown of the products that you have decided to buy.
+                    </div>
+                </div>
+            }
+
             <div style={{
                 fontSize: 16,
                 fontWeight: 'bold',

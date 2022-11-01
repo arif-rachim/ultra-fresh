@@ -11,6 +11,7 @@ import {
     useRef,
     useState
 } from "react";
+import {useWhichChange} from "../page-components/useWhichChange";
 
 type Listener = (param: any) => void
 
@@ -81,14 +82,14 @@ export function useStoreValue<T, S>(store: Store<T>, selector: (param: T) => S, 
     const {addListener, stateRef} = store;
     const propsRef = useRef({selector});
     propsRef.current = {selector};
-
     useEffect(() => {
         return addListener((nextState: any) => {
             const {selector} = propsRef.current;
             setValue(selector(nextState));
         });
-    }, deps)
-    useEffect(() => setValue(propsRef.current.selector(stateRef.current)), deps)
+    }, deps);
+
+    useEffect(() => setValue(propsRef.current.selector(stateRef.current)), deps);
     return value;
 }
 
