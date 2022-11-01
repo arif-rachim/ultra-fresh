@@ -13,7 +13,7 @@ import {UserAccount} from "./UserAccount";
 import {Reward} from "./Reward";
 
 export const routes: Routes = {
-    'home': {
+    'categories': {
         component: CategoryList,
         footerComponent:FooterNavigation,
         animateIn: {
@@ -32,7 +32,7 @@ export const routes: Routes = {
             left:'-100%'
         }
     },
-    categories : {
+    'home' : {
         component: ProductListGroupedByCategory,
         footerComponent:FooterNavigation,
         animateIn: {
@@ -106,7 +106,7 @@ export const routes: Routes = {
             right:'-100%'
         }
     },
-    'product-with-category/$category': {
+    'product-with-category/$category/$group': {
         component: ProductWithCategory,
         animateIn: {
             right: 0,

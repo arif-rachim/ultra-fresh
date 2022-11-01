@@ -181,13 +181,16 @@ export function useGroupFromCategory(category: string) {
 
 export default function ProductWithCategory(props: RouteProps) {
     const category = props.params.get('category');
+    const group = props.params.get('group');
+
     const groups = useGroupFromCategory(category ?? '');
 
     const {appDimension} = useAppContext();
     let totalBox = groups.length < 6 ? 6 : groups.length;
     const imageDimension = Math.floor(appDimension.width / totalBox) - 10;
+    const initialSelectedGroup = groups.find(g => g.name === group) ?? groups[0];
     const selectedStore = useCreateStore({
-        selectedGroup: groups[0],
+        selectedGroup: initialSelectedGroup,
         selectedUnit: {unit: '', unitType: '', barcode: '', image: 1}
     }, (action) => state => {
         if (action.type === 'GROUP_SELECTED') {
@@ -205,10 +208,10 @@ export default function ProductWithCategory(props: RouteProps) {
     const {selectedGroup, selectedUnit} = useStoreValue(selectedStore, p => p);
     useEffect(() => {
         if (groups.length > 0) {
-            const group = groups[0];
-            selectedStore.dispatch({type: 'GROUP_SELECTED', payload: group})
+            const selectedGroup = groups.find(g => g.name === group) ?? groups[0];
+            selectedStore.dispatch({type: 'GROUP_SELECTED', payload: selectedGroup})
         }
-    }, [groups])
+    }, [groups,group])
 
     const units = useMemo(() => {
         return data.filter(d => d.category === selectedGroup.category && d.name === selectedGroup.name).map(p => ({
