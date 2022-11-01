@@ -6,8 +6,9 @@ import {ButtonTheme, theme, white} from "../../routes/Theme";
 import {IoCartOutline, IoHomeOutline, IoListCircleOutline, IoPersonOutline} from "react-icons/io5";
 import {GiCrown} from "react-icons/gi";
 import {AiOutlineOrderedList} from "react-icons/ai";
+import {RouteProps} from "../useRoute";
 
-export function FooterNavigation() {
+export function FooterNavigation(props:RouteProps) {
     const navigate = useNavigate();
     const {store, appDimension} = useAppContext();
     const itemsInCart = useStoreValue(store, state => {

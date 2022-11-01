@@ -75,6 +75,5 @@ export function CategoryList(props: RouteProps) {
                 </div>
             </div>
         </div>
-        <FooterNavigation  />
     </div>
 }

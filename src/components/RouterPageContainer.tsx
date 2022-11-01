@@ -11,7 +11,7 @@ export const maxWidth = 480;
  */
 export function RouterPageContainer() {
     const [components, setComponents] = useState<PathAbleComponent[]>([]);
-    const {params, routeComponent: RouteComponent, path, onVisible, onHidden} = useRoute();
+    const {params, routeComponent: RouteComponent, path, onVisible, onHidden,routeFooterComponent:RouteFooterComponent} = useRoute();
     const Component = useMemo(() => function RouteComponentContainer(props: { isFocused: boolean } & RouteProps) {
         return <motion.div
             initial={onHidden as Target}
@@ -35,12 +35,24 @@ export function RouterPageContainer() {
     }, [Component, path, params]);
 
     return <CurrentActivePathContext.Provider value={path}>
-        <div style={shellContainerStyle}>
+        <div style={{
+            maxWidth: maxWidth,
+            height: '100%',
+            width: '100%',
+            overflow: 'hidden',
+            position: 'relative',
+            flexGrow: 1,
+            display:'flex',
+            flexDirection:'column'
+        }}>
             {components.map((c) => {
                 const Component = c.component;
                 const isFocused = c.path === path;
                 return <Component key={c.path} params={c.params} path={c.path} isFocused={isFocused}/>
             })}
+            <div style={{position:'absolute',bottom:0,width:'100%'}}>
+                <RouteFooterComponent path={path} params={params}/>
+            </div>
         </div>
     </CurrentActivePathContext.Provider>
 }
@@ -61,11 +73,3 @@ export function useFocusListener(path: string) {
 }
 
 
-const shellContainerStyle: CSSProperties = {
-    maxWidth: maxWidth,
-    height: '100%',
-    width: '100%',
-    overflow: 'hidden',
-    position: 'relative',
-    flexGrow: 1
-}

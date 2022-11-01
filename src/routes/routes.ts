@@ -8,10 +8,14 @@ import Payment from "./Payment";
 import History from "./History";
 import OrderDetail from "./OrderDetail";
 import {ProductListGroupedByCategory} from "./ProductListGroupedByCategory";
+import {FooterNavigation} from "../components/page-components/FooterNavigation";
+import {UserAccount} from "./UserAccount";
+import {Reward} from "./Reward";
 
 export const routes: Routes = {
     'home': {
         component: CategoryList,
+        footerComponent:FooterNavigation,
         onVisible: {
             left: 0,
             transition: {
@@ -28,6 +32,7 @@ export const routes: Routes = {
     },
     categories : {
         component: ProductListGroupedByCategory,
+        footerComponent:FooterNavigation,
         onVisible: {
             left: 0,
             transition: {
@@ -59,6 +64,7 @@ export const routes: Routes = {
     },
     'cart': {
         component: Cart,
+        footerComponent:FooterNavigation,
         onHidden: {
             bottom: '-100%',
             transition: {
@@ -119,6 +125,7 @@ export const routes: Routes = {
     },
     'history':{
         component : History,
+        footerComponent:FooterNavigation,
         onVisible: {
             right: 0,
             transition: {
@@ -134,6 +141,38 @@ export const routes: Routes = {
     },
     'order-detail/$id':{
         component : OrderDetail,
+        onVisible: {
+            right: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidden: {
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        }
+    },
+    'user-account' : {
+        component : UserAccount,
+        footerComponent:FooterNavigation,
+        onVisible: {
+            right: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidden: {
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        }
+    },
+    'reward' : {
+        component : Reward,
+        footerComponent:FooterNavigation,
         onVisible: {
             right: 0,
             transition: {

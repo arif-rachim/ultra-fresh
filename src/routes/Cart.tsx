@@ -50,7 +50,7 @@ export default function Cart(props: RouteProps) {
             display: 'flex',
             flexDirection: 'column',
             background: 'radial-gradient(rgba(255,255,255,0.8),rgba(255,255,255,1))',
-            height: '100%',
+            flexGrow:1,
             overflow: 'auto',
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
@@ -97,6 +97,7 @@ export default function Cart(props: RouteProps) {
             padding: 10,
             borderTop: '1px solid rgba(0,0,0,0.05)',
             display: "flex",
+            marginBottom:52
         }}>
             <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                 <div style={{fontSize: 12}}>Subtotal</div>
