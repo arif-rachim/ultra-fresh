@@ -37,7 +37,7 @@ function TotalItemsInCartLogo(props: { totalInCart?: number }) {
 }
 
 
-export default function ProductRoute(props: RouteProps) {
+export function ProductDetail(props: RouteProps) {
     const {appDimension, store} = useAppContext();
     const {params} = props;
 

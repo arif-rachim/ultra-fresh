@@ -1,16 +1,17 @@
-import {Home} from "./Home";
-import Product from "./Product";
+import {CategoryList} from "./CategoryList";
+import {ProductDetail} from "./ProductDetail";
 import {Routes} from "../components/useRoute";
 import Cart from "./Cart";
 import {ShippingAddress} from "./ShippingAddress";
-import Category from "./Category";
+import ProductWithCategory from "./ProductWithCategory";
 import Payment from "./Payment";
 import History from "./History";
 import OrderDetail from "./OrderDetail";
+import {ProductListGroupedByCategory} from "./ProductListGroupedByCategory";
 
 export const routes: Routes = {
     'home': {
-        component: Home,
+        component: CategoryList,
         onVisible: {
             left: 0,
             transition: {
@@ -25,8 +26,24 @@ export const routes: Routes = {
 
         }
     },
-    'product/$productId': {
-        component: Product,
+    categories : {
+        component: ProductListGroupedByCategory,
+        onVisible: {
+            left: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidden: {
+            left: '-100%',
+            transition: {
+                bounce: 0
+            }
+
+        }
+    },
+    'product-detail/$productId': {
+        component: ProductDetail,
         onVisible: {
             right: 0,
             transition: {
@@ -70,8 +87,8 @@ export const routes: Routes = {
             }
         }
     },
-    'category/$category': {
-        component: Category,
+    'product-with-category/$category': {
+        component: ProductWithCategory,
         onVisible: {
             right: 0,
             transition: {

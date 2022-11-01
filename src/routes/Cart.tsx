@@ -9,7 +9,7 @@ import {ButtonTheme, white} from "./Theme";
 import {useNavigate} from "../components/useNavigate";
 import {Button} from "../components/page-components/Button";
 
-import {AddRemoveButton} from "./Category";
+import {AddRemoveButton} from "./ProductWithCategory";
 import {useMemo} from "react";
 import {Product} from "../components/AppState";
 

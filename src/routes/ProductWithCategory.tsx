@@ -165,7 +165,7 @@ function ImageSlider(props: { selectedProduct?: Product }) {
     </div>;
 }
 
-export default function Category(props: RouteProps) {
+export default function ProductWithCategory(props: RouteProps) {
     const category = props.params.get('category');
     const groups = useMemo(() => {
         return data.filter(p => p.category === category).reduce((result: { name: string, category: string, barcode: string }[], product: Product, index: number) => {
