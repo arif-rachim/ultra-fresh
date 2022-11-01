@@ -121,7 +121,8 @@ interface MotionRouteElement {
     component: RouteElement,
     footerComponent?: RouteElement,
     onVisible: TargetAndTransition,
-    onHidden: TargetAndTransition
+    onHidden: TargetAndTransition,
+    onHidingPrevElement : TargetAndTransition
 }
 
 export interface Routes {

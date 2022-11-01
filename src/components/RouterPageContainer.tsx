@@ -1,7 +1,8 @@
 import {RouteProps, useRoute} from "./useRoute";
-import {createContext, CSSProperties, FunctionComponent, useContext, useEffect, useMemo, useState} from "react";
+import {createContext, FunctionComponent, useContext, useEffect, useMemo, useRef, useState} from "react";
 import {motion, Target} from "framer-motion";
 import {produce} from "immer";
+import {usePreviousValue} from "./page-components/usePreviousValue";
 
 export const maxWidth = 480;
 
@@ -10,29 +11,30 @@ export const maxWidth = 480;
  * @constructor
  */
 export function RouterPageContainer() {
-    const [components, setComponents] = useState<PathAbleComponent[]>([]);
+    //const [components, setComponents] = useState<PathAbleComponent[]>([]);
+    const componentsRef = useRef<PathAbleComponent[]>([]);
     const {params, routeComponent: RouteComponent, path, onVisible, onHidden,routeFooterComponent:RouteFooterComponent} = useRoute();
     const Component = useMemo(() => function RouteComponentContainer(props: { isFocused: boolean } & RouteProps) {
+        const {isFocused} = props;
+        const beforeIsFocused = usePreviousValue(isFocused);
+        const changeToFocused = (beforeIsFocused !== isFocused) && isFocused;
+        const changeToBlurred = (beforeIsFocused !== isFocused) && !isFocused;
         return <motion.div
             initial={onHidden as Target}
             style={{position: 'absolute', height: '100%', width: '100%', overflow: 'auto'}}
-            animate={props.isFocused ? onVisible : onHidden}
+            animate={changeToFocused ? onVisible : changeToBlurred ? onHidden : {}}
         >
             <RouteComponent params={props.params} path={props.path}/>
         </motion.div>
         // eslint-disable-next-line
     }, [RouteComponent]);
 
-    useEffect(() => {
-        setComponents(produce(draft => {
-            const currentIndex = draft.findIndex(old => old.path === path);
-            if (currentIndex >= 0) {
-                draft[currentIndex].params = params;
-            } else {
-                draft.push({params, path, component: Component});
-            }
-        }))
-    }, [Component, path, params]);
+    const componentIndex = componentsRef.current.findIndex(c => c.path === path);
+    if(componentIndex < 0){
+        componentsRef.current.push({params, path, component: Component})
+    }else{
+        componentsRef.current[componentIndex].params = params;
+    }
 
     return <CurrentActivePathContext.Provider value={path}>
         <div style={{
@@ -45,7 +47,7 @@ export function RouterPageContainer() {
             display:'flex',
             flexDirection:'column'
         }}>
-            {components.map((c) => {
+            {componentsRef.current.map((c) => {
                 const Component = c.component;
                 const isFocused = c.path === path;
                 return <Component key={c.path} params={c.params} path={c.path} isFocused={isFocused}/>

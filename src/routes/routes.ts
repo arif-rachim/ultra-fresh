@@ -27,7 +27,12 @@ export const routes: Routes = {
             transition: {
                 bounce: 0
             }
-
+        },
+        onHidingPrevElement: {
+            left:'100%',
+            transition: {
+                bounce: 0
+            }
         }
     },
     categories : {
@@ -44,7 +49,12 @@ export const routes: Routes = {
             transition: {
                 bounce: 0
             }
-
+        },
+        onHidingPrevElement: {
+            left:'100%',
+            transition: {
+                bounce: 0
+            }
         }
     },
     'product-detail/$productId': {
@@ -61,6 +71,12 @@ export const routes: Routes = {
                 bounce: 0
             }
         },
+        onHidingPrevElement: {
+            left:'100%',
+            transition: {
+                bounce: 0
+            }
+        }
     },
     'cart': {
         component: Cart,
@@ -77,6 +93,12 @@ export const routes: Routes = {
                 bounce: 0
             }
         },
+        onHidingPrevElement: {
+            left:'100%',
+            transition: {
+                bounce: 0
+            }
+        }
     },
     'shipping': {
         component: ShippingAddress,
@@ -88,6 +110,12 @@ export const routes: Routes = {
         },
         onHidden: {
             right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidingPrevElement: {
+            left:'100%',
             transition: {
                 bounce: 0
             }
@@ -106,6 +134,12 @@ export const routes: Routes = {
             transition: {
                 bounce: 0
             }
+        },
+        onHidingPrevElement: {
+            left:'100%',
+            transition: {
+                bounce: 0
+            }
         }
     },
     'payment':{
@@ -118,6 +152,12 @@ export const routes: Routes = {
         },
         onHidden: {
             right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidingPrevElement: {
+            left:'100%',
             transition: {
                 bounce: 0
             }
@@ -137,6 +177,12 @@ export const routes: Routes = {
             transition: {
                 bounce: 0
             }
+        },
+        onHidingPrevElement: {
+            left:'100%',
+            transition: {
+                bounce: 0
+            }
         }
     },
     'order-detail/$id':{
@@ -149,6 +195,12 @@ export const routes: Routes = {
         },
         onHidden: {
             right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidingPrevElement: {
+            left:'100%',
             transition: {
                 bounce: 0
             }
@@ -168,6 +220,12 @@ export const routes: Routes = {
             transition: {
                 bounce: 0
             }
+        },
+        onHidingPrevElement: {
+            left:'100%',
+            transition: {
+                bounce: 0
+            }
         }
     },
     'reward' : {
@@ -181,6 +239,12 @@ export const routes: Routes = {
         },
         onHidden: {
             right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        },
+        onHidingPrevElement: {
+            left:'100%',
             transition: {
                 bounce: 0
             }
