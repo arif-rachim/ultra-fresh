@@ -12,15 +12,25 @@ export const maxWidth = 480;
 export function RouterPageContainer() {
     const componentsRef = useRef<PathAbleComponent[]>([]);
     const {params, routeComponent: RouteComponent, path, animateIn, animateOut,initial,routeFooterComponent:RouteFooterComponent} = useRoute();
+    const currentAnimateOutRef = useRef(animateOut); //
+    currentAnimateOutRef.current = animateOut;
     const Component = useMemo(() => function RouteComponentContainer(props: { isFocused: boolean } & RouteProps) {
         const {isFocused} = props;
         const beforeIsFocused = usePreviousValue(isFocused);
         const changeToFocused = (beforeIsFocused !== isFocused) && isFocused;
         const changeToBlurred = (beforeIsFocused !== isFocused) && !isFocused;
+        if(changeToBlurred){
+            console.log('A panel is blurred');
+        }
+        if(changeToFocused){
+            console.log('A panel is focused');
+        }
+
         return <motion.div
             initial={initial}
             style={{position: 'absolute', height: '100%', width: '100%', overflow: 'auto'}}
-            animate={changeToFocused ? animateIn : changeToBlurred ? animateOut : {}}
+            animate={isFocused ? animateIn : animateOut}
+
         >
             <RouteComponent params={props.params} path={props.path}/>
         </motion.div>
