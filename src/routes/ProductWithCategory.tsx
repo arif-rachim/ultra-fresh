@@ -9,6 +9,7 @@ import {blue, blueDarken, red, white, yellow} from "./Theme";
 import {MdAddCircle, MdCancel} from "react-icons/md";
 import {IoCheckmarkCircle} from "react-icons/io5";
 import {Product} from "../components/AppState";
+import {Image} from "../components/page-components/Image";
 
 function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: string }, selectedStore: Store<any>, selected?: boolean }) {
     const {selectedStore, unit, selected} = props;
@@ -152,7 +153,7 @@ function ImageSlider(props: { selectedProduct?: Product }) {
                         key={value} onScroll={(event) => {
 
             }}>
-                <img src={`/images/${selectedProduct?.barcode}/400/${value}.png`}
+                <Image src={`/images/${selectedProduct?.barcode}/400/${value}.png`}
                      style={{position: 'relative'}}
                      height={appDimension.height * 0.5} alt={'Barcode ' + selectedProduct?.barcode}
                      key={selectedProduct?.barcode}
@@ -182,9 +183,7 @@ export function useGroupFromCategory(category: string) {
 export default function ProductWithCategory(props: RouteProps) {
     const category = props.params.get('category');
     const group = props.params.get('group');
-
     const groups = useGroupFromCategory(category ?? '');
-
     const {appDimension} = useAppContext();
     let totalBox = groups.length < 6 ? 6 : groups.length;
     const imageDimension = Math.floor(appDimension.width / totalBox) - 10;
@@ -229,7 +228,7 @@ export default function ProductWithCategory(props: RouteProps) {
     }, [units])
     const selectedProduct = data.find(d => d.barcode === selectedUnit.barcode);
 
-    return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
+    return <div style={{display: 'flex', flexDirection: 'column', height: '100%',overflow:'hidden'}}>
         <Header title={category ?? ''}/>
         <div style={{
             height: '100%',
@@ -241,8 +240,10 @@ export default function ProductWithCategory(props: RouteProps) {
         <div style={{
             display: 'flex',
             flexDirection: 'column',
-            width: appDimension.width,
+            width: '100%',
+            maxWidth:'100%',
             position: 'absolute',
+            overflow:'hidden',
             bottom: 0
         }}>
             <div style={{display: "flex", alignItems: 'flex-end', marginLeft: 10, marginRight: 10, marginBottom: 10}}>
@@ -337,7 +338,7 @@ function CategoryIconSelector<T extends { barcode: string, name: string }>(props
                        key={item.barcode}
                        animate={{background: selected ? blueDarken : 'rgba(255,255,255,0.5)', color: selected ? white : blueDarken}}
                        onTap={() => props.onTap(item)}>
-        <motion.img src={`/images/${item.barcode}/THUMB/default.png`}
+        <Image src={`/images/${item.barcode}/THUMB/default.png`}
                     style={{marginTop: 5}}
                     width={imageDimension - 20} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
                     whileHover={{scale: 1.05}}/>

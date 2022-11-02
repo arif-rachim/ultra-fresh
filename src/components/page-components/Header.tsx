@@ -19,7 +19,7 @@ export function Header(props: PropsWithChildren<{ title: string }>) {
         <motion.div onTap={() => window.history.back()}
                     whileHover={{scale: 1.05}}
                     whileTap={{scale: 0.95}}>
-            <IoChevronBackOutline style={{fontSize: 26}}/>
+            <IoChevronBackOutline style={{fontSize: 36}}/>
         </motion.div>
         <div style={{fontSize: 18, fontWeight: 'bold', lineHeight: 1, marginBottom: 2, marginLeft: 10}}>{title}</div>
         {props.children}

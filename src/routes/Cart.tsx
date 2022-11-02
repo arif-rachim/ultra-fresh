@@ -13,6 +13,7 @@ import {AddRemoveButton} from "./ProductWithCategory";
 import {useMemo} from "react";
 import {Product} from "../components/AppState";
 import {IoClose} from "react-icons/io5";
+import {Image} from "../components/page-components/Image";
 
 export function useSubTotalCart() {
     const cartItems = useItemsInCart();
@@ -85,7 +86,7 @@ export default function Cart(props: RouteProps) {
                     padding: 5
                 }}>
                     <div>
-                        <img src={`/images/${ci.barcode}/THUMB/default.png`}
+                        <Image src={`/images/${ci.barcode}/THUMB/default.png`}
                              alt={'Barcode ' + ci.barcode} height={50}/>
                     </div>
                     <div style={{flexGrow: 1}}>

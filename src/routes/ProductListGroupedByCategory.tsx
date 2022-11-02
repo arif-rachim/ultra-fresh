@@ -3,6 +3,7 @@ import {useAppContext} from "../components/useAppContext";
 import {useNavigate} from "../components/useNavigate";
 import {useGroupFromCategory} from "./ProductWithCategory";
 import {motion} from "framer-motion";
+import {Image} from "../components/page-components/Image";
 
 export function ProductListGroupedByCategory() {
 
@@ -61,7 +62,7 @@ function CategoryLineRenderer(props: { category: string }) {
                     navigate(`product-with-category/${category}/${group.name}`);
                 }} whileTap={{scale: 0.95}}
                             whileHover={{scale: 1.05}}>
-                    <motion.img src={`/images/${group.barcode}/THUMB/default.png`}
+                    <Image src={`/images/${group.barcode}/THUMB/default.png`}
                                 style={{marginTop: 5, marginBottom: 5}}
                                 height={70}
                                 width={70}

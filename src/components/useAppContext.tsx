@@ -1,7 +1,7 @@
 import {createContext, Dispatch, PropsWithChildren, ReactElement, useCallback, useContext, useMemo} from "react";
-import {maxWidth} from "./RouterPageContainer";
 import {Store} from "./store/useCreateStore";
 import {AppState} from "./AppState";
+import {WindowSizeContext} from "../App";
 
 
 export function useAppContext() {
@@ -71,6 +71,7 @@ type FactoryFunction<T> = (closePanel: (val: T) => void) => ReactElement;
 export function AppContextProvider<State extends AppState>(props: PropsWithChildren<{
     setModalPanel: Dispatch<ReactElement | false>, store: Store<State>
 }>) {
+    const window = useContext(WindowSizeContext);
     const {setModalPanel, store} = props;
     const showModal = useCallback((factory: FactoryFunction<any>) => {
         return new Promise<any>(resolve => {
@@ -85,14 +86,12 @@ export function AppContextProvider<State extends AppState>(props: PropsWithChild
 
     const contextValue = useMemo(() => {
         const appDimension: Dimension = {
-            height: window.innerHeight,
-            width: window.innerWidth
+            height: window.height,
+            width: window.width
         };
-        if (appDimension.width > maxWidth) {
-            appDimension.width = maxWidth
-        }
+
         let appType = AppType.Desktop;
-        if (appDimension.width < 480) {
+        if (appDimension.width <= 480) {
             appType = AppType.Mobile
         }
 

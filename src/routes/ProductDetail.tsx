@@ -9,6 +9,7 @@ import {useEffect, useState} from "react";
 import {Header} from "../components/page-components/Header";
 
 import {Button} from "../components/page-components/Button";
+import {Image} from "../components/page-components/Image";
 
 
 function TotalItemsInCartLogo(props: { totalInCart?: number }) {
@@ -69,7 +70,7 @@ export function ProductDetail(props: RouteProps) {
                 background: 'radial-gradient(rgba(255,255,255,1) 70%,rgba(0,0,0,0.1))',
                 borderBottom: '1px solid rgba(0,0,0,0.05)'
             }}>
-                <img src={`/images/${productId}/400/1.png`} alt={`Barcode ${productId}`} width={appDimension.width}
+                <Image src={`/images/${productId}/400/1.png`} alt={`Barcode ${productId}`} width={appDimension.width}
                      height={appDimension.width}/>
             </div>
 

@@ -3,7 +3,6 @@ import {createContext, FunctionComponent, useContext, useEffect, useMemo, useRef
 import {motion} from "framer-motion";
 import {usePreviousValue} from "./page-components/usePreviousValue";
 
-export const maxWidth = 480;
 
 /**
  * Router Page Container
@@ -54,7 +53,6 @@ export function RouterPageContainer() {
 
     return <CurrentActivePathContext.Provider value={path}>
         <div style={{
-            maxWidth: maxWidth,
             height: '100%',
             width: '100%',
             overflow: 'hidden',
