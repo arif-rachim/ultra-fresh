@@ -11,7 +11,7 @@ import {ProductListGroupedByCategory} from "./ProductListGroupedByCategory";
 import {FooterNavigation} from "../components/page-components/FooterNavigation";
 import {UserAccount} from "./UserAccount";
 import {SignIn} from "./SignIn";
-import {Register} from "./Register";
+
 
 export const routes: Routes = {
     'categories': {
@@ -201,24 +201,6 @@ export const routes: Routes = {
     },
     'sign-in': {
         component: SignIn,
-        initial: {
-            top: '-100%'
-        },
-        animateIn: {
-            top: 0,
-            transition: {
-                bounce: 0
-            }
-        },
-        animateOut: {
-            top: '-100%',
-            transition: {
-                bounce: 0
-            }
-        }
-    },
-    'register': {
-        component: Register,
         initial: {
             top: '-100%'
         },

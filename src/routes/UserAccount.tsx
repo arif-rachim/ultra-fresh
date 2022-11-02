@@ -1,7 +1,7 @@
 import {Header} from "../components/page-components/Header";
 import {motion} from "framer-motion";
 import {IoLogInOutline,IoLogOutOutline} from "react-icons/io5";
-import {AiOutlineUserAdd} from "react-icons/ai";
+import {HiOutlineUserCircle} from "react-icons/hi";
 import {blueDarken, ButtonTheme, white} from "./Theme";
 import {useNavigate} from "../components/useNavigate";
 import {useAppContext, User} from "../components/useAppContext";
@@ -23,18 +23,18 @@ function AnonymousPage() {
         </div>
 
 
-        <div style={{display: 'flex'}}>
+        <div style={{display: 'flex',justifyContent:'center'}}>
             <motion.div style={{
                 margin: 20,
-                border: '1px solid rgba(0,0,0,0.1)',
-                padding: 10,
-                width: '50%',
+                border: '1px solid rgba(0,0,0,0.05)',
+                boxShadow:'0 0 5px -3px rgba(0,0,0,0.1)',
+                padding: 20,
                 alignItems: 'center',
                 justifyContent: 'center',
                 display: 'flex',
                 borderRadius: 10,
                 flexDirection: 'column',
-                background: 'rgba(255,255,255,0.2)'
+                background: 'rgba(255,255,255,0.4)'
             }} whileTap={{scale: 0.95}} onTap={() => navigate('sign-in')}>
                 <div style={{
                     fontSize: 30,
@@ -49,31 +49,6 @@ function AnonymousPage() {
                 </div>
                 <div>Sign In</div>
             </motion.div>
-            <motion.div style={{
-                margin: 20,
-                border: '1px solid rgba(0,0,0,0.1)',
-                padding: 10,
-                width: '50%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-                borderRadius: 10,
-                flexDirection: 'column',
-                background: 'rgba(255,255,255,0.2)'
-            }} whileTap={{scale: 0.95}} onTap={() => navigate('register')}>
-                <div style={{
-                    fontSize: 30,
-                    backgroundColor: blueDarken,
-                    color: white,
-                    padding: 5,
-                    width: 30,
-                    height: 30,
-                    borderRadius: 50
-                }}>
-                    <AiOutlineUserAdd/>
-                </div>
-                <div>Register</div>
-            </motion.div>
         </div>
 
     </div>;
@@ -82,9 +57,12 @@ function AnonymousPage() {
 function AccountInfo(props:{user?:User}){
     const {user} = props;
     invariant(user);
-    return <div style={{display:'flex',flexDirection:'column',margin:20,padding:20,background:'rgba(255,255,255,1)',border:'1px solid rgba(0,0,0,0.1)',borderRadius:10}}>
+    return <div style={{display:'flex',flexDirection:'column',margin:20,padding:20,background:'rgba(255,255,255,0.4)',border:'1px solid rgba(0,0,0,0.1)',borderRadius:10}}>
+        <div style={{fontSize:200,display:'flex',justifyContent:'center',margin:0,padding:20,background:'radial-gradient(rgba(255,255,255,0.6),rgba(0,0,0,0.09))'}}>
+            <HiOutlineUserCircle/>
+        </div>
         <div style={{display:'flex',flexDirection:'column',borderBottom:'1px solid rgba(0,0,0,0.1)',paddingBottom:10,marginBottom:10}}>
-            <div style={{fontSize:26,marginBottom:10}}>{user.firstName} {user.lastName}</div>
+            <div style={{fontSize:36,marginBottom:10}}>{user.firstName} {user.lastName}</div>
             <div style={{fontSize:18,marginBottom:5}}>{user.phone}</div>
             <div>{user.email}</div>
         </div>
