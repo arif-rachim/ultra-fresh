@@ -9,7 +9,7 @@ export function Header(props: PropsWithChildren<{ title: string }>) {
         display: 'flex',
         alignItems: 'center',
         borderBottom: '1px solid rgba(0,0,0,0.05)',
-        background: white,
+        background: 'linear-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.7))',
         paddingLeft: 10,
         padding: 5,
         paddingTop: 7,

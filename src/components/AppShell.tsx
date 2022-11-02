@@ -10,10 +10,11 @@ const shellStyle: CSSProperties = {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    background : 'url("background.jpeg")',
     alignItems: 'center',
     boxSizing: 'border-box',
     overflow: 'auto',
-    background: 'radial-gradient(rgba(0,0,0,0.01),rgba(0,0,0,0.02))'
+
 }
 
 const modalStyle: CSSProperties = {

@@ -335,7 +335,7 @@ function CategoryIconSelector<T extends { barcode: string, name: string }>(props
     const {imageDimension, item, selected} = props;
     return <motion.div style={{...itemStyleSheet, height: imageDimension + 10}}
                        key={item.barcode}
-                       animate={{background: selected ? blueDarken : white, color: selected ? white : blueDarken}}
+                       animate={{background: selected ? blueDarken : 'rgba(255,255,255,0.5)', color: selected ? white : blueDarken}}
                        onTap={() => props.onTap(item)}>
         <motion.img src={`/images/${item.barcode}/THUMB/default.png`}
                     style={{marginTop: 5}}

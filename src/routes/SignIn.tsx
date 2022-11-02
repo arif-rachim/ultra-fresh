@@ -9,7 +9,7 @@ import {IoClose, IoLogInOutline} from "react-icons/io5";
 
 export function SignIn(props: RouteProps) {
     const [loginWithOtp, setLoginWithOtp] = useState(true);
-    return <div style={{height: '100%', overflow: 'auto', display: 'flex', flexDirection: 'column'}}>
+    return <div style={{height: '100%', overflow: 'auto', display: 'flex', flexDirection: 'column',background:'rgba(255,255,255,0.4)'}}>
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
             <motion.div style={{fontSize: 36, margin: 20, color: 'rgba(0,0,0,0.6)'}} whileTap={{scale: 0.95}}
                         onTap={() => window.history.back()}>

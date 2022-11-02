@@ -16,7 +16,7 @@ export function ItemIcon<T extends { barcode: string, name: string }>(props: { i
     const {imageDimension, item, selected} = props;
     return <motion.div style={{...itemStyleSheet, width: imageDimension, height: imageDimension + 30}}
                        key={item.barcode} whileTap={{scale: 0.95}} whileHover={{scale: 1.05}}
-                       animate={{background: selected ? blueDarken : white, color: selected ? white : blueDarken}}
+                       animate={{background: selected ? blueDarken : 'rgba(255,255,255,0.4)', color: selected ? white : blueDarken}}
                        onTap={() => props.onTap(item)}>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <div style={{

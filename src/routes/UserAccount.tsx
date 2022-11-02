@@ -31,7 +31,8 @@ export function UserAccount() {
                     justifyContent: 'center',
                     display: 'flex',
                     borderRadius: 10,
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    background:'rgba(255,255,255,0.2)'
                 }} whileTap={{scale: 0.95}} onTap={() => navigate('sign-in')}>
                     <div style={{
                         fontSize: 30,
@@ -55,7 +56,8 @@ export function UserAccount() {
                     justifyContent: 'center',
                     display: 'flex',
                     borderRadius: 10,
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    background:'rgba(255,255,255,0.2)'
                 }} whileTap={{scale: 0.95}} onTap={() => navigate('register')}>
                     <div style={{
                         fontSize: 30,

@@ -55,7 +55,8 @@ function CategoryLineRenderer(props: { category: string }) {
                     border: '1px solid rgba(0,0,0,0.05)',
                     marginLeft: 5,
                     marginRight: 5,
-                    borderRadius: 5
+                    borderRadius: 5,
+                    background:'radial-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.8))'
                 }} onTap={() => {
                     navigate(`product-with-category/${category}/${group.name}`);
                 }} whileTap={{scale: 0.95}}

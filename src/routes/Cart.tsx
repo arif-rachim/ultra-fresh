@@ -43,7 +43,7 @@ export default function Cart(props: RouteProps) {
     const subTotal = useSubTotalCart();
     const isEmpty = cartItems.length === 0;
     return <div style={{
-        background: 'radial-gradient(rgba(255,255,255,0.8),rgba(255,255,255,1))',
+        background:'rgba(255,255,255,0.2)',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -107,7 +107,7 @@ export default function Cart(props: RouteProps) {
             </div>
         </div>
         <div style={{
-            backgroundColor: white,
+            background:'rgba(255,255,255,0.5)',
             padding: '10px 20px',
             borderTop: '1px solid rgba(0,0,0,0.05)',
             display: "flex",
