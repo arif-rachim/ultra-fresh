@@ -57,7 +57,6 @@ export function RouterPageContainer() {
             width: '100%',
             overflow: 'hidden',
             position: 'relative',
-            flexGrow: 1,
             display: 'flex',
             flexDirection: 'column'
         }}>

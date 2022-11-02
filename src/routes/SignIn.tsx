@@ -53,12 +53,12 @@ export function SignIn(props: RouteProps) {
             <motion.div layout style={{display: 'flex', alignItems: 'flex-end'}}>
                 <div style={{marginBottom: 22, fontWeight: 'bold', marginLeft: 10}}>+971</div>
                 <Input title={'Enter Mobile number'} placeholder={'501234567'}
-                       style={{containerStyle: {borderBottom: 'none', flexGrow: 1}}}/>
+                       style={{containerStyle: {borderBottom: 'none', flexGrow: 1}}} type={"number"} inputMode={"tel"}/>
             </motion.div>
             {!loginWithOtp &&
                 <motion.div layout>
-                    <Input title={'Password'} placeholder={'Please enter password'}
-                           style={{containerStyle: {borderBottom: 'none'}}}/>
+                    <Input title={'Password'} type={'password'} placeholder={'Please enter password'}
+                           style={{containerStyle: {borderBottom: 'none'}}} />
                 </motion.div>
             }
             <Button onTap={() => {
