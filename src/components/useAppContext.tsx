@@ -85,10 +85,7 @@ export function AppContextProvider<State extends AppState>(props: PropsWithChild
     }, [setModalPanel]);
 
     const contextValue = useMemo(() => {
-        const appDimension: Dimension = {
-            height: window.height,
-            width: window.width
-        };
+        const appDimension: Dimension = window;
 
         let appType = AppType.Desktop;
         if (appDimension.width <= 480) {
@@ -104,7 +101,7 @@ export function AppContextProvider<State extends AppState>(props: PropsWithChild
         }
 
         return {appDimension, appType, showModal, store}
-    }, [showModal, store]);
+    }, [showModal, store,window]);
 
     return <AppContext.Provider value={contextValue as any}>
         {props.children}

@@ -210,7 +210,7 @@ export default function ProductWithCategory(props: RouteProps) {
             const selectedGroup = groups.find(g => g.name === group) ?? groups[0];
             selectedStore.dispatch({type: 'GROUP_SELECTED', payload: selectedGroup})
         }
-    }, [groups, group])
+    }, [groups, group,selectedStore])
 
     const units = useMemo(() => {
         return data.filter(d => d.category === selectedGroup.category && d.name === selectedGroup.name).map(p => ({
@@ -225,7 +225,7 @@ export default function ProductWithCategory(props: RouteProps) {
             const unit = units[0];
             selectedStore.dispatch({type: 'UNIT_SELECTED', payload: unit});
         }
-    }, [units])
+    }, [units,selectedStore])
     const selectedProduct = data.find(d => d.barcode === selectedUnit.barcode);
 
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%',overflow:'hidden'}}>

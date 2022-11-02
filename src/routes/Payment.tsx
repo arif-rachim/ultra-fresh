@@ -42,9 +42,23 @@ export default function Payment(props: RouteProps) {
                 s.cardNumber = '';
             }))
         }
-    }, [isFocused]);
+    }, [isFocused,localStore]);
 
     const navigate = useNavigate();
+
+    const validate = useCallback(() => {
+        localStore.setState(produce(state => {
+            state.errors.cardNumber = isNotEmptyText(state.cardNumber) ? '' : 'Card Number is required';
+            state.errors.cardHolderName = isNotEmptyText(state.cardHolderName) ? '' : 'Name is required';
+            state.errors.cvv = isNotEmptyText(state.cvv) ? '' : 'CVV is required';
+            state.errors.validUntil = isNotEmptyText(state.validUntil) ? '' : 'Valid until is required';
+        }));
+        const state = localStore.stateRef.current;
+        const hasError = Object.keys(state.errors).reduce((hasError, key) => {
+            return hasError || ((state.errors as any)[key]).toString().length > 0
+        }, false);
+        return !hasError;
+    }, [localStore]);
 
     const performPayment = useCallback(() => {
         if (!validate()) {
@@ -56,8 +70,6 @@ export default function Payment(props: RouteProps) {
             state.cardInfo.cardNumber = localStore.stateRef.current.cardNumber;
             state.cardInfo.validUntil = localStore.stateRef.current.validUntil;
         }));
-
-        // kemudian balik lagi ke home
 
         store.setState(produce(state => {
             const order: Order = {
@@ -96,21 +108,9 @@ export default function Payment(props: RouteProps) {
             }
         }));
         navigate('home');
-    }, []);
+    }, [store,navigate,validate,subTotal,localStore.stateRef]);
 
-    const validate = useCallback(() => {
-        localStore.setState(produce(state => {
-            state.errors.cardNumber = isNotEmptyText(state.cardNumber) ? '' : 'Card Number is required';
-            state.errors.cardHolderName = isNotEmptyText(state.cardHolderName) ? '' : 'Name is required';
-            state.errors.cvv = isNotEmptyText(state.cvv) ? '' : 'CVV is required';
-            state.errors.validUntil = isNotEmptyText(state.validUntil) ? '' : 'Valid until is required';
-        }));
-        const state = localStore.stateRef.current;
-        const hasError = Object.keys(state.errors).reduce((hasError, key) => {
-            return hasError || ((state.errors as any)[key]).toString().length > 0
-        }, false);
-        return !hasError;
-    }, [localStore]);
+
 
     return <div
         style={{

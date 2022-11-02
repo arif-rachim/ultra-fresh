@@ -5,7 +5,7 @@ import {useAppContext} from "../components/useAppContext";
 import {useStoreValue} from "../components/store/useCreateStore";
 import {data} from "../data";
 import invariant from "tiny-invariant";
-import {ButtonTheme, white} from "./Theme";
+import {ButtonTheme} from "./Theme";
 import {useNavigate} from "../components/useNavigate";
 import {Button} from "../components/page-components/Button";
 

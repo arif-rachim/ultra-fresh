@@ -1,5 +1,4 @@
 import {motion} from "framer-motion";
-import {white} from "../../routes/Theme";
 import {IoChevronBackOutline} from "react-icons/io5";
 import {PropsWithChildren} from "react";
 

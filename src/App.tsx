@@ -1,12 +1,13 @@
 import React, {createContext, useMemo} from 'react';
 import './App.css';
+import {supabase} from "./components/supabase";
 
 import AppShell from "./components/AppShell";
 
 export const WindowSizeContext = createContext<{ width: number, height: number }>({width: 0, height: 0})
 
 function App() {
-
+    console.log(supabase);
     let {width,height} = useMemo(() => ({width:window.innerWidth,height:window.innerHeight}),[]);
 
     const isSimulator = width > 490;
@@ -24,7 +25,7 @@ function App() {
             <div>As Gemba final project candidate Windy Des Nadian</div>
             </div>
         </div>}
-        <WindowSizeContext.Provider value={{height, width}}>
+        <WindowSizeContext.Provider value={useMemo(() => ({width,height}),[height, width])}>
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',

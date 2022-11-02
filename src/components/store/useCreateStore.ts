@@ -86,8 +86,10 @@ export function useStoreValue<T, S>(store: Store<T>, selector: (param: T) => S, 
             const {selector} = propsRef.current;
             setValue(selector(nextState));
         });
+    // eslint-disable-next-line
     }, deps);
 
+    // eslint-disable-next-line
     useEffect(() => setValue(propsRef.current.selector(stateRef.current)), deps);
     return value;
 }
