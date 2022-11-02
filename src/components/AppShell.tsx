@@ -18,7 +18,7 @@ const shellStyle: CSSProperties = {
 }
 
 const modalStyle: CSSProperties = {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+
     backdropFilter: 'blur(20px)',
     width: '100%',
     height: '100%',
@@ -29,11 +29,8 @@ const modalStyle: CSSProperties = {
 }
 
 const dialogPanelStyle: CSSProperties = {
-    backgroundColor: 'rgba(240,240,240,0.9)',
     minWidth: 100,
     minHeight: 0,
-    borderRadius: 5,
-    boxShadow: '0 5px 5px -3px rgba(0,0,0,0.1)'
 }
 
 export default function AppShell() {

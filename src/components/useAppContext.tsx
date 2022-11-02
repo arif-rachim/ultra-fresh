@@ -1,8 +1,19 @@
-import {createContext, Dispatch, PropsWithChildren, ReactElement, useCallback, useContext, useMemo} from "react";
+import {
+    createContext,
+    Dispatch,
+    PropsWithChildren,
+    ReactElement,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState
+} from "react";
 import {Store} from "./store/useCreateStore";
 import {AppState} from "./AppState";
 import {WindowSizeContext} from "../App";
-
+import {supabase} from "./supabase";
+import {Session} from "@supabase/supabase-js";
 
 export function useAppContext() {
     return useContext(AppContext);
@@ -17,7 +28,10 @@ interface AppContextType {
     appDimension: Dimension,
     appType: AppType,
     showModal: <T>(factoryFunction: FactoryFunction<T>) => Promise<T>,
-    store: Store<AppState>
+    store: Store<AppState>,
+    user?: User,
+    session?: Session,
+    refreshSession: () => void
 }
 
 
@@ -61,18 +75,62 @@ const AppContext = createContext<AppContextType>({
                     }
                 }
             }, addListener: (state: any) => Nothing,
-            setState: Nothing
-        }
+            setState: Nothing,
+        },
+        refreshSession: Nothing
     }
 );
 
 type FactoryFunction<T> = (closePanel: (val: T) => void) => ReactElement;
 
+let userSession: any = null;
+(async () => {
+    let {data} = await supabase.auth.getSession();
+    userSession = data?.session;
+})();
+
+export interface User {
+    firstName: string,
+    lastName: string,
+    nationality: string,
+    phone: string,
+    email: string
+}
+
 export function AppContextProvider<State extends AppState>(props: PropsWithChildren<{
     setModalPanel: Dispatch<ReactElement | false>, store: Store<State>
 }>) {
+
     const window = useContext(WindowSizeContext);
     const {setModalPanel, store} = props;
+    const [session, setSession] = useState<Session | null>(userSession);
+    const refreshSession = useCallback(() => {
+        (async () => {
+            let {data} = await supabase.auth.getSession();
+            setSession(data?.session);
+        })();
+    }, []);
+    const user: User | null = useMemo(() => {
+        if (session) {
+            return {
+                firstName: session.user.user_metadata.firstName ?? '',
+                lastName: session.user.user_metadata.lastName ?? '',
+                nationality: session.user.user_metadata.nationality ?? '',
+                phone: session.user.phone ?? '',
+                email: session.user.user_metadata.email ?? ''
+            }
+        }
+        return null;
+    }, [session]);
+    useEffect(() => {
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (event.toString() === 'SIGNED_IN') {
+                setSession(session);
+            } else {
+                setSession(null);
+            }
+        });
+    }, []);
     const showModal = useCallback((factory: FactoryFunction<any>) => {
         return new Promise<any>(resolve => {
             const closePanel = (value: any) => {
@@ -100,8 +158,8 @@ export function AppContextProvider<State extends AppState>(props: PropsWithChild
             appType = AppType.Laptop
         }
 
-        return {appDimension, appType, showModal, store}
-    }, [showModal, store,window]);
+        return {appDimension, appType, showModal, store, user, session, refreshSession}
+    }, [showModal, store, window, user, refreshSession, session]);
 
     return <AppContext.Provider value={contextValue as any}>
         {props.children}
