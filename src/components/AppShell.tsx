@@ -54,8 +54,7 @@ export default function AppShell() {
             email: '',
             phone: '',
             note: '',
-        },
-        orders: []
+        }
     }, storeReducer);
 
     return <AppContextProvider setModalPanel={setModalPanel} store={store}>

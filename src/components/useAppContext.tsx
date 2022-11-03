@@ -66,7 +66,6 @@ const AppContext = createContext<AppContextType>({
                         phone: '',
                         zipCode: ''
                     },
-                    orders: [],
                     cardInfo: {
                         cardNumber: '',
                         cardHolderName: '',

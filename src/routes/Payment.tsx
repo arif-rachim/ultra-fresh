@@ -9,17 +9,15 @@ import {IoCardOutline} from "react-icons/io5";
 import {useSubTotalCart} from "./Cart";
 import {useCallback, useEffect} from "react";
 import {useAppContext} from "../components/useAppContext";
-import {original, produce} from "immer";
+import {produce} from "immer";
 import {useNavigate} from "../components/useNavigate";
 import {StoreValue, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
 import {isNotEmptyText} from "./Shipping";
 import {useFocusListener} from "../components/RouterPageContainer";
-import {Address, CartItem, Order} from "../components/AppState";
 import {nanoid} from "nanoid";
 import {supabase} from "../components/supabase";
 import {DbOrder} from "../components/model/DbOrder";
 import {DbOrderLineItems} from "../components/model/DbOrderLineItems";
-
 
 
 export default function Payment(props: RouteProps) {
@@ -75,42 +73,6 @@ export default function Payment(props: RouteProps) {
             state.cardInfo.validUntil = localStore.stateRef.current.validUntil;
         }));
 
-        store.setState(produce(state => {
-            const order: Order = {
-                payment: {
-                    amount: subTotal,
-                    currency: 'aed',
-                    method: 'visa',
-                    referenceCode: nanoid(),
-                    status: 'received',
-                    time: new Date().toISOString()
-                },
-                status: 'Placed',
-                id: nanoid(),
-                date: new Date().toISOString(),
-                subTotal,
-                shippingAddress: original(state.shippingAddress) as Address,
-                shippingStatus: [],
-                lineItem: original(state.shoppingCart) as CartItem[],
-            }
-
-            state.orders.push(order);
-            state.shoppingCart = [];
-
-            state.shippingAddress = {
-                addressLine2: '',
-                lastName: '',
-                firstName: '',
-                city: '',
-                country: '',
-                addressLine1: '',
-                email: '',
-                note: '',
-                zipCode: '',
-                phone: '',
-                state: ''
-            }
-        }));
         const shippingAddress = store.stateRef.current.shippingAddress;
         const subTotalAmount = parseFloat(subTotal);
         const dbOrder:DbOrder = {
@@ -149,8 +111,23 @@ export default function Payment(props: RouteProps) {
                 order : persistedData.id ?? -1
             };
             return item;
-        });
-        await supabase.from("order_line_items").insert(dbOrderLineItems).select();
+        });await supabase.from("order_line_items").insert(dbOrderLineItems).select();
+        store.setState(produce(state => {
+            state.shoppingCart = [];
+            state.shippingAddress = {
+                addressLine2: '',
+                lastName: '',
+                firstName: '',
+                city: '',
+                country: '',
+                addressLine1: '',
+                email: '',
+                note: '',
+                zipCode: '',
+                phone: '',
+                state: ''
+            }
+        }));
         navigate('history');
     }, [store,navigate,validate,subTotal,localStore.stateRef,user?.phone]);
 
@@ -276,8 +253,8 @@ export default function Payment(props: RouteProps) {
                 </StoreValue>
             </div>
             <div style={{margin: '20px 20px', alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
-                <Button title={`Pay AED ${subTotal}`} onTap={() => {
-                    performPayment();
+                <Button title={`Pay AED ${subTotal}`} onTap={async() => {
+                    await performPayment();
                 }} icon={IoCardOutline} style={{fontSize: 20, padding: '15px 50px'}}/>
             </div>
         </div>

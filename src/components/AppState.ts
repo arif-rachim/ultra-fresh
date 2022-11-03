@@ -38,15 +38,15 @@ export interface Address {
     phone: string,
     note: string
 }
-
-export interface Payment {
-    time: string,
-    method: 'visa' | 'master' | 'apple' | 'google',
-    referenceCode: string,
-    status: 'received' | 'void',
-    amount: string,
-    currency: string
-}
+//
+// export interface Payment {
+//     time: string,
+//     method: 'visa' | 'master' | 'apple' | 'google',
+//     referenceCode: string,
+//     status: 'received' | 'void',
+//     amount: string,
+//     currency: string
+// }
 
 export interface Shipping {
     id: string,
@@ -58,23 +58,22 @@ export interface Shipping {
     captain: string,
     captainMobileNo: string
 }
-
-export interface Order {
-    id: string,
-    date: string,
-    lineItem: CartItem[],
-    subTotal: string,
-    shippingAddress: Address,
-    payment: Payment,
-    shippingStatus: Shipping[]
-    status: 'Placed' | 'Accepted' | 'Dispatched' | 'Delivered' | 'Partial Delivered' | 'Canceled'
-}
+//
+// export interface Order {
+//     id: string,
+//     date: string,
+//     lineItem: CartItem[],
+//     subTotal: string,
+//     shippingAddress: Address,
+//     payment: Payment,
+//     shippingStatus: Shipping[]
+//     status: 'Placed' | 'Accepted' | 'Dispatched' | 'Delivered' | 'Partial Delivered' | 'Canceled'
+// }
 
 export interface AppState {
     shoppingCart: CartItem[];
     shippingAddress: Address,
-    cardInfo: CardInfo,
-    orders: Order[]
+    cardInfo: CardInfo
 }
 
 export const storeReducer = (action: Action) => produce((oldState: AppState) => {

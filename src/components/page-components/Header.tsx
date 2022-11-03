@@ -1,8 +1,10 @@
 import {motion} from "framer-motion";
 import {IoChevronBackOutline} from "react-icons/io5";
-import {PropsWithChildren} from "react";
+import {PropsWithChildren, ReactFragment} from "react";
 
-export function Header(props: PropsWithChildren<{ title: string }>) {
+type Element = string | number | boolean | ReactFragment | JSX.Element | null | undefined;
+
+export function Header(props: PropsWithChildren<{ title: Element }>) {
     const {title} = props;
     return <div style={{
         display: 'flex',
