@@ -1,11 +1,11 @@
-import {HTMLAttributes, PropsWithChildren} from "react";
+import {CSSProperties, PropsWithChildren} from "react";
 import './SkeletonBox.css';
-
-export function SkeletonBox(props:PropsWithChildren<HTMLAttributes<HTMLDivElement> & {skeletonVisible:boolean}>){
-    const {children,skeletonVisible,style,...propsDiv} = props;
+import {motion} from "framer-motion";
+export function SkeletonBox(props:PropsWithChildren<{skeletonVisible:boolean,style:CSSProperties}>){
+    const {children,skeletonVisible,style} = props;
 
     if(skeletonVisible){
-        return <div className={'skeleton-box'} style={{minWidth:100,minHeight:19,...style}} {...propsDiv}/>
+        return <motion.div initial={{opacity:0}} animate={{opacity:1}} className={'skeleton-box'} style={{minWidth:100,minHeight:19,...style}} />
     }
     return <>{children}</>;
 }

@@ -154,8 +154,8 @@ function ImageSlider(props: { selectedProduct?: Product }) {
 
             }}>
                 <Image src={`/images/${selectedProduct?.barcode}/400/${value}.png`}
-                     style={{position: 'relative'}}
-                     height={appDimension.height * 0.5} alt={'Barcode ' + selectedProduct?.barcode}
+                     style={{position: 'relative',margin:10}}
+                     height={appDimension.height * 0.5} width={appDimension.width-20} alt={'Barcode ' + selectedProduct?.barcode}
                      key={selectedProduct?.barcode}
                 />
             </div>

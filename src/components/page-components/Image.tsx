@@ -1,33 +1,27 @@
 import {motion, MotionProps} from "framer-motion";
-import {ImgHTMLAttributes, PropsWithoutRef, useRef} from "react";
+import {ImgHTMLAttributes, PropsWithoutRef, useEffect, useState} from "react";
 import './Image.css';
-import invariant from "tiny-invariant";
+import {SkeletonBox} from "./SkeletonBox";
 
 export function Image(props: PropsWithoutRef<ImgHTMLAttributes<HTMLImageElement>> & MotionProps) {
-    let {onLoad, onError,style, ...properties} = props;
-    const loadingRef = useRef<HTMLDivElement>(null);
-    const motionRef = useRef<HTMLImageElement>(null);
-    style = style ?? {};
-    return <div style={{display: 'flex', flexDirection: 'column', position: 'relative'}}>
-        <div style={{display:'flex',position:'absolute',top:0,left:0,width:'100%',justifyContent:'center'}} >
-        <div className="lds-ellipsis" ref={loadingRef} >
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        </div>
-        <motion.img ref={motionRef} {...properties} style={{opacity:0,...style}} onLoad={() => {
-            invariant(motionRef.current);
-            invariant(loadingRef.current);
-            motionRef.current.style.opacity = '1';
-            loadingRef.current.style.opacity = '0';
-        }} onError={() => {
-            invariant(motionRef.current);
-            invariant(loadingRef.current);
-            motionRef.current.style.opacity = '0';
-            loadingRef.current.style.opacity = '0';
-        }} />
+    let {onLoad, onError, style,width,height, src, ...properties} = props;
+    const [imageObjectURL, setImageObjectURL] = useState('');
 
+    useEffect(() => {
+        setImageObjectURL('');
+        (async () => {
+            const response = await fetch(src ?? '');
+            const imageBlob = await response.blob();
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            setImageObjectURL(imageObjectURL);
+        })();
+    }, [src]);
+
+    return <div style={{display: 'flex', flexDirection: 'column', position: 'relative'}}>
+        <SkeletonBox skeletonVisible={imageObjectURL === ''} style={{...style,width:width,height:height}}>
+            <motion.img initial={{
+                scale:0.95
+            }} animate={{scale:1}} src={imageObjectURL} {...properties} width={width} height={height} style={{...style}}/>
+        </SkeletonBox>
     </div>
 }
