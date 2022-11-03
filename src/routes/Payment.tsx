@@ -16,6 +16,8 @@ import {isNotEmptyText} from "./ShippingAddress";
 import {useFocusListener} from "../components/RouterPageContainer";
 import {Address, CartItem, Order} from "../components/AppState";
 import {nanoid} from "nanoid";
+import {supabase} from "../components/supabase";
+
 
 
 export default function Payment(props: RouteProps) {
@@ -107,7 +109,9 @@ export default function Payment(props: RouteProps) {
                 state: ''
             }
         }));
-        navigate('home');
+
+        supabase.from('orders').insert({})
+        //navigate('home');
     }, [store,navigate,validate,subTotal,localStore.stateRef]);
 
 
