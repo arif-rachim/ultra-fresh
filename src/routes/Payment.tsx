@@ -12,17 +12,19 @@ import {useAppContext} from "../components/useAppContext";
 import {original, produce} from "immer";
 import {useNavigate} from "../components/useNavigate";
 import {StoreValue, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
-import {isNotEmptyText} from "./ShippingAddress";
+import {isNotEmptyText} from "./Shipping";
 import {useFocusListener} from "../components/RouterPageContainer";
 import {Address, CartItem, Order} from "../components/AppState";
 import {nanoid} from "nanoid";
 import {supabase} from "../components/supabase";
+import {DbOrder} from "../components/model/DbOrder";
+import {DbOrderLineItems} from "../components/model/DbOrderLineItems";
 
 
 
 export default function Payment(props: RouteProps) {
     const subTotal = useSubTotalCart();
-    const {store} = useAppContext();
+    const {store,user} = useAppContext();
     const cardInfo = useStoreValue(store, s => s.cardInfo);
     const localStore = useCreateStore({
         ...cardInfo,
@@ -62,7 +64,7 @@ export default function Payment(props: RouteProps) {
         return !hasError;
     }, [localStore]);
 
-    const performPayment = useCallback(() => {
+    const performPayment = useCallback(async () => {
         if (!validate()) {
             return;
         }
@@ -109,10 +111,48 @@ export default function Payment(props: RouteProps) {
                 state: ''
             }
         }));
-
-        supabase.from('orders').insert({})
-        //navigate('home');
-    }, [store,navigate,validate,subTotal,localStore.stateRef]);
+        const shippingAddress = store.stateRef.current.shippingAddress;
+        const subTotalAmount = parseFloat(subTotal);
+        const dbOrder:DbOrder = {
+            payment_date : new Date().toISOString(),
+            order_status : 'placed',
+            payment_amount : subTotalAmount,
+            payment_method : 'card',
+            payment_status : 'received',
+            payment_reference_code : nanoid(),
+            created_by : user?.phone ?? '',
+            shipping_address_line_one : shippingAddress.addressLine1,
+            shipping_address_line_two : shippingAddress.addressLine2,
+            shipping_city : shippingAddress.city,
+            shipping_country : shippingAddress.country,
+            shipping_note : shippingAddress.note,
+            shipping_receiver_first_name : shippingAddress.firstName,
+            shipping_receiver_last_name : shippingAddress.lastName,
+            shipping_receiver_phone : shippingAddress.phone,
+            shipping_state : shippingAddress.state,
+            shipping_zipcode : shippingAddress.zipCode,
+            sub_total : subTotalAmount
+        };
+        const {data:persistedData} = await supabase.from('orders').insert(dbOrder).select().single();
+        const shoppingCart = store.stateRef.current.shoppingCart;
+        let dbOrderLineItems = shoppingCart.map(sc => {
+            const item:DbOrderLineItems = {
+                barcode:sc.barcode,
+                category:sc.category,
+                name : sc.name,
+                price : parseFloat(sc.price),
+                unit : sc.unit,
+                unit_type : sc.unitType,
+                requested_amount : sc.total,
+                shelf_life : sc.shelfLife,
+                shelf_life_type : sc.shelfLifeType,
+                order : persistedData.id ?? -1
+            };
+            return item;
+        });
+        await supabase.from("order_line_items").insert(dbOrderLineItems).select();
+        navigate('history');
+    }, [store,navigate,validate,subTotal,localStore.stateRef,user?.phone]);
 
 
 

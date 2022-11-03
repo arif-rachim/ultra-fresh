@@ -8,7 +8,7 @@ import {motion} from "framer-motion";
 import {IoClose, IoLogInOutline} from "react-icons/io5";
 import {StoreValue, useCreateStore} from "../components/store/useCreateStore";
 import {produce} from "immer";
-import {isNotEmptyText} from "./ShippingAddress";
+import {isNotEmptyText} from "./Shipping";
 import {supabase} from "../components/supabase";
 import {useAppContext} from "../components/useAppContext";
 import {OtpInput} from "../components/page-components/OtpInput";

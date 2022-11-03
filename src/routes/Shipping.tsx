@@ -10,7 +10,7 @@ import {useCallback, useEffect} from "react";
 import {useAppContext} from "../components/useAppContext";
 import {useNavigate} from "../components/useNavigate";
 
-export function ShippingAddress(props: RouteProps) {
+export function Shipping(props: RouteProps) {
     const {store: appStore} = useAppContext();
     const shippingAddress = useStoreValue(appStore, s => s.shippingAddress);
     const store = useCreateStore({

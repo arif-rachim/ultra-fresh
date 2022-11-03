@@ -1,7 +1,7 @@
-export interface Order{
-    created_at : string;//"2022-11-02T21:11:22+00:00"
+export interface DbOrder {
+    created_at?: string;//"2022-11-02T21:11:22+00:00"
     created_by:string;//"971509018075"
-    id:number;//1
+    id?:number;//1
     order_status:string;//"Placed"
     payment_amount:number;//100
     payment_date:string;//"2022-11-02"

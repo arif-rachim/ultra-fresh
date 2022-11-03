@@ -1,13 +1,13 @@
-import {CategoryList} from "./CategoryList";
+import {Categories} from "./Categories";
 import {ProductDetail} from "./ProductDetail";
 import {Routes} from "../components/useRoute";
 import Cart from "./Cart";
-import {ShippingAddress} from "./ShippingAddress";
+import {Shipping} from "./Shipping";
 import ProductWithCategory from "./ProductWithCategory";
 import Payment from "./Payment";
 import History from "./History";
 import OrderDetail from "./OrderDetail";
-import {ProductListGroupedByCategory} from "./ProductListGroupedByCategory";
+import {Home} from "./Home";
 import {FooterNavigation} from "../components/page-components/FooterNavigation";
 import {UserAccount} from "./UserAccount";
 import {SignIn} from "./SignIn";
@@ -34,7 +34,7 @@ export const routes: Routes = {
         }
     },
     'categories': {
-        component: CategoryList,
+        component: Categories,
         footerComponent: FooterNavigation,
         animateIn: {
             left: 0,
@@ -53,7 +53,7 @@ export const routes: Routes = {
         }
     },
     'home': {
-        component: ProductListGroupedByCategory,
+        component: Home,
         footerComponent: FooterNavigation,
         animateIn: {
             left: 0,
@@ -109,7 +109,7 @@ export const routes: Routes = {
         }
     },
     'shipping': {
-        component: ShippingAddress,
+        component: Shipping,
         animateIn: {
             right: 0,
             transition: {

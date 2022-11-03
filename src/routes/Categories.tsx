@@ -55,7 +55,7 @@ export function MainHeaderSearchPanel() {
     </div>
 }
 
-export function CategoryList(props: RouteProps) {
+export function Categories(props: RouteProps) {
     const {appDimension} = useAppContext();
     const navigate = useNavigate();
     const imageDimension = Math.floor(appDimension.width / 3) - 10;

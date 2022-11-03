@@ -1,11 +1,11 @@
-import {MainHeaderSearchPanel, useCategoriesList} from "./CategoryList";
+import {MainHeaderSearchPanel, useCategoriesList} from "./Categories";
 import {useAppContext} from "../components/useAppContext";
 import {useNavigate} from "../components/useNavigate";
 import {useGroupFromCategory} from "./ProductWithCategory";
 import {motion} from "framer-motion";
 import {Image} from "../components/page-components/Image";
 
-export function ProductListGroupedByCategory() {
+export function Home() {
 
     const categories = useCategoriesList();
 

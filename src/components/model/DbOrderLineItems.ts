@@ -1,8 +1,8 @@
-export interface OrderLineItems{
+export interface DbOrderLineItems {
     barcode:string;//"ABC-DEF-GHI"
     category:string;//"Fresh Milk"
-    created_at:string;//"2022-11-02T20:14:47.627626+00:00"
-    id:number;//1
+    created_at?:string;//"2022-11-02T20:14:47.627626+00:00"
+    id?:number;//1
     name:string;//"Strawberry"
     order:number;//1
     price:number;//3
