@@ -115,22 +115,6 @@ export function FooterNavigation(props: RouteProps) {
         </motion.div>
 
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: path === 'shipment' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
-                    style={{
-                        position: 'relative',
-                        alignItems: 'center',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        fontSize: 28
-                    }}
-                    onTap={() => {
-                        navigate('shipment');
-                    }}>
-            {path === 'shipment' ? <MdLocalShipping/> : <MdOutlineLocalShipping/>}
-            <div style={{fontSize: 12}}>Shipment</div>
-        </motion.div>
-
-        <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
                     animate={{color: path === 'user-account' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
                     style={{
                         position: 'relative',

@@ -20,7 +20,7 @@ export function Image(props: PropsWithoutRef<ImgHTMLAttributes<HTMLImageElement>
     return <div style={{display: 'flex', flexDirection: 'column', position: 'relative'}}>
         <SkeletonBox skeletonVisible={imageObjectURL === ''} style={{...style,width:width,height:height}}>
             <motion.img initial={{
-                scale:0.95
+                scale:0.8
             }} animate={{scale:1}} src={imageObjectURL} {...properties} width={width} height={height} style={{...style}}/>
         </SkeletonBox>
     </div>
