@@ -1,6 +1,5 @@
 import {Header} from "../components/page-components/Header";
 import {RouteProps} from "../components/useRoute";
-import {useCreateStore, useStoreValue} from "../components/store/useCreateStore";
 import {useAppContext} from "../components/useAppContext";
 import {white} from "./Theme";
 import {motion} from "framer-motion";
@@ -10,7 +9,7 @@ import {supabase} from "../components/supabase";
 import {DbOrder} from "../components/model/DbOrder";
 
 export default function History(props: RouteProps) {
-    const {store,user} = useAppContext();
+    const {user} = useAppContext();
     const [orders,setOrders] = useState<DbOrder[]>([]);
     useEffect(() => {
         (async () => {
@@ -41,7 +40,7 @@ export default function History(props: RouteProps) {
 
         }
 
-    },[]);
+    },[user?.phone]);
 
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <Header title={'Order Status'}/>
