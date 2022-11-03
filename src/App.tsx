@@ -15,7 +15,6 @@ function App() {
         height = 844;
     }
 
-
     return <div style={{display: 'flex', height: '100%', overflow: 'auto'}}>
         {isSimulator &&
             <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1,justifyContent:'center'}}>

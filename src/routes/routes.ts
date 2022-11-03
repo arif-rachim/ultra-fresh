@@ -11,9 +11,28 @@ import {ProductListGroupedByCategory} from "./ProductListGroupedByCategory";
 import {FooterNavigation} from "../components/page-components/FooterNavigation";
 import {UserAccount} from "./UserAccount";
 import {SignIn} from "./SignIn";
+import {LandingScreen} from "./LandingScreen";
 
 
 export const routes: Routes = {
+    '' : {
+        component : LandingScreen ,
+        animateIn: {
+            scale:1,
+            opacity: 1,
+        },
+        animateOut: {
+            scale: 0.1,
+            opacity : 0.1,
+            transition: {
+                bounce: 0
+            }
+        },
+        initial: {
+            scale: 0.1,
+            opacity : 0.1
+        }
+    },
     'categories': {
         component: CategoryList,
         footerComponent: FooterNavigation,
