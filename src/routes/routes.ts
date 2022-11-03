@@ -12,6 +12,7 @@ import {FooterNavigation} from "../components/page-components/FooterNavigation";
 import {UserAccount} from "./UserAccount";
 import {SignIn} from "./SignIn";
 import {LandingScreen} from "./LandingScreen";
+import {Shipment} from "./Shipment";
 
 
 export const routes: Routes = {
@@ -164,6 +165,25 @@ export const routes: Routes = {
     },
     'history': {
         component: History,
+        footerComponent: FooterNavigation,
+        animateIn: {
+            right: 0,
+            transition: {
+                bounce: 0
+            }
+        },
+        animateOut: {
+            right: '-100%',
+            transition: {
+                bounce: 0
+            }
+        },
+        initial: {
+            right: '-100%'
+        }
+    },
+    'shipment': {
+        component: Shipment,
         footerComponent: FooterNavigation,
         animateIn: {
             right: 0,
