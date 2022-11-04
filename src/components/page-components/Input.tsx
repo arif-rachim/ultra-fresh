@@ -44,7 +44,7 @@ export function Input(props: {
             minWidth: 0,
             ...style?.inputStyle
         }} placeholder={props.placeholder} value={value} defaultValue={defaultValue} onChange={props.onChange}
-               title={error} type={type} inputMode={inputMode}/>
+               title={error} type={type} inputMode={inputMode} onFocus={e => e.target.select()}/>
         <div style={{
             paddingRight: 5,
             fontSize: 12,
