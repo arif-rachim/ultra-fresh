@@ -14,6 +14,7 @@ import {useAppContext} from "../components/useAppContext";
 import {OtpInput} from "../components/page-components/OtpInput";
 
 const initialState = {phone: '', password: '', errors: {phone: '', password: ''}};
+
 export function SignIn(props: RouteProps) {
     const [loginWithOtp, setLoginWithOtp] = useState(true);
     const localStore = useCreateStore(initialState);
@@ -83,25 +84,26 @@ export function SignIn(props: RouteProps) {
             </motion.div>
             {!loginWithOtp &&
                 <motion.div layout>
-                    <StoreValue store={localStore} selector={[s => s.password,s => s.errors.password]} property={['value','error']}>
-                    <Input title={'Password'} type={'password'} placeholder={'Please enter password'}
-                           style={{containerStyle: {borderBottom: 'none'}}}
-                           onChange={(e) => {
-                               localStore.setState(produce(state => {
-                                   state.password = e.target.value;
-                                   state.errors.password = isNotEmptyText(e.target.value) ? '' : 'Password is required';
-                               }))
-                           }}
-                    />
+                    <StoreValue store={localStore} selector={[s => s.password, s => s.errors.password]}
+                                property={['value', 'error']}>
+                        <Input title={'Password'} type={'password'} placeholder={'Please enter password'}
+                               style={{containerStyle: {borderBottom: 'none'}}}
+                               onChange={(e) => {
+                                   localStore.setState(produce(state => {
+                                       state.password = e.target.value;
+                                       state.errors.password = isNotEmptyText(e.target.value) ? '' : 'Password is required';
+                                   }))
+                               }}
+                        />
                     </StoreValue>
                 </motion.div>
             }
             <Button onTap={async () => {
                 const state = localStore.stateRef.current;
-                let phone = '+971'+state.phone;
+                let phone = '+971' + state.phone;
                 if (loginWithOtp) {
-                    const result = await supabase.auth.signInWithOtp({phone,options:{shouldCreateUser:true}});
-                    if(result.error){
+                    const result = await supabase.auth.signInWithOtp({phone, options: {shouldCreateUser: true}});
+                    if (result.error) {
                         localStore.setState(produce(state => {
                             state.errors.phone = 'We do not have any records for this number.';
                         }));
@@ -109,22 +111,22 @@ export function SignIn(props: RouteProps) {
                     }
 
                     const otp = await showModal(closePanel => {
-                        return <ValidatingOtp closePanel={closePanel} phone={phone} />
+                        return <ValidatingOtp closePanel={closePanel} phone={phone}/>
                     });
 
-                    if(otp === false){
+                    if (otp === false) {
                         return;
                     }
-                    if(otp === 'new-user'){
+                    if (otp === 'new-user') {
                         await showModal(closePanel => {
-                            return <UpdateUserProfile closePanel={closePanel}  />
+                            return <UpdateUserProfile closePanel={closePanel}/>
                         });
                     }
                     localStore.setState(initialState);
                     window.history.back();
-                }else{
-                    const result = await supabase.auth.signInWithPassword({phone,password:state.password});
-                    if(result.error){
+                } else {
+                    const result = await supabase.auth.signInWithPassword({phone, password: state.password});
+                    if (result.error) {
                         localStore.setState(produce(state => {
                             state.errors.phone = result.error.message;
                         }));
@@ -140,14 +142,19 @@ export function SignIn(props: RouteProps) {
     </div>
 }
 
-function UpdateUserProfile(props:{closePanel:(param:any) => void}){
-    const localStore = useCreateStore({firstName:'',lastName:'',pinNo:'',errors:{firstName:'',lastName:'',pinNo:''}});
+function UpdateUserProfile(props: { closePanel: (param: any) => void }) {
+    const localStore = useCreateStore({
+        firstName: '',
+        lastName: '',
+        pinNo: '',
+        errors: {firstName: '', lastName: '', pinNo: ''}
+    });
     const validate = useCallback(() => {
         localStore.setState(produce(draft => {
-            draft.errors.firstName = isNotEmptyText(draft.firstName) ? '' :'First Name is required';
-            draft.errors.lastName = isNotEmptyText(draft.lastName) ? '' :'Last Name is required';
-            draft.errors.pinNo = isNotEmptyText(draft.pinNo) ? '' :'PIN No is required';
-            if(draft.pinNo.length !== 6){
+            draft.errors.firstName = isNotEmptyText(draft.firstName) ? '' : 'First Name is required';
+            draft.errors.lastName = isNotEmptyText(draft.lastName) ? '' : 'Last Name is required';
+            draft.errors.pinNo = isNotEmptyText(draft.pinNo) ? '' : 'PIN No is required';
+            if (draft.pinNo.length !== 6) {
                 draft.errors.pinNo = 'PIN No must be 6 numeric character';
             }
         }));
@@ -156,64 +163,78 @@ function UpdateUserProfile(props:{closePanel:(param:any) => void}){
             return hasError || ((state.errors as any)[key]).toString().length > 0
         }, false);
         return !hasError;
-    },[localStore]);
-    return <div style={{margin:30,backgroundColor:white,padding:20,borderRadius:20,display:'flex',flexDirection:'column',boxShadow:'0 5px 5px -3px rgba(0,0,0,0.5)'}}>
-        <div style={{margin:10,marginBottom:20,fontSize:14}}>We are delighted to have you with us! In order to better serve you, we would appreciate it if you could fill out the following information.</div>
-        <StoreValue store={localStore} selector={[s => s.firstName,s => s.errors.firstName]} property={['value','error']}>
-        <Input title={'First Name'} placeholder={'Please enter your first name'} onChange={(e) => {
-            localStore.setState(produce(draft => {
-                draft.firstName = e.target.value;
-                draft.errors.firstName = isNotEmptyText(e.target.value) ? '' : 'First name is required';
-            }))
-        }}/>
-        </StoreValue>
-        <StoreValue store={localStore} selector={[s => s.lastName,s => s.errors.lastName]} property={['value','error']}>
-        <Input title={'Last Name'} placeholder={'Please enter your last name'} onChange={(e) => {
-            localStore.setState(produce(draft => {
-                draft.lastName = e.target.value;
-                draft.errors.lastName = isNotEmptyText(e.target.value) ? '' : 'Last name is required';
-            }))
-        }}/>
-        </StoreValue>
-        <div style={{margin:10,marginBottom:20,fontSize:14}}>
-            The PIN is a six-digit number that can be entered instead of the OTP in order to log in. This will provide you with the benefit of being able to log into the app without waiting for the OTP to be delivered.
+    }, [localStore]);
+    return <div style={{
+        margin: 30,
+        backgroundColor: white,
+        padding: 20,
+        borderRadius: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        boxShadow: '0 5px 5px -3px rgba(0,0,0,0.5)'
+    }}>
+        <div style={{margin: 10, marginBottom: 20, fontSize: 14}}>We are delighted to have you with us! In order to
+            better serve you, we would appreciate it if you could fill out the following information.
         </div>
-        <StoreValue store={localStore} selector={[s => s.pinNo,s => s.errors.pinNo]} property={['value','error']}>
-            <Input title={'PIN No'} placeholder={'Please enter your pin'} type={'number'} inputMode={"numeric"} onChange={(e) => {
+        <StoreValue store={localStore} selector={[s => s.firstName, s => s.errors.firstName]}
+                    property={['value', 'error']}>
+            <Input title={'First Name'} placeholder={'Please enter your first name'} onChange={(e) => {
                 localStore.setState(produce(draft => {
-                    draft.pinNo = e.target.value;
-                    draft.errors.pinNo = isNotEmptyText(e.target.value) ? '' : 'PIN no is required';
+                    draft.firstName = e.target.value;
+                    draft.errors.firstName = isNotEmptyText(e.target.value) ? '' : 'First name is required';
                 }))
             }}/>
         </StoreValue>
-        <div style={{margin:10,display:'flex',flexDirection:'column'}}>
-        <Button onTap={async () => {
-            if(validate()){
-                const {firstName,lastName,pinNo} = localStore.stateRef.current;
-                await supabase.auth.updateUser( {data:{firstName,lastName},password:pinNo});
-                props.closePanel(true);
-            }
-        }} title={'Save my information'} icon={IoLogInOutline} theme={ButtonTheme.promoted} />
+        <StoreValue store={localStore} selector={[s => s.lastName, s => s.errors.lastName]}
+                    property={['value', 'error']}>
+            <Input title={'Last Name'} placeholder={'Please enter your last name'} onChange={(e) => {
+                localStore.setState(produce(draft => {
+                    draft.lastName = e.target.value;
+                    draft.errors.lastName = isNotEmptyText(e.target.value) ? '' : 'Last name is required';
+                }))
+            }}/>
+        </StoreValue>
+        <div style={{margin: 10, marginBottom: 20, fontSize: 14}}>
+            The PIN is a six-digit number that can be entered instead of the OTP in order to log in. This will provide
+            you with the benefit of being able to log into the app without waiting for the OTP to be delivered.
+        </div>
+        <StoreValue store={localStore} selector={[s => s.pinNo, s => s.errors.pinNo]} property={['value', 'error']}>
+            <Input title={'PIN No'} placeholder={'Please enter your pin'} type={'number'} inputMode={"numeric"}
+                   onChange={(e) => {
+                       localStore.setState(produce(draft => {
+                           draft.pinNo = e.target.value;
+                           draft.errors.pinNo = isNotEmptyText(e.target.value) ? '' : 'PIN no is required';
+                       }))
+                   }}/>
+        </StoreValue>
+        <div style={{margin: 10, display: 'flex', flexDirection: 'column'}}>
+            <Button onTap={async () => {
+                if (validate()) {
+                    const {firstName, lastName, pinNo} = localStore.stateRef.current;
+                    await supabase.auth.updateUser({data: {firstName, lastName}, password: pinNo});
+                    props.closePanel(true);
+                }
+            }} title={'Save my information'} icon={IoLogInOutline} theme={ButtonTheme.promoted}/>
         </div>
     </div>
 }
 
-export function ValidatingOtp(props:{closePanel:(result:any) => void,phone:string}){
-    const [value,setValue] = useState('');
-    const {phone,closePanel} = props;
-    const [disabled,setDisabled] = useState(false);
-    const [errMessage,setErrMessage] = useState('');
+export function ValidatingOtp(props: { closePanel: (result: any) => void, phone: string }) {
+    const [value, setValue] = useState('');
+    const {phone, closePanel} = props;
+    const [disabled, setDisabled] = useState(false);
+    const [errMessage, setErrMessage] = useState('');
     useEffect(() => {
         (async () => {
-            if(value.length === 6){
+            if (value.length === 6) {
                 setDisabled(true);
                 const result = await supabase.auth.verifyOtp({
-                    type : 'sms',
-                    phone ,
-                    token:value
+                    type: 'sms',
+                    phone,
+                    token: value
                 });
 
-                if(result.error){
+                if (result.error) {
                     setErrMessage(result.error.message);
                     setDisabled(false);
                     setValue('');
@@ -221,30 +242,42 @@ export function ValidatingOtp(props:{closePanel:(result:any) => void,phone:strin
                 }
                 const userMeta = result?.data?.user?.user_metadata;
                 const userAlreadyRegistered = userMeta && 'firstName' in userMeta;
-                if(!userAlreadyRegistered){
+                if (!userAlreadyRegistered) {
                     closePanel('new-user');
                     return;
                 }
                 closePanel(true);
             }
         })();
-    },[value,closePanel,phone])
-    return <div style={{display:'flex',position:'relative',flexDirection:'column',padding:20,margin:20,backgroundColor:'white',borderRadius:20,boxShadow:'0 5px 10px -7px rgba(0,0,0,1)',border:'1px solid rgba(0,0,0,0.1)'}}>
-        <div style={{display:'flex'}}>
-            <div style={{display:'flex',flexDirection:'column',marginBottom:10,flexGrow:1}}>
-                <div style={{fontSize:16,marginBottom:5}}>
+    }, [value, closePanel, phone])
+    return <div style={{
+        display: 'flex',
+        position: 'relative',
+        flexDirection: 'column',
+        padding: 20,
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        boxShadow: '0 5px 10px -7px rgba(0,0,0,1)',
+        border: '1px solid rgba(0,0,0,0.1)'
+    }}>
+        <div style={{display: 'flex'}}>
+            <div style={{display: 'flex', flexDirection: 'column', marginBottom: 10, flexGrow: 1}}>
+                <div style={{fontSize: 16, marginBottom: 5}}>
                     OTP has been sent to :
                 </div>
-                <div style={{display:'flex'}}>
-                    <div style={{flexGrow:1}}>{phone}</div>
-                    <div style={{color:'red'}}>{errMessage}</div>
+                <div style={{display: 'flex'}}>
+                    <div style={{flexGrow: 1}}>{phone}</div>
+                    <div style={{color: 'red'}}>{errMessage}</div>
                 </div>
             </div>
         </div>
-        <motion.div onTap={() => {closePanel(false)}} style={{position:'absolute',top:10,right:10}}>
-            <IoClose />
+        <motion.div onTap={() => {
+            closePanel(false)
+        }} style={{position: 'absolute', top: 10, right: 10}}>
+            <IoClose/>
         </motion.div>
-        <OtpInput onChange={setValue} value={value} valueLength={6} disabled={disabled} />
+        <OtpInput onChange={setValue} value={value} valueLength={6} disabled={disabled}/>
 
     </div>
 }

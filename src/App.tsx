@@ -17,10 +17,10 @@ function App() {
 
     return <div style={{display: 'flex', height: '100%', overflow: 'auto'}}>
         {isSimulator &&
-            <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1,justifyContent:'center'}}>
-                <div style={{margin: 60,marginTop:0}}>
+            <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center'}}>
+                <div style={{margin: 60, marginTop: 0}}>
                     <div style={{fontSize: 90}}>Ultra Fresh</div>
-                    <div style={{fontSize:40}}>By Marmum</div>
+                    <div style={{fontSize: 40}}>By Marmum</div>
                     <div>Build and designed by Windy Des Nadian for INSEAD GEMBA Final Project.</div>
                 </div>
             </div>}
@@ -36,7 +36,7 @@ function App() {
                 borderRadius: isSimulator ? 30 : 0,
                 transform: isSimulator ? 'scale(0.8)' : 'unset',
                 border: isSimulator ? '10px solid rgba(0,0,0,1)' : 'none',
-                marginRight : isSimulator ? 50 : 0,
+                marginRight: isSimulator ? 50 : 0,
             }}>
                 <AppShell/>
             </div>

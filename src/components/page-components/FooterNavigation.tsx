@@ -13,7 +13,6 @@ import {
     IoPerson,
     IoPersonOutline
 } from "react-icons/io5";
-import {MdOutlineLocalShipping,MdLocalShipping} from "react-icons/md";
 import {AiOutlineOrderedList} from "react-icons/ai";
 import {RouteProps} from "../useRoute";
 

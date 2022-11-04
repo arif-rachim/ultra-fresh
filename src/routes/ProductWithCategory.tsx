@@ -154,9 +154,10 @@ function ImageSlider(props: { selectedProduct?: Product }) {
 
             }}>
                 <Image src={`/images/${selectedProduct?.barcode}/400/${value}.png`}
-                     style={{position: 'relative',margin:10}}
-                     height={appDimension.height * 0.5} width={appDimension.width-20} alt={'Barcode ' + selectedProduct?.barcode}
-                     key={selectedProduct?.barcode}
+                       style={{position: 'relative', margin: 10}}
+                       height={appDimension.height * 0.5} width={appDimension.width - 20}
+                       alt={'Barcode ' + selectedProduct?.barcode}
+                       key={selectedProduct?.barcode}
                 />
             </div>
         })}
@@ -210,7 +211,7 @@ export default function ProductWithCategory(props: RouteProps) {
             const selectedGroup = groups.find(g => g.name === group) ?? groups[0];
             selectedStore.dispatch({type: 'GROUP_SELECTED', payload: selectedGroup})
         }
-    }, [groups, group,selectedStore])
+    }, [groups, group, selectedStore])
 
     const units = useMemo(() => {
         return data.filter(d => d.category === selectedGroup.category && d.name === selectedGroup.name).map(p => ({
@@ -225,10 +226,10 @@ export default function ProductWithCategory(props: RouteProps) {
             const unit = units[0];
             selectedStore.dispatch({type: 'UNIT_SELECTED', payload: unit});
         }
-    }, [units,selectedStore])
+    }, [units, selectedStore])
     const selectedProduct = data.find(d => d.barcode === selectedUnit.barcode);
 
-    return <div style={{display: 'flex', flexDirection: 'column', height: '100%',overflow:'hidden'}}>
+    return <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden'}}>
         <Header title={category ?? ''}/>
         <div style={{
             height: '100%',
@@ -241,9 +242,9 @@ export default function ProductWithCategory(props: RouteProps) {
             display: 'flex',
             flexDirection: 'column',
             width: '100%',
-            maxWidth:'100%',
+            maxWidth: '100%',
             position: 'absolute',
-            overflow:'hidden',
+            overflow: 'hidden',
             bottom: 0
         }}>
             <div style={{display: "flex", alignItems: 'flex-end', marginLeft: 10, marginRight: 10, marginBottom: 10}}>
@@ -336,12 +337,15 @@ function CategoryIconSelector<T extends { barcode: string, name: string }>(props
     const {imageDimension, item, selected} = props;
     return <motion.div style={{...itemStyleSheet, height: imageDimension + 10}}
                        key={item.barcode}
-                       animate={{background: selected ? blueDarken : 'rgba(255,255,255,0.5)', color: selected ? white : blueDarken}}
+                       animate={{
+                           background: selected ? blueDarken : 'rgba(255,255,255,0.5)',
+                           color: selected ? white : blueDarken
+                       }}
                        onTap={() => props.onTap(item)}>
         <Image src={`/images/${item.barcode}/THUMB/default.png`}
-                    style={{marginTop: 5}}
-                    width={imageDimension - 20} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
-                    whileHover={{scale: 1.05}}/>
+               style={{marginTop: 5}}
+               width={imageDimension - 20} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
+               whileHover={{scale: 1.05}}/>
         <div style={{
             fontSize: 10,
             textAlign: 'center',

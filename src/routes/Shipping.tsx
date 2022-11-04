@@ -37,7 +37,7 @@ export function Shipping(props: RouteProps) {
     }));
     useEffect(() => {
         store.setState(old => ({...old, ...shippingAddress}))
-    }, [shippingAddress,store])
+    }, [shippingAddress, store])
     const update = useCallback((key: string, value: any) => store.dispatch({
         type: 'update',
         payload: {key, value}

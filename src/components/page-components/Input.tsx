@@ -17,7 +17,7 @@ export function Input(props: {
     error?: string,
     style?: InputStyle,
     type?: HTMLInputTypeAttribute,
-    disabled?:boolean,
+    disabled?: boolean,
     inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search"
 }) {
 
@@ -45,7 +45,8 @@ export function Input(props: {
             minWidth: 0,
             ...style?.inputStyle
         }} placeholder={props.placeholder} value={value} defaultValue={defaultValue} onChange={props.onChange}
-               title={error} type={type} inputMode={inputMode} onFocus={e => e.target.select()} disabled={props.disabled}/>
+               title={error} type={type} inputMode={inputMode} onFocus={e => e.target.select()}
+               disabled={props.disabled}/>
         <div style={{
             paddingRight: 5,
             fontSize: 12,

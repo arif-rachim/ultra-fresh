@@ -24,7 +24,7 @@ interface Dimension {
     height: number
 }
 
-interface AppContextType{
+interface AppContextType {
     appDimension: Dimension,
     appType: AppType,
     showModal: <T>(factoryFunction: FactoryFunction<T>) => Promise<T>,
@@ -116,7 +116,7 @@ export function AppContextProvider<State extends AppState>(props: PropsWithChild
     }, [session]);
     useEffect(() => {
         supabase.auth.onAuthStateChange((event, session) => {
-            console.log('WE HAVE EVENT ',event,session);
+            console.log('WE HAVE EVENT ', event, session);
             setSession(session);
         });
     }, []);

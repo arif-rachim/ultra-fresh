@@ -1,6 +1,6 @@
 import {Header} from "../components/page-components/Header";
 import {motion} from "framer-motion";
-import {IoLogInOutline,IoLogOutOutline} from "react-icons/io5";
+import {IoLogInOutline, IoLogOutOutline} from "react-icons/io5";
 import {HiOutlineUserCircle} from "react-icons/hi";
 import {blueDarken, ButtonTheme, white} from "./Theme";
 import {useNavigate} from "../components/useNavigate";
@@ -23,11 +23,11 @@ function AnonymousPage() {
         </div>
 
 
-        <div style={{display: 'flex',justifyContent:'center'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
             <motion.div style={{
                 margin: 20,
                 border: '1px solid rgba(0,0,0,0.05)',
-                boxShadow:'0 0 5px -3px rgba(0,0,0,0.1)',
+                boxShadow: '0 0 5px -3px rgba(0,0,0,0.1)',
                 padding: 20,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -54,21 +54,42 @@ function AnonymousPage() {
     </div>;
 }
 
-function AccountInfo(props:{user?:User}){
+function AccountInfo(props: { user?: User }) {
     const {user} = props;
     invariant(user);
-    return <div style={{display:'flex',flexDirection:'column',margin:20,padding:20,background:'rgba(255,255,255,0.4)',border:'1px solid rgba(0,0,0,0.1)',borderRadius:10}}>
-        <div style={{fontSize:200,display:'flex',justifyContent:'center',margin:0,padding:20,background:'radial-gradient(rgba(255,255,255,0.6),rgba(0,0,0,0.09))'}}>
+    return <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 20,
+        padding: 20,
+        background: 'rgba(255,255,255,0.4)',
+        border: '1px solid rgba(0,0,0,0.1)',
+        borderRadius: 10
+    }}>
+        <div style={{
+            fontSize: 200,
+            display: 'flex',
+            justifyContent: 'center',
+            margin: 0,
+            padding: 20,
+            background: 'radial-gradient(rgba(255,255,255,0.6),rgba(0,0,0,0.09))'
+        }}>
             <HiOutlineUserCircle/>
         </div>
-        <div style={{display:'flex',flexDirection:'column',borderBottom:'1px solid rgba(0,0,0,0.1)',paddingBottom:10,marginBottom:10}}>
-            <div style={{fontSize:36,marginBottom:10}}>{user.firstName} {user.lastName}</div>
-            <div style={{fontSize:18,marginBottom:5}}>{user.phone}</div>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            borderBottom: '1px solid rgba(0,0,0,0.1)',
+            paddingBottom: 10,
+            marginBottom: 10
+        }}>
+            <div style={{fontSize: 36, marginBottom: 10}}>{user.firstName} {user.lastName}</div>
+            <div style={{fontSize: 18, marginBottom: 5}}>{user.phone}</div>
             <div>{user.email}</div>
         </div>
         <Button title={'Sign-Out'} onTap={async () => {
             await supabase.auth.signOut();
-        }} icon={IoLogOutOutline} theme={ButtonTheme.promoted}  />
+        }} icon={IoLogOutOutline} theme={ButtonTheme.promoted}/>
     </div>
 }
 
@@ -80,7 +101,7 @@ export function UserAccount() {
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden'}}>
         <Header title={'User Account Information'}/>
         {isAnonymous &&
-        <AnonymousPage />}
+            <AnonymousPage/>}
         {!isAnonymous && <AccountInfo user={user}/>}
     </div>
 }

@@ -4,7 +4,7 @@ import './Image.css';
 import {SkeletonBox} from "./SkeletonBox";
 
 export function Image(props: PropsWithoutRef<ImgHTMLAttributes<HTMLImageElement>> & MotionProps) {
-    let {onLoad, onError, style,width,height, src, ...properties} = props;
+    let {onLoad, onError, style, width, height, src, ...properties} = props;
     const [imageObjectURL, setImageObjectURL] = useState('');
 
     useEffect(() => {
@@ -18,10 +18,11 @@ export function Image(props: PropsWithoutRef<ImgHTMLAttributes<HTMLImageElement>
     }, [src]);
 
     return <div style={{display: 'flex', flexDirection: 'column', position: 'relative'}}>
-        <SkeletonBox skeletonVisible={imageObjectURL === ''} style={{...style,width:width,height:height}}>
+        <SkeletonBox skeletonVisible={imageObjectURL === ''} style={{...style, width: width, height: height}}>
             <motion.img initial={{
-                scale:0.8
-            }} animate={{scale:1}} src={imageObjectURL} {...properties} width={width} height={height} style={{...style}}/>
+                scale: 0.8
+            }} animate={{scale: 1}} src={imageObjectURL} {...properties} width={width} height={height}
+                        style={{...style}}/>
         </SkeletonBox>
     </div>
 }

@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 
 import './OtpInput.css';
+
 const RE_DIGIT = new RegExp(/^\d+$/);
 
 export type Props = {
@@ -9,8 +10,8 @@ export type Props = {
     onChange: (value: string) => void;
 };
 
-export function OtpInput( props:{ value:string, valueLength:number, onChange:(newVal:string) => void,disabled:boolean }) {
-    const {value,valueLength,onChange,disabled} = props;
+export function OtpInput(props: { value: string, valueLength: number, onChange: (newVal: string) => void, disabled: boolean }) {
+    const {value, valueLength, onChange, disabled} = props;
     const valueItems = useMemo(() => {
         const valueArray = value.split('');
         const items: Array<string> = [];
@@ -85,7 +86,7 @@ export function OtpInput( props:{ value:string, valueLength:number, onChange:(ne
         }
     };
     const inputOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const { key } = e;
+        const {key} = e;
         const target = e.target as HTMLInputElement;
 
         if (key === 'ArrowRight' || key === 'ArrowDown') {
@@ -111,7 +112,7 @@ export function OtpInput( props:{ value:string, valueLength:number, onChange:(ne
         focusToPrevInput(target);
     };
     const inputOnFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-        const { target } = e;
+        const {target} = e;
 
         // keep focusing back until previous input
         // element has value

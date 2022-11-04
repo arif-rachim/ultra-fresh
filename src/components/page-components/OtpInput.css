@@ -17,6 +17,7 @@
     font-weight: bold;
     line-height: 1;
 }
-.otp-input[disabled="true"]{
+
+.otp-input[disabled="true"] {
     opacity: 0.9;
 }

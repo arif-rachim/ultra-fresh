@@ -22,7 +22,7 @@ import {DbOrderLineItems} from "../components/model/DbOrderLineItems";
 
 export default function Payment(props: RouteProps) {
     const subTotal = useSubTotalCart();
-    const {store,user} = useAppContext();
+    const {store, user} = useAppContext();
     const cardInfo = useStoreValue(store, s => s.cardInfo);
     const localStore = useCreateStore({
         ...cardInfo,
@@ -44,7 +44,7 @@ export default function Payment(props: RouteProps) {
                 s.cardNumber = '';
             }))
         }
-    }, [isFocused,localStore]);
+    }, [isFocused, localStore]);
 
     const navigate = useNavigate();
 
@@ -75,44 +75,45 @@ export default function Payment(props: RouteProps) {
 
         const shippingAddress = store.stateRef.current.shippingAddress;
         const subTotalAmount = parseFloat(subTotal);
-        const dbOrder:DbOrder = {
-            payment_date : new Date().toISOString(),
-            order_status : 'Placed',
-            payment_amount : subTotalAmount,
-            payment_method : 'card',
-            payment_status : 'Received',
-            payment_reference_code : nanoid(),
-            created_by : user?.phone ?? '',
-            shipping_address_line_one : shippingAddress.addressLine1,
-            shipping_address_line_two : shippingAddress.addressLine2,
-            shipping_city : shippingAddress.city,
-            shipping_country : shippingAddress.country,
-            shipping_note : shippingAddress.note,
-            shipping_receiver_first_name : shippingAddress.firstName,
-            shipping_receiver_last_name : shippingAddress.lastName,
-            shipping_receiver_phone : shippingAddress.phone,
-            shipping_state : shippingAddress.state,
-            shipping_zipcode : shippingAddress.zipCode,
-            sub_total : subTotalAmount
+        const dbOrder: DbOrder = {
+            payment_date: new Date().toISOString(),
+            order_status: 'Placed',
+            payment_amount: subTotalAmount,
+            payment_method: 'card',
+            payment_status: 'Received',
+            payment_reference_code: nanoid(),
+            created_by: user?.phone ?? '',
+            shipping_address_line_one: shippingAddress.addressLine1,
+            shipping_address_line_two: shippingAddress.addressLine2,
+            shipping_city: shippingAddress.city,
+            shipping_country: shippingAddress.country,
+            shipping_note: shippingAddress.note,
+            shipping_receiver_first_name: shippingAddress.firstName,
+            shipping_receiver_last_name: shippingAddress.lastName,
+            shipping_receiver_phone: shippingAddress.phone,
+            shipping_state: shippingAddress.state,
+            shipping_zipcode: shippingAddress.zipCode,
+            sub_total: subTotalAmount
         };
-        const {data:persistedData} = await supabase.from('orders').insert(dbOrder).select().single();
+        const {data: persistedData} = await supabase.from('orders').insert(dbOrder).select().single();
         const shoppingCart = store.stateRef.current.shoppingCart;
         let dbOrderLineItems = shoppingCart.map(sc => {
-            const item:DbOrderLineItems = {
-                barcode:sc.barcode,
-                category:sc.category,
-                name : sc.name,
-                price : parseFloat(sc.price),
-                unit : sc.unit,
-                unit_type : sc.unitType,
-                requested_amount : sc.total,
-                shelf_life : sc.shelfLife,
-                shelf_life_type : sc.shelfLifeType,
-                order : persistedData.id ?? -1,
-                fulfilled_amount : 0
+            const item: DbOrderLineItems = {
+                barcode: sc.barcode,
+                category: sc.category,
+                name: sc.name,
+                price: parseFloat(sc.price),
+                unit: sc.unit,
+                unit_type: sc.unitType,
+                requested_amount: sc.total,
+                shelf_life: sc.shelfLife,
+                shelf_life_type: sc.shelfLifeType,
+                order: persistedData.id ?? -1,
+                fulfilled_amount: 0
             };
             return item;
-        });await supabase.from("order_line_items").insert(dbOrderLineItems).select();
+        });
+        await supabase.from("order_line_items").insert(dbOrderLineItems).select();
         store.setState(produce(state => {
             state.shoppingCart = [];
             state.shippingAddress = {
@@ -130,8 +131,7 @@ export default function Payment(props: RouteProps) {
             }
         }));
         navigate('history');
-    }, [store,navigate,validate,subTotal,localStore.stateRef,user?.phone]);
-
+    }, [store, navigate, validate, subTotal, localStore.stateRef, user?.phone]);
 
 
     return <div
@@ -254,7 +254,7 @@ export default function Payment(props: RouteProps) {
                 </StoreValue>
             </div>
             <div style={{margin: '20px 20px', alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
-                <Button title={`Pay AED ${subTotal}`} onTap={async() => {
+                <Button title={`Pay AED ${subTotal}`} onTap={async () => {
                     await performPayment();
                 }} icon={IoCardOutline} style={{fontSize: 20, padding: '15px 50px'}}/>
             </div>

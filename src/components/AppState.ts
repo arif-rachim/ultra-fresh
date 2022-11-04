@@ -38,6 +38,7 @@ export interface Address {
     phone: string,
     note: string
 }
+
 //
 // export interface Payment {
 //     time: string,
@@ -58,6 +59,7 @@ export interface Shipping {
     captain: string,
     captainMobileNo: string
 }
+
 //
 // export interface Order {
 //     id: string,

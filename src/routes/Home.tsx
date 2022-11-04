@@ -57,16 +57,16 @@ function CategoryLineRenderer(props: { category: string }) {
                     marginLeft: 5,
                     marginRight: 5,
                     borderRadius: 5,
-                    background:'radial-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.8))'
+                    background: 'radial-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.8))'
                 }} onTap={() => {
                     navigate(`product-with-category/${category}/${group.name}`);
                 }} whileTap={{scale: 0.95}}
                             whileHover={{scale: 1.05}}>
                     <Image src={`/images/${group.barcode}/THUMB/default.png`}
-                                style={{marginTop: 5, marginBottom: 5}}
-                                height={70}
-                                width={70}
-                                alt={'Barcode ' + group.barcode}/>
+                           style={{marginTop: 5, marginBottom: 5}}
+                           height={70}
+                           width={70}
+                           alt={'Barcode ' + group.barcode}/>
                 </motion.div>
                 <div style={{
                     fontSize: 12,

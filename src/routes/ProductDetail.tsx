@@ -71,7 +71,7 @@ export function ProductDetail(props: RouteProps) {
                 borderBottom: '1px solid rgba(0,0,0,0.05)'
             }}>
                 <Image src={`/images/${productId}/400/1.png`} alt={`Barcode ${productId}`} width={appDimension.width}
-                     height={appDimension.width}/>
+                       height={appDimension.width}/>
             </div>
 
             <div style={{display: 'flex', flexDirection: 'column', padding: '0px 20px'}}>

@@ -15,22 +15,22 @@ import {LandingScreen} from "./LandingScreen";
 
 
 export const routes: Routes = {
-    '' : {
-        component : LandingScreen ,
+    '': {
+        component: LandingScreen,
         animateIn: {
-            scale:1,
+            scale: 1,
             opacity: 1,
         },
         animateOut: {
             scale: 0.1,
-            opacity : 0.1,
+            opacity: 0.1,
             transition: {
                 bounce: 0
             }
         },
         initial: {
             scale: 0.1,
-            opacity : 0.1
+            opacity: 0.1
         }
     },
     'categories': {

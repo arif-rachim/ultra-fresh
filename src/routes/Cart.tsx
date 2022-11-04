@@ -44,7 +44,7 @@ export default function Cart(props: RouteProps) {
     const subTotal = useSubTotalCart();
     const isEmpty = cartItems.length === 0;
     return <div style={{
-        background:'rgba(255,255,255,0.2)',
+        background: 'rgba(255,255,255,0.2)',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -87,7 +87,7 @@ export default function Cart(props: RouteProps) {
                 }}>
                     <div>
                         <Image src={`/images/${ci.barcode}/THUMB/default.png`}
-                             alt={'Barcode ' + ci.barcode} height={50}/>
+                               alt={'Barcode ' + ci.barcode} height={50}/>
                     </div>
                     <div style={{flexGrow: 1}}>
                         <div style={{flexGrow: 1, fontSize: 14}}>{ci.category} {ci.name} </div>
@@ -108,7 +108,7 @@ export default function Cart(props: RouteProps) {
             </div>
         </div>
         <div style={{
-            background:'rgba(255,255,255,0.5)',
+            background: 'rgba(255,255,255,0.5)',
             padding: '10px 20px',
             borderTop: '1px solid rgba(0,0,0,0.05)',
             display: "flex",
