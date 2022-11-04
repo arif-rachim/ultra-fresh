@@ -14,9 +14,9 @@ import {AcknowledgementNotePanel} from "./modal/AcknowledgementNotePanel";
 import {BsPatchCheckFill} from "react-icons/bs";
 import {formatConfirmationNo} from "./utils/formatConfirmationNo";
 
-export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLineItems[], confirmations: DbOrderConfirmation[] }) {
+export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLineItems[], confirmations: DbOrderConfirmation[],refresh:() => void }) {
     const appContext = useAppContext();
-    const {order, orderLineItems, confirmations} = props;
+    const {order, orderLineItems, confirmations,refresh} = props;
     return <div style={{display: 'flex', flexDirection: 'column', paddingBottom: 50}}>
         {confirmations.map(c => {
             return <motion.div key={c.id} style={{
@@ -30,20 +30,24 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                         <div style={{display: 'flex'}}>
                             <div style={{display: 'flex', flexDirection: 'column',flexGrow:1}}>
 
-                                <TitleValue title={'Confirmation No'} value={formatConfirmationNo(c)}/>
-                                <TitleValue title={'Recorded at'} value={formatDateTime(c.created_at)}/>
+                                <TitleValue title={'Confirmation No'} value={order === null ? undefined : formatConfirmationNo(c)}/>
+                                <TitleValue title={'Recorded at'} value={order === null ? undefined :formatDateTime(c.created_at)}/>
                             </div>
                             <div style={{width:120,display:'flex',flexDirection:'column',paddingTop:10}}>
                                 <Button title={'Detail'} style={{fontSize:14}} theme={ButtonTheme.promoted} icon={IoOpenOutline} onTap={async () => {
                                     invariant(order);
                                     const {data: confirmedLineItems} = await supabase.from('order_confirmation_line_items').select('*').eq('order_confirmation(id)', c.id);
-                                    await appContext.showModal(closePanel => {
+                                    const shouldRefresh = await appContext.showModal(closePanel => {
                                         return <AcknowledgementNotePanel closePanel={closePanel} order={order}
                                                                          orderLineItems={orderLineItems}
                                                                          confirmation={c}
                                                                          confirmationLineItems={confirmedLineItems ?? []}
                                         />
                                     });
+                                    if(shouldRefresh){
+                                        refresh();
+                                    }
+
                                 }}/>
                                 {c.status !== 'Complete' &&
                                 <Button title={'Delete'} style={{fontSize:14,marginBottom:15}} icon={IoRemoveCircleOutline} onTap={async () => {
@@ -80,15 +84,16 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                                     if (deleteItem) {
                                         await supabase.from('order_confirmation_line_items').delete().eq('order_confirmation', c.id);
                                         await supabase.from('order_confirmations').delete().eq('id', c.id);
+                                        refresh();
                                     }
                                 }} theme={ButtonTheme.danger}/>}
                             </div>
                         </div>
                         <div style={{display: 'flex'}}>
                             <div style={{display:'flex',flexDirection:'column',flexGrow:1}}>
-                            <TitleValue title={'Confirmed by'} value={c.confirmed_by} />
+                            <TitleValue title={'Confirmed by'} value={order === null ? undefined :c.confirmed_by} />
                             </div>
-                            <TitleValue title={'Status'} value={c.status ?? 'N/A'} width={120}/>
+                            <TitleValue title={'Status'} value={order === null ? undefined :c.status ?? 'N/A'} width={120}/>
                         </div>
                     </div>
 
@@ -119,6 +124,7 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                                                      confirmationLineItems={confirmedLineItems ?? []}
                     />
                 });
+                refresh();
             }} style={{margin: 10}} theme={ButtonTheme.promoted}/>}
     </div>
 }

@@ -10,27 +10,26 @@ import {IoBasket, IoStorefront, IoStorefrontOutline} from "react-icons/io5";
 import {BsPatchCheck, BsPatchCheckFill, BsTruck} from "react-icons/bs";
 import {FaTruck} from "react-icons/fa";
 import {IconType} from "react-icons";
-import {blueDarken} from "./Theme";
+import { blueDarken, grey,  blue} from "./Theme";
 import {produce} from "immer";
 import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
 import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
 
-function StatusIcon(props: { title: string, icon: IconType, iconSelected: IconType, selected?: boolean }) {
-    const {icon, title, selected, iconSelected} = props;
+function StatusIcon(props: { title: string, icon: IconType, iconSelected: IconType, selected?: boolean,isCurrent?:boolean }) {
+    const {icon, title, selected, iconSelected,isCurrent} = props;
     const Icon = selected ? iconSelected : icon;
-    return <div style={{
+    return <motion.div style={{
         width: '25%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        color: selected ? blueDarken : 'rgba(0,0,0,0.2)',
         fontSize: 13
-    }}>
+    }} animate={isCurrent ? {color:[blue,blueDarken,blue],transition:{duration:2, repeat:Infinity,ease:'easeInOut',repeatType:"loop",bounce:0}} : selected ? {color:blueDarken} : {color:grey}}>
         <div style={{fontSize: 28, marginBottom: -3}}>
             <Icon/>
         </div>
         {title}
-    </div>;
+    </motion.div>;
 }
 
 export default function History(props: RouteProps) {
@@ -125,11 +124,22 @@ export default function History(props: RouteProps) {
                             </div>
                         </div>
                         <div style={{display: 'flex', marginTop: 5, marginBottom: 5, justifyContent: 'space-evenly'}}>
-                            <StatusIcon icon={IoBasket} iconSelected={IoBasket} title={'Placed'} selected={true}/>
+                            <StatusIcon icon={IoBasket} iconSelected={IoBasket} title={'Placed'}
+                                        selected={['Placed' , 'Acknowledge' , 'Confirmed' , 'Send' , 'Dispatched' , 'Received' , 'Delivered'].includes(order.order_status)}
+                                        isCurrent={['Placed'].includes(order.order_status)}
+                            />
                             <StatusIcon icon={BsPatchCheck} iconSelected={BsPatchCheckFill} title={'Confirmed'}
-                                        selected={true}/>
-                            <StatusIcon icon={BsTruck} iconSelected={FaTruck} title={'Dispatched'}/>
-                            <StatusIcon icon={IoStorefrontOutline} iconSelected={IoStorefront} title={'Delivered'}/>
+                                        selected={['Acknowledge' , 'Confirmed' , 'Send' , 'Dispatched' , 'Received' , 'Delivered'].includes(order.order_status)}
+                                        isCurrent={['Acknowledge' , 'Confirmed'].includes(order.order_status)}
+                            />
+                            <StatusIcon icon={BsTruck} iconSelected={FaTruck} title={'Dispatched'}
+                                        selected={[ 'Send' , 'Dispatched' , 'Received' , 'Delivered'].includes(order.order_status)}
+                                        isCurrent={['Send' , 'Dispatched'].includes(order.order_status)}
+                            />
+                            <StatusIcon icon={IoStorefrontOutline} iconSelected={IoStorefront} title={'Delivered'}
+                                        selected={['Received' , 'Delivered'].includes(order.order_status)}
+                                        isCurrent={[ 'Received' , 'Delivered'].includes(order.order_status)}
+                            />
                         </div>
                     </motion.div>
                 })}

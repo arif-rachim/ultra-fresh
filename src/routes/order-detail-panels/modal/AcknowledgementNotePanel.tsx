@@ -237,7 +237,7 @@ export function AcknowledgementNotePanel(props: {
         <div style={{display: 'flex', padding: '5px 10px 0px 10px'}}>
             <div style={{display: 'flex', flexDirection: 'column', marginTop: 5, flexGrow: 1}}>
                 <Button title={'Close'} onTap={() => {
-                    props.closePanel(true)
+                    props.closePanel(false)
                 }} icon={IoClose}/>
             </div>
             {!isComplete &&

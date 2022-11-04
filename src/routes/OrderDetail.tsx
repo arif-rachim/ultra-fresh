@@ -1,7 +1,7 @@
 import {Header} from "../components/page-components/Header";
 import {RouteProps} from "../components/useRoute";
 import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {supabase} from "../components/supabase";
 import {DbOrder} from "../components/model/DbOrder";
 import {DbOrderLineItems} from "../components/model/DbOrderLineItems";
@@ -23,75 +23,22 @@ export default function OrderDetail(props: RouteProps) {
     const [orderLineItems, setOrderLineItems] = useState<DbOrderLineItems[]>([]);
     const [selectedPage, setSelectedPage] = useState('order');
     const [confirmations, setConfirmations] = useState<DbOrderConfirmation[]>([]);
-    const [deliveryNotes,setDeliveryNotes] = useState<DbDeliveryNote[]>([])
-    useEffect(() => {
+    const [deliveryNotes,setDeliveryNotes] = useState<DbDeliveryNote[]>([]);
+    const refresh = useCallback(() => {
         setOrder(null);
-        setOrderLineItems([]);
-        const listenWhenOrderConfirmationChanges = 'listen-when-confirmation-change';
-        const listenWhenOrderChanges = 'listen-when-order-change';
         (async () => {
             const {data: order} = await supabase.from('orders').select('*').eq('id', orderId).single();
             const {data: lineItems} = await supabase.from('order_line_items').select('*').eq('order(id)', order.id);
             const {data: orderConfirmations} = await supabase.from('order_confirmations').select('*').eq('order(id)', order?.id);
-
             const {data: deliveryNotes} = await supabase.from('order_delivery_notes').select('*').filter('order_confirmation','in',`(${orderConfirmations?.map(oc => oc.id).join(',')})`);
 
-            await supabase.channel(listenWhenOrderConfirmationChanges).on('postgres_changes', {
-                event: '*',
-                schema: 'public',
-                table: 'order_confirmations',
-                filter: `order=eq.${order.id}`
-            }, (payload) => {
-                const newVal: any = payload.new;
-                const oldVal: any = payload.old;
-                const eventType = payload.eventType;
-                debugger;
-                if (eventType === 'DELETE') {
-                    setConfirmations(old => {
-                        return old.filter(o => o.id !== oldVal.id)
-                    });
-                } else if (eventType === 'INSERT') {
-                    setConfirmations(old => [newVal, ...old]);
-                } else if (eventType === 'UPDATE') {
-                    setConfirmations(produce(draft => {
-                        const index = draft.findIndex(d => d.id === newVal.id);
-                        draft.splice(index, 1, newVal);
-                    }));
-                } else {
-                    debugger;
-                }
-            }).subscribe();
-
-            await supabase.channel(listenWhenOrderChanges).on('postgres_changes', {
-                event: '*',
-                schema: 'public',
-                table: 'orders',
-                filter: `id=eq.${order.id}`
-            }, (payload) => {
-                const newVal: any = payload.new;
-                const oldVal: any = payload.old;
-                const eventType = payload.eventType;
-                debugger;
-                if (eventType === 'UPDATE') {
-                    setOrder(newVal);
-                } else {
-                    debugger;
-                }
-            }).subscribe();
-
-
-            setOrder(order);
             setOrderLineItems(lineItems ?? []);
             setConfirmations(orderConfirmations ?? []);
             setDeliveryNotes(deliveryNotes??[]);
-            return () => {
-                (async () => {
-                    await supabase.channel(listenWhenOrderConfirmationChanges).unsubscribe()
-                    await supabase.channel(listenWhenOrderChanges).unsubscribe();
-                })();
-            }
+            setOrder(order);
         })();
-    }, [orderId]);
+    },[orderId])
+    useEffect(() => refresh(), [orderId]);
 
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <Header title={<SkeletonBox skeletonVisible={order === null}
@@ -114,12 +61,13 @@ export default function OrderDetail(props: RouteProps) {
             flexDirection: 'column'
         }}>
             {selectedPage === 'order' &&
-                <OrderPanel order={order} orderLineItems={orderLineItems}/>}
+                <OrderPanel order={order} orderLineItems={orderLineItems} refresh={refresh}/>}
             {selectedPage === 'confirm' &&
-                <ConfirmPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations}/>}
+                <ConfirmPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} refresh={refresh}/>}
             {selectedPage === 'dispatch' &&
-                <DispatchPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} deliveryNotes={deliveryNotes}/>}
-            {selectedPage === 'received' && <ReceivedPanel/>}
+                <DispatchPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} deliveryNotes={deliveryNotes} refresh={refresh}/>}
+            {selectedPage === 'received' &&
+                <ReceivedPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} deliveryNotes={deliveryNotes} refresh={refresh}/>}
         </div>
         <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', bottom: 0, width: '100%'}}>
             <OrderDetailFooter value={selectedPage} onChange={setSelectedPage}/>

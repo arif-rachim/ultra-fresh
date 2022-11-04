@@ -14,32 +14,22 @@ import invariant from "tiny-invariant";
 import {DbOrderConfirmationLineItems} from "../../components/model/DbOrderConfirmationLineItems";
 import {supabase} from "../../components/supabase";
 import {DbDeliveryNote} from "../../components/model/DbDeliveryNote";
+import {formatDeliveryNoteNo} from "./utils/formatDeliveryNoteNo";
 
-function formatDeliveryNoteNo(deliveryNote: DbDeliveryNote) {
-    if (deliveryNote === null) {
-        return '';
-    }
-    if (deliveryNote.created_at === undefined || deliveryNote.id === undefined) {
-        return '';
-    }
-    const date = new Date(deliveryNote.created_at);
-    return `3-${deliveryNote.id.toString().padStart(6, '0')}-${date.getDate().toString().padStart(2, '0')}${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-}
-
-export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLineItems[], confirmations: DbOrderConfirmation[], deliveryNotes: DbDeliveryNote[] }) {
-    let {orderLineItems, order, confirmations, deliveryNotes} = props;
+export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLineItems[], confirmations: DbOrderConfirmation[], deliveryNotes: DbDeliveryNote[],refresh:() => void }) {
+    let {orderLineItems, order, confirmations, deliveryNotes,refresh} = props;
     confirmations = useMemo(() => confirmations.filter(cf => cf.status === 'Complete'), [confirmations]);
     const {showModal, user} = useAppContext();
-    return <div style={{display: 'flex', flexDirection: 'column'}}>
+    return <div style={{display: 'flex', flexDirection: 'column',paddingBottom:50}}>
         <div style={{display: 'flex', flexDirection: 'column', padding: '10px 20px'}}>
             <div style={{display: 'flex'}}>
-                <TitleValue title={'City'} value={order?.shipping_city} width={'50%'}/>
-                <TitleValue title={'State'} value={order?.shipping_state} width={'50%'}/>
+                <TitleValue title={'City'} value={order === null ? undefined :order?.shipping_city} width={'50%'}/>
+                <TitleValue title={'State'} value={order === null ? undefined :order?.shipping_state} width={'50%'}/>
             </div>
             <TitleValue title={'Address'}
-                        value={order?.shipping_address_line_one + '' + order?.shipping_address_line_two}/>
+                        value={order === null ? undefined :order?.shipping_address_line_one + '' + order?.shipping_address_line_two}/>
             <TitleValue title={'Receiver'}
-                        value={order?.shipping_receiver_first_name + ' ' + order?.shipping_receiver_last_name}/>
+                        value={order === null ? undefined :order?.shipping_receiver_first_name + ' ' + order?.shipping_receiver_last_name}/>
             <TitleValue title={'Phone'} value={order?.shipping_receiver_phone}/>
         </div>
         {confirmations.map(confirmation => {
@@ -48,13 +38,13 @@ export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: Db
             return <div key={confirmation.id} style={{display: 'flex', flexDirection: 'column', padding: '10px 20px'}}>
                 <div style={{display: 'flex'}}>
                     <div style={{display: 'flex', flexDirection: 'column',flexGrow:1}}>
-                        <TitleValue title={'Confirmation No'} value={formatConfirmationNo(confirmation)} />
-                        <TitleValue title={'Confirmation Time'} value={formatDateTime(confirmation.created_at)}/>
+                        <TitleValue title={'Confirmation No'} value={order === null ? undefined :formatConfirmationNo(confirmation)} />
+                        <TitleValue title={'Confirmation Time'} value={order === null ? undefined :formatDateTime(confirmation.created_at)}/>
                     </div>
                     {hasDeliveryNote &&
                         <div style={{display: 'flex', flexDirection: 'column',flexGrow:1}}>
-                            <TitleValue title={'Delivery No'} value={formatDeliveryNoteNo(deliveryNote)}/>
-                            <TitleValue title={'Delivery Time'} value={formatDateTime(deliveryNote.created_at)}/>
+                            <TitleValue title={'Delivery No'} value={order === null ? undefined :formatDeliveryNoteNo(deliveryNote)}/>
+                            <TitleValue title={'Delivery Time'} value={order === null ? undefined :formatDateTime(deliveryNote.created_at)}/>
                         </div>
                     }
                 </div>
@@ -82,6 +72,7 @@ export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: Db
                                     const orderStatus = order?.order_status ?? '';
                                     const nextOrderStatus = orderStatus === 'Confirmed' ? 'Dispatched' : orderStatus === 'Acknowledge' ? 'Send' : orderStatus;
                                     await supabase.from('orders').update({order_status: nextOrderStatus}).eq('id', order?.id);
+                                    refresh();
                                 }} theme={ButtonTheme.promoted}/>
                     }
                 </div>
