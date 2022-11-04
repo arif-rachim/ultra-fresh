@@ -19,11 +19,13 @@ const shellStyle: CSSProperties = {
 
 const modalStyle: CSSProperties = {
 
-    backdropFilter: 'blur(20px)',
+    backdropFilter: 'blur(5px)',
+    background:'rgba(255,255,255,0.8)',
     width: '100%',
     height: '100%',
     position: 'fixed',
     display: 'flex',
+    flexDirection:'column',
     alignItems: 'center',
     justifyContent: 'center'
 }
@@ -64,8 +66,7 @@ export default function AppShell() {
                 {modalPanel && <motion.div style={modalStyle} initial={{opacity: 0}} animate={{opacity: 1}}
                                            exit={{opacity: 0}} transition={{ease: "easeInOut", duration: 0.3}}
                                            key={'modal'}>
-                    <motion.div style={dialogPanelStyle} initial={{y: -30}} animate={{y: 0}} exit={{y: -30}}
-                                transition={{ease: "easeInOut", duration: 0.3}}>
+                    <motion.div style={dialogPanelStyle} initial={{scale: 0.7,opacity:0.4}} animate={{scale: 1,opacity:1}} exit={{scale:0.7,opacity:0.4}}>
                         {modalPanel}
                     </motion.div>
                 </motion.div>}

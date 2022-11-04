@@ -8,18 +8,19 @@ interface InputStyle {
     errorStyle?: CSSProperties
 }
 
-export function Input(props: { title: string,
+export function Input(props: {
+    title: string,
     placeholder: string,
     value?: string,
+    defaultValue?: string,
     onChange?: ChangeEventHandler<HTMLInputElement> | undefined,
     error?: string,
     style?: InputStyle,
-    type? : HTMLInputTypeAttribute,
-    inputMode? : "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search"
+    type?: HTMLInputTypeAttribute,
+    inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search"
 }) {
 
-    const {error, value, style,type,inputMode} = props;
-
+    const {error, value, defaultValue, style, type, inputMode} = props;
     return <div style={{
         display: 'flex',
         flexDirection: 'column',
@@ -42,7 +43,8 @@ export function Input(props: { title: string,
             fontSize: 16,
             minWidth: 0,
             ...style?.inputStyle
-        }} placeholder={props.placeholder} value={value} onChange={props.onChange} title={error} type={type} inputMode={inputMode}/>
+        }} placeholder={props.placeholder} value={value} defaultValue={defaultValue} onChange={props.onChange}
+               title={error} type={type} inputMode={inputMode}/>
         <div style={{
             paddingRight: 5,
             fontSize: 12,

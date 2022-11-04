@@ -45,7 +45,7 @@ export default function History(props: RouteProps) {
     const [orders,setOrders] = useState<DbOrder[]>([]);
     useEffect(() => {
         (async () => {
-            const {data} = await supabase.from('orders').select('*').eq('created_by',user?.phone);
+            const {data} = await supabase.from('orders').select('*').eq('created_by',user?.phone).order('id',{ascending:false});
             setOrders(data??[]);
         })();
     },[user?.phone])

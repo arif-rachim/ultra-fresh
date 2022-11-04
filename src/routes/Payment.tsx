@@ -77,10 +77,10 @@ export default function Payment(props: RouteProps) {
         const subTotalAmount = parseFloat(subTotal);
         const dbOrder:DbOrder = {
             payment_date : new Date().toISOString(),
-            order_status : 'placed',
+            order_status : 'Placed',
             payment_amount : subTotalAmount,
             payment_method : 'card',
-            payment_status : 'received',
+            payment_status : 'Received',
             payment_reference_code : nanoid(),
             created_by : user?.phone ?? '',
             shipping_address_line_one : shippingAddress.addressLine1,
