@@ -1,6 +1,6 @@
 import {Header} from "../components/page-components/Header";
 import {RouteProps} from "../components/useRoute";
-import {formatDateTime} from "./History";
+import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
 import {useEffect, useState} from "react";
 import {supabase} from "../components/supabase";
 import {DbOrder} from "../components/model/DbOrder";
@@ -12,14 +12,10 @@ import {TitleValue} from "./order-detail-panels/utils/TitleValue";
 import {OrderDetailFooter} from "./order-detail-panels/utils/OrderDetailFooter";
 import {ConfirmPanel} from "./order-detail-panels/ConfirmPanel";
 import {OrderPanel} from "./order-detail-panels/OrderPanel";
-
-function DispatchPanel() {
-    return <div>Dispatched Panel</div>
-}
-
-function ReceivedPanel() {
-    return <div>Received Panel</div>
-}
+import {DispatchPanel} from "./order-detail-panels/DispatchPanel";
+import {ReceivedPanel} from "./order-detail-panels/ReceivedPanel";
+import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
+import {DbDeliveryNote} from "../components/model/DbDeliveryNote";
 
 export default function OrderDetail(props: RouteProps) {
     const orderId = props.params.get('id');
@@ -27,6 +23,7 @@ export default function OrderDetail(props: RouteProps) {
     const [orderLineItems, setOrderLineItems] = useState<DbOrderLineItems[]>([]);
     const [selectedPage, setSelectedPage] = useState('order');
     const [confirmations, setConfirmations] = useState<DbOrderConfirmation[]>([]);
+    const [deliveryNotes,setDeliveryNotes] = useState<DbDeliveryNote[]>([])
     useEffect(() => {
         setOrder(null);
         setOrderLineItems([]);
@@ -36,6 +33,8 @@ export default function OrderDetail(props: RouteProps) {
             const {data: order} = await supabase.from('orders').select('*').eq('id', orderId).single();
             const {data: lineItems} = await supabase.from('order_line_items').select('*').eq('order(id)', order.id);
             const {data: orderConfirmations} = await supabase.from('order_confirmations').select('*').eq('order(id)', order?.id);
+
+            const {data: deliveryNotes} = await supabase.from('order_delivery_notes').select('*').filter('order_confirmation','in',`(${orderConfirmations?.map(oc => oc.id).join(',')})`);
 
             await supabase.channel(listenWhenOrderConfirmationChanges).on('postgres_changes', {
                 event: '*',
@@ -84,6 +83,7 @@ export default function OrderDetail(props: RouteProps) {
             setOrder(order);
             setOrderLineItems(lineItems ?? []);
             setConfirmations(orderConfirmations ?? []);
+            setDeliveryNotes(deliveryNotes??[]);
             return () => {
                 (async () => {
                     await supabase.channel(listenWhenOrderConfirmationChanges).unsubscribe()
@@ -95,7 +95,7 @@ export default function OrderDetail(props: RouteProps) {
 
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <Header title={<SkeletonBox skeletonVisible={order === null}
-                                    style={{flexGrow: 1}}>{`Order Detail ${order?.id}`}</SkeletonBox>}/>
+                                    style={{flexGrow: 1}}>{`Order : ${formatOrderNo(order)}`}</SkeletonBox>}/>
         <div style={{padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,0.1)'}}>
             <div style={{display: 'flex'}}>
                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
@@ -117,7 +117,8 @@ export default function OrderDetail(props: RouteProps) {
                 <OrderPanel order={order} orderLineItems={orderLineItems}/>}
             {selectedPage === 'confirm' &&
                 <ConfirmPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations}/>}
-            {selectedPage === 'dispatch' && <DispatchPanel/>}
+            {selectedPage === 'dispatch' &&
+                <DispatchPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} deliveryNotes={deliveryNotes}/>}
             {selectedPage === 'received' && <ReceivedPanel/>}
         </div>
         <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', bottom: 0, width: '100%'}}>

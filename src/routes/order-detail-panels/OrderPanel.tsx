@@ -36,7 +36,6 @@ export function OrderPanel(props: { order: DbOrder | null, orderLineItems: DbOrd
                                 textAlign: 'right',
                                 backgroundColor: 'rgba(0,0,0,0.4)',
                                 color: 'white',
-
                             }}>{index + 1}</div>
                             <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
                                 <div style={{

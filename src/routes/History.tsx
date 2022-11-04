@@ -12,7 +12,8 @@ import {FaTruck} from "react-icons/fa";
 import {IconType} from "react-icons";
 import {blueDarken} from "./Theme";
 import {produce} from "immer";
-
+import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
+import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
 
 function StatusIcon(props: { title: string, icon: IconType, iconSelected: IconType, selected?: boolean }) {
     const {icon, title, selected, iconSelected} = props;
@@ -101,16 +102,22 @@ export default function History(props: RouteProps) {
                         border: '1px solid rgba(0,0,0,0.05)',
                     }} whileTap={{scale: 0.98}} onTap={() => navigate(`order-detail/${order.id}`)}>
                         <div style={{padding: '10px 20px 0px 20px'}}>
-                            <div style={{fontWeight: 'bold', fontSize: 18}}>
-                                {order.order_status}
+                            <div style={{display:'flex'}}>
+                                <div style={{flexGrow:'1',fontSize:14}}>
+                                    {formatOrderNo(order)}
+                                </div>
+                                <div style={{fontWeight: 'bold', fontSize: 18}}>
+                                    {order.order_status}
+                                </div>
                             </div>
+
                             <div style={{
                                 display: 'flex',
                                 alignItems: 'flex-end',
                                 paddingBottom: 10
                             }}>
                                 <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-                                    <div style={{fontSize: 16}}>{formatDateTime(order?.created_at)}</div>
+                                    <div style={{fontSize: 14}}>{formatDateTime(order?.created_at)}</div>
                                 </div>
                                 <div style={{fontWeight: 'bold'}}>
                                     AED {order.sub_total}
@@ -129,17 +136,4 @@ export default function History(props: RouteProps) {
             </div>
         </div>
     </div>
-}
-
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const padZero = (value: number) => {
-    return value < 10 ? '0' + value : value
-}
-
-export function formatDateTime(dateString?: string) {
-    if (dateString === undefined || dateString === null) {
-        return '';
-    }
-    const date = new Date(dateString);
-    return `${padZero(date.getDate())} ${MONTHS[date.getMonth()]} ${date.getFullYear()} at ${padZero(date.getHours())}:${padZero(date.getMinutes())}`
 }
