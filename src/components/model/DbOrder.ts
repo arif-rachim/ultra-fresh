@@ -1,8 +1,18 @@
+
+const statusDescription = {
+    'Placed' : 'The order has been submitted, and we are currently awaiting confirmation from the farm.',
+    'Acknowledge':'The order has been confirmed, but not all of the items can be sent. The items that have been confirmed will be sent out in the morning.',
+    'Confirmed' : 'The order has been accepted, all of the items that were requested can be provided, and the items will be shipped first thing in the morning.',
+    'Dispatched' : 'The order has been processed and is now en route to the customer where it will be delivered.',
+    'Delivered' : 'The customer\'s order has been delivered.',
+    'Returned' : 'The order has been cancelled due to one or more of the following reasons.',
+}
+
 export interface DbOrder {
     created_at?: string;//"2022-11-02T21:11:22+00:00"
     created_by:string;//"971509018075"
     id?:number;//1
-    order_status:string;//"Placed"
+    order_status:'Placed'|'Acknowledge'|'Confirmed'|'Dispatched'|'Delivered';//"Placed"
     payment_amount:number;//100
     payment_date:string;//"2022-11-02"
     payment_method:string;//"visa"

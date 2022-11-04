@@ -13,14 +13,8 @@ import {FaTruck} from "react-icons/fa";
 import {IoStorefrontOutline,IoStorefront} from "react-icons/io5";
 import {IconType} from "react-icons";
 import {blueDarken} from "./Theme";
+import {produce} from "immer";
 
-const statusDescription = {
-    'Placed' : 'The order has been submitted, and we are currently awaiting confirmation from the farm.',
-    'Confirmed' : 'The order has been processed successfully and will be ready for shipment first thing in the morning tomorrow.',
-    'Dispatched' : 'The order has been processed and is now en route to the customer where it will be delivered.',
-    'Delivered' : 'The customer\'s order has been delivered.',
-    'Returned' : 'The order has been cancelled due to one or more of the following reasons.',
-}
 
 function StatusIcon(props:{title:string,icon:IconType,iconSelected:IconType,selected?:boolean}) {
     const {icon,title,selected,iconSelected} = props;
@@ -55,13 +49,23 @@ export default function History(props: RouteProps) {
         const channelName = `new_order_created`;
         (async () => {
             await supabase.channel(channelName).on('postgres_changes',{
-                event : 'INSERT',
+                event : '*',
                 schema : 'public',
                 table:'orders',
                 filter : `created_by=eq.${user?.phone}`
             },(payload) => {
-                const newData:any = payload.new;
-                setOrders(old => ([...old,newData]));
+                if(payload.eventType === 'INSERT'){
+                    const newData:any = payload.new;
+                    setOrders(old => ([...old,newData]));
+                }else if(payload.eventType === 'UPDATE'){
+                    setOrders(produce(draft => {
+                        const index = draft.findIndex(d => d.id === payload.new.id);
+                        draft.splice(index,1,(payload.new as any));
+                    }))
+                }else{
+                    debugger;
+                }
+
             }).subscribe();
         })();
         return () => {

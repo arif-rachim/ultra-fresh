@@ -168,7 +168,7 @@ function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLin
 
             </motion.div>
         })}
-
+        {['Placed','Acknowledge'].indexOf(order?.order_status ?? '') >= 0 &&
         <Button title={'Create Acknowledgement Note'} icon={BsPatchCheckFill} onTap={async () => {
             invariant(order);
             const {data: confirmation} = await supabase.from('order_confirmations').insert({
@@ -189,7 +189,7 @@ function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLin
                                                  confirmationLineItems={confirmedLineItems ?? []}
                 />
             });
-        }} style={{margin: 10}} theme={ButtonTheme.promoted}/>
+        }} style={{margin: 10}} theme={ButtonTheme.promoted}/>}
     </div>
 }
 
@@ -204,7 +204,7 @@ function AcknowledgementNotePanel(props: {
 }) {
     const {orderLineItems, order, confirmation, confirmationLineItems, closePanel} = props;
     const {user, appDimension} = useAppContext();
-
+    const isComplete = confirmation.status === 'Complete';
     const localStore = useCreateStore({
         order,
         orderLineItems,
@@ -224,9 +224,10 @@ function AcknowledgementNotePanel(props: {
                 } else {
                     const amountToBeFulfilled = confirmationLineItem.amount_fulfilled;
                     const orderLineItem = state.orderLineItems.find(oli => oli.id === confirmationLineItem.order_line_item);
-                    if (amountToBeFulfilled === 0) {
-                        state.errors[confirmationLineItem.id.toString()] = 'Item must have value or mark as unable to fulfill';
-                    } else if (amountToBeFulfilled > (orderLineItem?.requested_amount ?? 0)) {
+                    invariant(orderLineItem);
+                    if (amountToBeFulfilled <= 0 && (orderLineItem.requested_amount - orderLineItem.fulfilled_amount) > 0 ) {
+                        state.errors[confirmationLineItem.id.toString()] = 'Item must have value';
+                    } else if (amountToBeFulfilled > ((orderLineItem?.requested_amount ?? 0)  - (orderLineItem?.fulfilled_amount ?? 0)) ) {
                         state.errors[confirmationLineItem.id.toString()] = 'Quantity exceed requested quantity'
                     } else {
                         state.errors[confirmationLineItem.id.toString()] = ''
@@ -250,7 +251,6 @@ function AcknowledgementNotePanel(props: {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
-        boxShadow: '0 7px 10px -5px rgba(0,0,0,0.3)'
     }}>
         <div style={{fontSize: 22, borderBottom: '1px solid rgba(0,0,0,0.1)', padding: '0 10px 5px 10px'}}>Requested
             Items
@@ -273,19 +273,12 @@ function AcknowledgementNotePanel(props: {
                             <div>{oli.unit} {oli.unit_type}</div>
                         </div>
 
-                        <motion.div style={{display: 'flex', flexDirection: 'column'}} whileTap={{scale: 0.98}}
-                                    onTap={() => {
-                                        localStore.setState(produce(draft => {
-                                            const index = draft.confirmationLineItems.findIndex(cli => cli.order_line_item === oli.id);
-                                            draft.confirmationLineItems[index].amount_fulfilled = oli.requested_amount;
-                                            draft.errors[draft.confirmationLineItems[index].id.toString()] = '';
-                                        }));
-                                    }}>
+                        <div style={{display: 'flex', flexDirection: 'column'}} >
                             <div style={{fontSize: 12}}>Requested</div>
                             <div style={{fontSize: 30, fontWeight: 'bold', textAlign: 'right'}}>
                                 {oli.requested_amount}
                             </div>
-                        </motion.div>
+                        </div>
 
                     </div>
                     <div style={{display: 'flex'}}>
@@ -338,6 +331,7 @@ function AcknowledgementNotePanel(props: {
                                                 property={['value', 'error']}>
                                         <Input title={'Total item can be fulfilled'} type={'number'}
                                                inputMode={'numeric'}
+                                               disabled={isComplete}
                                                placeholder={'Enter total items can be fulfilled'}
                                                style={{containerStyle: {borderBottom: 'none'}}}
                                                onChange={(e) => {
@@ -345,9 +339,10 @@ function AcknowledgementNotePanel(props: {
                                                        const index = draft.confirmationLineItems.findIndex(cli => cli.order_line_item === oli.id);
                                                        const amountToBeFulfilled = parseInt(e.target.value || '0');
                                                        draft.confirmationLineItems[index].amount_fulfilled = amountToBeFulfilled;
-                                                       if (amountToBeFulfilled === 0) {
+
+                                                       if (amountToBeFulfilled <= 0 && (oli.requested_amount - oli.fulfilled_amount) > 0) {
                                                            draft.errors[draft.confirmationLineItems[index].id.toString()] = 'Item must have value or mark as unable to fulfill';
-                                                       } else if (amountToBeFulfilled > oli.requested_amount) {
+                                                       } else if (amountToBeFulfilled > (oli.requested_amount - oli.fulfilled_amount) ) {
                                                            draft.errors[draft.confirmationLineItems[index].id.toString()] = 'Quantity exceed requested quantity'
                                                        } else {
                                                            draft.errors[draft.confirmationLineItems[index].id.toString()] = ''
@@ -379,6 +374,7 @@ function AcknowledgementNotePanel(props: {
                                                inputMode={'text'}
                                                placeholder={'Enter reason why it cannot be fulfilled'}
                                                style={{containerStyle: {borderBottom: 'none'}}}
+                                               disabled={isComplete}
                                                onChange={(e) => {
                                                    localStore.setState(produce(draft => {
                                                        const index = draft.confirmationLineItems.findIndex(cli => cli.order_line_item === oli.id);
@@ -395,26 +391,52 @@ function AcknowledgementNotePanel(props: {
                                 </ShouldDisplay>
                             </StoreValue>
                         </div>
+                        <motion.div style={{display: 'flex', flexDirection: 'column',marginRight:15,marginTop:5}} whileTap={{scale: 0.98}}
+                                    onTap={() => {
+                                        localStore.setState(produce(draft => {
+                                            const index = draft.confirmationLineItems.findIndex(cli => cli.order_line_item === oli.id);
+                                            draft.confirmationLineItems[index].amount_fulfilled = oli.requested_amount - oli.fulfilled_amount;
+                                            draft.errors[draft.confirmationLineItems[index].id.toString()] = '';
+                                        }));
+                                    }}>
+                            <div style={{fontSize: 12}}>Remaining</div>
+                            <div style={{fontSize: 30, fontWeight: 'bold', textAlign: 'right'}}>
+                                {oli.requested_amount - oli.fulfilled_amount}
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             })}
         </div>
         <div style={{display: 'flex', padding: '5px 10px 0px 10px'}}>
-            <div style={{display: 'flex', flexDirection: 'column', marginTop: 5, width: '50%'}}>
+            <div style={{display: 'flex', flexDirection: 'column', marginTop: 5, flexGrow:1}}>
                 <Button title={'Close'} onTap={() => {
                     props.closePanel(true)
                 }} icon={IoClose}/>
             </div>
-            <div style={{display: 'flex', flexDirection: 'column', marginTop: 5, marginLeft: 10, width: '50%'}}>
+            {!isComplete &&
+            <div style={{display: 'flex', flexDirection: 'column', marginTop: 5, marginLeft: 10, flexGrow:1}}>
                 <Button title={'Confirm'} onTap={async () => {
                     if (validate()) {
-                        await supabase.from('order_confirmation_line_items').upsert(localStore.stateRef.current.confirmationLineItems).select();;
+                        const confirmationLineItems = localStore.stateRef.current.confirmationLineItems;
+                        await supabase.from('order_confirmation_line_items').upsert(confirmationLineItems).select();
                         await supabase.from('order_confirmations').update({status:'Complete'}).eq('id',confirmation.id);
+                        let orderLineItems = localStore.stateRef.current.orderLineItems;
+                        let allComplete = true;
+                        orderLineItems = orderLineItems.map(oli => ({...oli}));
+                        orderLineItems.forEach(oli => {
+                            const confirmedLineItem = confirmationLineItems.find(cli => cli.order_line_item === oli.id);
+                            oli.fulfilled_amount = (oli.fulfilled_amount ?? 0) + (confirmedLineItem?.amount_fulfilled ?? 0);
+                            allComplete = allComplete && (oli.fulfilled_amount === oli.requested_amount);
+                        });
+                        await supabase.from('order_line_items').upsert(orderLineItems).select();
+                        await supabase.from('orders').update({order_status:allComplete?'Confirmed':'Acknowledge'}).eq('id',order.id);
                         props.closePanel(true)
                     }
 
                 }} icon={BsPatchCheckFill} theme={ButtonTheme.promoted}/>
             </div>
+            }
         </div>
     </div>
 }
@@ -437,6 +459,7 @@ export default function OrderDetail(props: RouteProps) {
         setOrder(null);
         setOrderLineItems([]);
         const listenWhenOrderConfirmationChanges = 'listen-when-confirmation-change';
+        const listenWhenOrderChanges = 'listen-when-order-change';
         (async () => {
             const {data: order} = await supabase.from('orders').select('*').eq('id', orderId).single();
             const {data: lineItems} = await supabase.from('order_line_items').select('*').eq('order(id)', order.id);
@@ -451,7 +474,7 @@ export default function OrderDetail(props: RouteProps) {
                 const newVal: any = payload.new;
                 const oldVal: any = payload.old;
                 const eventType = payload.eventType;
-
+                debugger;
                 if (eventType === 'DELETE') {
                     setConfirmations(old => {
                         return old.filter(o => o.id !== oldVal.id)
@@ -468,12 +491,31 @@ export default function OrderDetail(props: RouteProps) {
                 }
             }).subscribe();
 
+            await supabase.channel(listenWhenOrderChanges).on('postgres_changes', {
+                event: '*',
+                schema: 'public',
+                table: 'orders',
+                filter: `id=eq.${order.id}`
+            }, (payload) => {
+                const newVal: any = payload.new;
+                const oldVal: any = payload.old;
+                const eventType = payload.eventType;
+                debugger;
+                if (eventType === 'UPDATE') {
+                    setOrder(newVal);
+                }else{
+                    debugger;
+                }
+            }).subscribe();
+
+
             setOrder(order);
             setOrderLineItems(lineItems ?? []);
             setConfirmations(orderConfirmations ?? []);
             return () => {
                 (async () => {
                     await supabase.channel(listenWhenOrderConfirmationChanges).unsubscribe()
+                    await supabase.channel(listenWhenOrderChanges).unsubscribe();
                 })();
             }
         })();
@@ -484,8 +526,12 @@ export default function OrderDetail(props: RouteProps) {
                                     style={{flexGrow: 1}}>{`Order Detail ${order?.id}`}</SkeletonBox>}/>
         <div style={{padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,0.1)'}}>
             <div style={{display: 'flex'}}>
-                <TitleValue title={'Order Date'} value={order && formatDateTime(order?.created_at)} width={'70%'}/>
-                <TitleValue title={'Order Status'} value={order?.order_status.toUpperCase()} width={'30%'}/>
+                <div style={{display:'flex',flexDirection:'column',flexGrow:1}}>
+                <TitleValue title={'Order Date'} value={order && formatDateTime(order?.created_at)} />
+                </div>
+                <div style={{display:'flex',flexDirection:'column',width:120}}>
+                <TitleValue title={'Order Status'} value={order?.order_status}/>
+                </div>
             </div>
             <TitleValue title={'Sub total'} value={order && `AED ${order?.sub_total}`} width={'100%'}/>
         </div>
@@ -537,7 +583,7 @@ function TitleValue(props: { value: string | undefined | null, title: string, wi
         <div style={{fontSize: 14, marginRight: 10}}>{props.title} :</div>
         <SkeletonBox skeletonVisible={props.value === null || props.value === undefined}
                      style={{flexGrow: 1, height: 22, marginRight: 10}}>
-            <div style={{fontSize: 20}}>
+            <div style={{fontSize: 18}}>
                 {props.value}
             </div>
         </SkeletonBox>

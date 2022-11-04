@@ -11,4 +11,5 @@ export interface DbOrderLineItems {
     shelf_life_type:string;//"DAYS"
     unit:string;//"500"
     unit_type:string;//"Milliliter"
+    fulfilled_amount:number;
 }

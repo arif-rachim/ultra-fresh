@@ -108,7 +108,8 @@ export default function Payment(props: RouteProps) {
                 requested_amount : sc.total,
                 shelf_life : sc.shelfLife,
                 shelf_life_type : sc.shelfLifeType,
-                order : persistedData.id ?? -1
+                order : persistedData.id ?? -1,
+                fulfilled_amount : 0
             };
             return item;
         });await supabase.from("order_line_items").insert(dbOrderLineItems).select();
