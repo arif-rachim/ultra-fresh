@@ -5,7 +5,8 @@ import {useGroupFromCategory} from "./ProductWithCategory";
 import {motion} from "framer-motion";
 import {Image} from "../components/page-components/Image";
 import {MainHeaderSearchPanel} from "../components/page-components/MainHeaderSearchPanel";
-
+import {FaShippingFast} from "react-icons/fa";
+import {IoRibbonOutline,IoPricetagsOutline} from "react-icons/io5";
 
 export function Home() {
 
@@ -21,8 +22,30 @@ export function Home() {
                 paddingBottom: 50,
                 margin: '0px 0px'
             }}>
+                <Image src={'/logo/top-banner-latest.png'} width={appDimension.width - 20}
+                       height={(appDimension.width - 20) * 0.5} style={{margin: 10, marginTop: 0}}/>
 
-                <Image src={'/logo/top-banner.jpeg'} width={appDimension.width - 20} height={(appDimension.width - 20) * 0.5} style={{margin:10,marginTop:0}}/>
+                <div style={{display: 'flex',marginBottom:30}}>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '33.33%'}}>
+                        <div style={{width:90,height:90,background:'#33AD00',borderRadius:100,boxShadow:'0 5px 5px 0px rgba(0,0,0,0.3),0 5px 10px 0px rgba(0,0,0,0.1) inset'}}></div>
+                        <div style={{background:'red',fontSize:10,padding:'3px 5px',borderRadius:10,fontWeight:'bold',color:'white',marginTop:-15}}>SUBSCRIBE</div>
+                        <FaShippingFast style={{fontSize:28,marginTop:-50,color:'white'}}/>
+                        <Image src={'/logo/member/regular-delivery.svg'} width={65} height={80} style={{marginTop:-85}}/>
+                    </div>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '33.33%'}}>
+                        <div style={{width:90,height:90,background:'#004BAD',borderRadius:100,boxShadow:'0 5px 5px 0px rgba(0,0,0,0.3),0 5px 10px 0px rgba(0,0,0,0.1) inset'}}></div>
+                        <div style={{background:'#F0B521',fontSize:10,padding:'3px 5px',borderRadius:10,fontWeight:'bold',color:'white',marginTop:-15}}>CLICK HERE</div>
+                        <IoRibbonOutline style={{fontSize:28,marginTop:-50,color:'white'}}/>
+                        <Image src={'/logo/member/loyalty-program.svg'} width={65} height={80} style={{marginTop:-85}}/>
+                    </div>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '33.33%'}}>
+                        <div style={{width:90,height:90,background:'#AA00AD',borderRadius:100,boxShadow:'0 5px 5px 0px rgba(0,0,0,0.3),0 5px 10px 0px rgba(0,0,0,0.1) inset'}}></div>
+                        <div style={{background:'#3696DD',fontSize:10,padding:'3px 5px',borderRadius:10,fontWeight:'bold',color:'white',marginTop:-15}}>CLICK HERE</div>
+                        <IoPricetagsOutline style={{fontSize:28,marginTop:-50,color:'white'}}/>
+                        <Image src={'/logo/member/promotion-products.svg'} width={55} height={80} style={{marginTop:-85}}/>
+
+                    </div>
+                </div>
 
                 {categories.map(d => {
                     return <div key={d.label} style={{display: 'flex', flexDirection: 'column', width: '100%'}}>

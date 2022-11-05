@@ -22,11 +22,11 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
                        animate={{
                            opacity: 1,
                            top: 0,
-                           background: selected ? 'url("/logo/banner-bg.png")' : 'unset',
-                           color: selected ? white : 'unset'
                        }}
                        exit={{opacity: 0, top: -10}}
                        key={unit.unit + unit.unitType} style={{
+        background: selected ? 'url("/logo/banner-bg.png")' : 'unset',
+        color: selected ? white : 'unset',
         marginTop: 10,
         padding: 5,
         borderRadius: 5,

@@ -10,7 +10,7 @@ import {IoBasket, IoStorefront, IoStorefrontOutline} from "react-icons/io5";
 import {BsPatchCheck, BsPatchCheckFill, BsTruck} from "react-icons/bs";
 import {FaTruck} from "react-icons/fa";
 import {IconType} from "react-icons";
-import {blue,  purple} from "./Theme";
+import {blue, grey, purple} from "./Theme";
 import {produce} from "immer";
 import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
 import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
@@ -23,8 +23,9 @@ function StatusIcon(props: { title: string, icon: IconType, iconSelected: IconTy
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        fontSize: 13
-    }} animate={isCurrent ? {color:[purple,blue,purple],transition:{duration:2, repeat:Infinity,ease:'easeInOut',repeatType:"loop",bounce:0}} : selected ? {color:blue} : {color:'unset'}}>
+        fontSize: 13,
+
+    }} animate={isCurrent ? {color:[purple,blue,purple],transition:{duration:2, repeat:Infinity,ease:'easeInOut',repeatType:"loop",bounce:0}} : selected ? {color:blue} : {color:grey}}>
         <div style={{fontSize: 28, marginBottom: -3}}>
             <Icon/>
         </div>
