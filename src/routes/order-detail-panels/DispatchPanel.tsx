@@ -91,17 +91,21 @@ export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: Db
     </div>
 }
 
-function OrderDispatchDetail(props: { confirmation: DbOrderConfirmation, confirmationLineItems: DbOrderConfirmationLineItems[], order: DbOrder, orderLineItems: DbOrderLineItems[], closePanel: (param: any) => void }) {
+export function OrderDispatchDetail(props: { confirmation: DbOrderConfirmation, confirmationLineItems: DbOrderConfirmationLineItems[], order: DbOrder, orderLineItems: DbOrderLineItems[], closePanel: (param: any) => void }) {
     const {order, orderLineItems, confirmation, closePanel, confirmationLineItems} = props;
 
     const {appDimension} = useAppContext();
 
 
     return <div style={{
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        padding: '10px 0px 10px 0px',
+        boxSizing: 'border-box',
+        height: '100%',
+        width: appDimension.width,
         display: 'flex',
         flexDirection: 'column',
-        background: 'rgba(255,255,255,0.8)',
-        width: appDimension.width
+        overflow: 'auto',
     }}>
         <div style={{
             display: 'flex',
@@ -112,6 +116,7 @@ function OrderDispatchDetail(props: { confirmation: DbOrderConfirmation, confirm
             <div style={{fontSize: 22}}>Items to be dispatched</div>
             <div>Reference No : {formatConfirmationNo(confirmation)}</div>
         </div>
+        <div style={{display:'flex',flexDirection:'column',height:'100%',overflow:'auto'}}>
         {confirmationLineItems.filter(cli => cli.amount_fulfilled > 0).map((cli, index) => {
             const item = orderLineItems.find(oli => oli.id === cli.order_line_item);
             invariant(item);
@@ -138,6 +143,7 @@ function OrderDispatchDetail(props: { confirmation: DbOrderConfirmation, confirm
                 </div>
             </div>
         })}
+        </div>
         <div style={{padding: 20, display: 'flex', flexDirection: 'column'}}>
             <Button title={'Close'} icon={IoClose} onTap={() => {
                 closePanel(true)

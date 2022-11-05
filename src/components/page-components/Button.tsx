@@ -23,7 +23,7 @@ export function Button(props: { onTap: () => void, title: string, icon: IconType
                           onTap={props.onTap}>
         <div>{props.title}</div>
         {Icon &&
-            <div style={{marginBottom: -5, marginLeft: 10}}>
+            <div style={{marginBottom: -3, marginLeft: 10}}>
                 <Icon/>
             </div>
         }

@@ -8,5 +8,5 @@ export function formatDeliveryNoteNo(deliveryNote: DbDeliveryNote) {
         return '';
     }
     const date = new Date(deliveryNote.created_at);
-    return `3-${deliveryNote.id.toString().padStart(6, '0')}-${date.getDate().toString().padStart(2, '0')}${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+    return `DN-${deliveryNote.id.toString().padStart(6, '0')}-${date.getDate().toString().padStart(2, '0')}${(date.getMonth() + 1).toString().padStart(2, '0')}`;
 }

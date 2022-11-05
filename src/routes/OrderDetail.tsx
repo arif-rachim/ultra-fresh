@@ -16,6 +16,7 @@ import {DispatchPanel} from "./order-detail-panels/DispatchPanel";
 import {ReceivedPanel} from "./order-detail-panels/ReceivedPanel";
 import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
 import {DbDeliveryNote} from "../components/model/DbDeliveryNote";
+import {DbReceivedNote} from "../components/model/DbReceivedNote";
 
 export default function OrderDetail(props: RouteProps) {
     const orderId = props.params.get('id');
@@ -24,6 +25,8 @@ export default function OrderDetail(props: RouteProps) {
     const [selectedPage, setSelectedPage] = useState('order');
     const [confirmations, setConfirmations] = useState<DbOrderConfirmation[]>([]);
     const [deliveryNotes,setDeliveryNotes] = useState<DbDeliveryNote[]>([]);
+    const [receivedNotes,setReceivedNotes] = useState<DbReceivedNote[]>([]);
+
     const refresh = useCallback(() => {
         setOrder(null);
         (async () => {
@@ -31,10 +34,11 @@ export default function OrderDetail(props: RouteProps) {
             const {data: lineItems} = await supabase.from('order_line_items').select('*').eq('order(id)', order.id);
             const {data: orderConfirmations} = await supabase.from('order_confirmations').select('*').eq('order(id)', order?.id);
             const {data: deliveryNotes} = await supabase.from('order_delivery_notes').select('*').filter('order_confirmation','in',`(${orderConfirmations?.map(oc => oc.id).join(',')})`);
-
+            const {data: receivedNotes} = await supabase.from('order_received_notes').select('*').filter('order_delivery_note','in',`(${deliveryNotes?.map(dn => dn.id).join(',')})`);
             setOrderLineItems(lineItems ?? []);
             setConfirmations(orderConfirmations ?? []);
             setDeliveryNotes(deliveryNotes??[]);
+            setReceivedNotes(receivedNotes??[]);
             setOrder(order);
         })();
     },[orderId])
@@ -63,7 +67,9 @@ export default function OrderDetail(props: RouteProps) {
             {selectedPage === 'dispatch' &&
                 <DispatchPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} deliveryNotes={deliveryNotes} refresh={refresh}/>}
             {selectedPage === 'received' &&
-                <ReceivedPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} deliveryNotes={deliveryNotes} refresh={refresh}/>}
+                <ReceivedPanel order={order} orderLineItems={orderLineItems} confirmations={confirmations} deliveryNotes={deliveryNotes}
+                                receivedNotes={receivedNotes}
+                               refresh={refresh}/>}
         </div>
         <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', bottom: 0, width: '100%'}}>
             <OrderDetailFooter value={selectedPage} onChange={setSelectedPage}/>

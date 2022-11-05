@@ -78,7 +78,7 @@ export function AcknowledgementNotePanel(props: {
         flexDirection: 'column',
         overflow: 'auto',
     }}>
-        <div style={{fontSize: 22, borderBottom: '1px solid rgba(0,0,0,0.1)', padding: '0 10px 5px 10px'}}>Requested
+        <div style={{fontSize: 22, borderBottom: '1px solid rgba(0,0,0,0.1)', padding: '10px 20px 15px 20px'}}>Requested
             Items
         </div>
 
@@ -92,10 +92,10 @@ export function AcknowledgementNotePanel(props: {
                                 display: 'flex',
                                 flexDirection: 'column',
                             }}>
-                    <div style={{display: 'flex', flexDirection: 'row', padding: '5px 15px'}}>
+                    <div style={{display: 'flex', flexDirection: 'row', padding: '5px 20px'}}>
                         <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, fontSize: 14}}>
-                            <div>{oli.barcode}</div>
-                            <div>{oli.category} {oli.name}</div>
+                            <div style={{marginBottom:5}}>{oli.barcode}</div>
+                            <div style={{marginBottom:5}}>{oli.category} {oli.name}</div>
                             <div>{oli.unit} {oli.unit_type}</div>
                         </div>
 
@@ -107,7 +107,7 @@ export function AcknowledgementNotePanel(props: {
                         </div>
 
                     </div>
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex',margin:'0px 10px'}}>
                         <motion.div style={{display: 'flex', flexDirection: 'column', marginRight: 0}}
                                     whileTap={{scale: 0.9}} onTap={() => {
                             localStore.setState(produce(draft => {
