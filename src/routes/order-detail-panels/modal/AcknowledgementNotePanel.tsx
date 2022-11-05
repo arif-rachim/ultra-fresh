@@ -78,9 +78,16 @@ export function AcknowledgementNotePanel(props: {
         flexDirection: 'column',
         overflow: 'auto',
     }}>
-        <div style={{fontSize: 22, borderBottom: '1px solid rgba(0,0,0,0.1)', padding: '10px 20px 15px 20px'}}>Requested
-            Items
+        <div style={{display: 'flex', flexDirection: 'row-reverse', margin: 10}}>
+            <motion.div style={{fontSize: 36}} whileTap={{scale: 0.95}}
+                        onTap={() => closePanel(false)}>
+                <IoClose/>
+            </motion.div>
+            <div style={{fontSize: 22,flexGrow:1,padding:10,marginTop:30}}>Requested
+                Items
+            </div>
         </div>
+
 
         <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto'}}>
             {orderLineItems.map(oli => {
@@ -155,7 +162,7 @@ export function AcknowledgementNotePanel(props: {
                                                     }
                                                 ]}
                                                 property={['value', 'error']}>
-                                        <Input title={'Total item can be fulfilled'} type={'number'}
+                                        <Input title={'Quantity fulfilled'} type={'number'}
                                                inputMode={'numeric'}
                                                disabled={isComplete}
                                                placeholder={'Enter total items can be fulfilled'}
@@ -239,11 +246,7 @@ export function AcknowledgementNotePanel(props: {
             })}
         </div>
         <div style={{display: 'flex', padding: '5px 10px 0px 10px'}}>
-            <div style={{display: 'flex', flexDirection: 'column', marginTop: 5, flexGrow: 1}}>
-                <Button title={'Close'} onTap={() => {
-                    props.closePanel(false)
-                }} icon={IoClose}/>
-            </div>
+
             {!isComplete &&
                 <div style={{display: 'flex', flexDirection: 'column', marginTop: 5, marginLeft: 10, flexGrow: 1}}>
                     <Button title={'Confirm'} onTap={async () => {

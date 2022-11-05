@@ -11,13 +11,11 @@ export const white = 'rgba(255,255,255,1)';
 
 export enum ButtonTheme {
     promoted,
-    danger,
-    default
+    danger
 }
 
 
 export const theme = {
     [ButtonTheme.promoted]: blue,
-    [ButtonTheme.danger]: red,
-    [ButtonTheme.default]: 'unset'
+    [ButtonTheme.danger]: red
 }

@@ -15,6 +15,7 @@ import {DbOrderConfirmationLineItems} from "../../components/model/DbOrderConfir
 import {supabase} from "../../components/supabase";
 import {DbDeliveryNote} from "../../components/model/DbDeliveryNote";
 import {formatDeliveryNoteNo} from "./utils/formatDeliveryNoteNo";
+import {HeaderClose} from "../../components/page-components/HeaderClose";
 
 export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLineItems[], confirmations: DbOrderConfirmation[], deliveryNotes: DbDeliveryNote[],refresh:() => void }) {
     let {orderLineItems, order, confirmations, deliveryNotes,refresh} = props;
@@ -69,7 +70,7 @@ export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: Db
                                                                 confirmation={confirmation}
                                                                 confirmationLineItems={confirmationLineItems ?? []}/>
                                 })
-                            }} theme={ButtonTheme.default}/>
+                            }} theme={ButtonTheme.danger}/>
                     {!hasDeliveryNote &&
                         <Button title={'Deliver Items'} icon={FaTruck}
                                 style={{marginLeft: 10, fontSize: 14, flexGrow: 1}}
@@ -107,15 +108,20 @@ export function OrderDispatchDetail(props: { confirmation: DbOrderConfirmation, 
         flexDirection: 'column',
         overflow: 'auto',
     }}>
-        <div style={{
-            display: 'flex',
-            padding: '20px',
-            flexDirection: 'column',
-            borderBottom: '1px solid rgba(0,0,0,0.1)'
-        }}>
-            <div style={{fontSize: 22}}>Items to be dispatched</div>
-            <div>Reference No : {formatConfirmationNo(confirmation)}</div>
-        </div>
+
+        <HeaderClose onClose={() =>{closePanel(false)}}>
+            <div style={{
+                display: 'flex',
+                flexGrow:1,
+                marginTop:30,
+                padding:10,
+                flexDirection: 'column',
+            }}>
+                <div style={{fontSize: 22}}>Items to be dispatched</div>
+                <div>Reference No : {formatConfirmationNo(confirmation)}</div>
+            </div>
+        </HeaderClose>
+
         <div style={{display:'flex',flexDirection:'column',height:'100%',overflow:'auto'}}>
         {confirmationLineItems.filter(cli => cli.amount_fulfilled > 0).map((cli, index) => {
             const item = orderLineItems.find(oli => oli.id === cli.order_line_item);
@@ -144,10 +150,6 @@ export function OrderDispatchDetail(props: { confirmation: DbOrderConfirmation, 
             </div>
         })}
         </div>
-        <div style={{padding: 20, display: 'flex', flexDirection: 'column'}}>
-            <Button title={'Close'} icon={IoClose} onTap={() => {
-                closePanel(true)
-            }}/>
-        </div>
+
     </div>
 }

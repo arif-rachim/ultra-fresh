@@ -2,7 +2,7 @@ import {RouteProps} from "../components/useRoute";
 import {Header} from "../components/page-components/Header";
 
 import {RiAppleLine, RiGoogleLine, RiMastercardLine, RiVisaLine} from "react-icons/ri";
-import {blue, white} from "./Theme";
+import {blue, ButtonTheme, white} from "./Theme";
 import {Input} from "../components/page-components/Input";
 import {Button} from "../components/page-components/Button";
 import {IoCardOutline} from "react-icons/io5";
@@ -256,7 +256,7 @@ export default function Payment(props: RouteProps) {
             <div style={{margin: '20px 20px', alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
                 <Button title={`Pay AED ${subTotal}`} onTap={async () => {
                     await performPayment();
-                }} icon={IoCardOutline} style={{fontSize: 20, padding: '15px 50px'}}/>
+                }} icon={IoCardOutline} style={{fontSize: 20, padding: '15px 50px'}} theme={ButtonTheme.promoted}/>
             </div>
         </div>
     </div>

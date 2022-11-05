@@ -86,7 +86,7 @@ export function ReceivedPanel(props: { order: DbOrder | null, orderLineItems: Db
                                                                 confirmation={confirmation}
                                                                 confirmationLineItems={confirmationLineItems ?? []}/>
                                 })
-                            }} theme={ButtonTheme.default}/>
+                            }} theme={ButtonTheme.danger}/>
                     {!hasReceivedNote &&
                         <Button title={'Receive Items'} icon={FaTruck}
                                 style={{marginLeft: 10, fontSize: 14, flexGrow: 1}}
@@ -157,7 +157,7 @@ function ReceiverInformation(props: { closePanel: (param: any) => void }) {
             }}/>
         </StoreValue>
         <div style={{display: 'flex'}}>
-            <Button title={'Close'} icon={IoClose} onTap={() => closePanel(false)} style={{flexGrow: 1}}/>
+            <Button title={'Close'} icon={IoClose} onTap={() => closePanel(false)} style={{flexGrow: 1}} theme={ButtonTheme.danger}/>
             <Button title={'Save'} icon={IoSave} onTap={() => {
                 if(validate()){
                     closePanel(localStore.stateRef.current)

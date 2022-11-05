@@ -76,7 +76,7 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                                             <div style={{display: 'flex'}}>
                                                 <div style={{display: 'flex', flexDirection: 'column', width: '50%'}}>
                                                     <Button onTap={() => closePanel(false)} title={'Cancel'}
-                                                            icon={IoClose}/>
+                                                            icon={IoClose} theme={ButtonTheme.danger}/>
                                                 </div>
                                                 <div style={{
                                                     display: 'flex',

@@ -2,9 +2,9 @@ import {IconType} from "react-icons";
 import {ButtonTheme, theme, white} from "../../routes/Theme";
 import {motion, MotionStyle} from "framer-motion";
 
-export function Button(props: { onTap: () => void, title: string, icon: IconType, theme?: ButtonTheme, style?: MotionStyle }) {
+export function Button(props: { onTap: () => void, title: string, icon: IconType, theme: ButtonTheme, style?: MotionStyle }) {
     const Icon: IconType = props.icon;
-    const buttonTheme = props.theme ?? ButtonTheme.default;
+    const buttonTheme = props.theme ?? ButtonTheme.danger;
     return <motion.button layout style={{
         minWidth: 0,
         fontSize: 18,

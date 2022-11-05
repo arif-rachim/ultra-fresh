@@ -14,6 +14,7 @@ import {useMemo} from "react";
 import {Product} from "../components/AppState";
 import {IoClose} from "react-icons/io5";
 import {Image} from "../components/page-components/Image";
+import {HeaderClose} from "../components/page-components/HeaderClose";
 
 export function useSubTotalCart() {
     const cartItems = useItemsInCart();
@@ -50,12 +51,7 @@ export default function Cart(props: RouteProps) {
         flexDirection: 'column',
         overflow: 'auto'
     }}>
-        <div style={{display: 'flex', flexDirection: 'row-reverse', margin: 10}}>
-            <motion.div style={{fontSize: 36}} whileTap={{scale: 0.95}}
-                        onTap={() => window.history.back()}>
-                <IoClose/>
-            </motion.div>
-        </div>
+        <HeaderClose/>
         {isEmpty &&
             <div style={{margin: 20, marginBottom: 30}}>
                 <div style={{fontSize: 36, marginBottom: 10}}>
