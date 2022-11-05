@@ -85,9 +85,9 @@ export default function Cart(props: RouteProps) {
                     borderBottom: '1px solid rgba(0,0,0,0.1)',
                     padding: 5
                 }}>
-                    <div>
+                    <div style={{marginRight:10}}>
                         <Image src={`/images/${ci.barcode}/THUMB/default.png`}
-                               alt={'Barcode ' + ci.barcode} height={50}/>
+                               alt={'Barcode ' + ci.barcode} height={50} width={50}/>
                     </div>
                     <div style={{flexGrow: 1}}>
                         <div style={{flexGrow: 1, fontSize: 14}}>{ci.category} {ci.name} </div>

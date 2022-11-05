@@ -187,7 +187,9 @@ export default function ProductWithCategory(props: RouteProps) {
     const groups = useGroupFromCategory(category ?? '');
     const {appDimension} = useAppContext();
     let totalBox = groups.length < 6 ? 6 : groups.length;
-    const imageDimension = Math.floor(appDimension.width / totalBox) - 10;
+    const imageDimension = Math.floor((appDimension.width - (10 * totalBox)) / totalBox);
+    console.log('We have imageDimension',imageDimension,totalBox);
+
     const initialSelectedGroup = groups.find(g => g.name === group) ?? groups[0];
     const selectedStore = useCreateStore({
         selectedGroup: initialSelectedGroup,
@@ -335,16 +337,16 @@ const itemStyleSheet: CSSProperties = {
 
 function CategoryIconSelector<T extends { barcode: string, name: string }>(props: { imageDimension: number, item: T, onTap: (item: T) => void, selected?: boolean }) {
     const {imageDimension, item, selected} = props;
-    return <motion.div style={{...itemStyleSheet, height: imageDimension + 10}}
+    return <motion.div style={{...itemStyleSheet, height: imageDimension + 30,width:imageDimension}}
                        key={item.barcode}
                        animate={{
                            background: selected ? blueDarken : 'rgba(255,255,255,0.5)',
                            color: selected ? white : blueDarken
                        }}
-                       onTap={() => props.onTap(item)}>
+                       onTap={() => props.onTap(item)} >
         <Image src={`/images/${item.barcode}/THUMB/default.png`}
                style={{marginTop: 5}}
-               width={imageDimension - 20} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
+               width={imageDimension} height={imageDimension} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
                whileHover={{scale: 1.05}}/>
         <div style={{
             fontSize: 10,

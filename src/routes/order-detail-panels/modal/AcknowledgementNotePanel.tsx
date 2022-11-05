@@ -16,7 +16,7 @@ import {Button} from "../../../components/page-components/Button";
 import {IoClose} from "react-icons/io5";
 import {supabase} from "../../../components/supabase";
 import {BsPatchCheckFill} from "react-icons/bs";
-import {ButtonTheme} from "../../Theme";
+import {ButtonTheme, green, red} from "../../Theme";
 
 const errors: any = {};
 
@@ -49,8 +49,9 @@ export function AcknowledgementNotePanel(props: {
                 } else {
                     const amountToBeFulfilled = confirmationLineItem.amount_fulfilled;
                     const orderLineItem = state.orderLineItems.find(oli => oli.id === confirmationLineItem.order_line_item);
-                    invariant(orderLineItem);
-                    if (amountToBeFulfilled <= 0 && (orderLineItem.requested_amount - orderLineItem.fulfilled_amount) > 0) {
+                    if(orderLineItem === undefined){
+                        state.errors[confirmationLineItem.id.toString()] = ''
+                    }else if (amountToBeFulfilled <= 0 && (orderLineItem.requested_amount - orderLineItem.fulfilled_amount) > 0) {
                         state.errors[confirmationLineItem.id.toString()] = 'Item must have value';
                     } else if (amountToBeFulfilled > ((orderLineItem?.requested_amount ?? 0) - (orderLineItem?.fulfilled_amount ?? 0))) {
                         state.errors[confirmationLineItem.id.toString()] = 'Quantity exceed requested quantity'
@@ -126,14 +127,14 @@ export function AcknowledgementNotePanel(props: {
                                     return s.confirmationLineItems.find(cli => cli.order_line_item === oli.id)?.unable_to_fulfill !== true
                                 }} property={'value'}>
                                     <ShouldDisplay>
-                                        <HiOutlineEmojiHappy/>
+                                        <HiOutlineEmojiHappy style={{color:green}}/>
                                     </ShouldDisplay>
                                 </StoreValue>
                                 <StoreValue store={localStore} selector={s => {
                                     return s.confirmationLineItems.find(cli => cli.order_line_item === oli.id)?.unable_to_fulfill === true
                                 }} property={'value'}>
                                     <ShouldDisplay>
-                                        <HiOutlineEmojiSad/>
+                                        <HiOutlineEmojiSad style={{color:red}}/>
                                     </ShouldDisplay>
                                 </StoreValue>
                             </div>
@@ -216,20 +217,23 @@ export function AcknowledgementNotePanel(props: {
                                 </ShouldDisplay>
                             </StoreValue>
                         </div>
-                        <motion.div style={{display: 'flex', flexDirection: 'column', marginRight: 15, marginTop: 5}}
-                                    whileTap={{scale: 0.98}}
-                                    onTap={() => {
-                                        localStore.setState(produce(draft => {
-                                            const index = draft.confirmationLineItems.findIndex(cli => cli.order_line_item === oli.id);
-                                            draft.confirmationLineItems[index].amount_fulfilled = oli.requested_amount - oli.fulfilled_amount;
-                                            draft.errors[draft.confirmationLineItems[index].id.toString()] = '';
-                                        }));
-                                    }}>
-                            <div style={{fontSize: 12}}>Remaining</div>
-                            <div style={{fontSize: 30, fontWeight: 'bold', textAlign: 'right'}}>
-                                {oli.requested_amount - oli.fulfilled_amount}
-                            </div>
-                        </motion.div>
+                        {!isComplete &&
+                            <motion.div
+                                style={{display: 'flex', flexDirection: 'column', marginRight: 15, marginTop: 5}}
+                                whileTap={{scale: 0.98}}
+                                onTap={() => {
+                                    localStore.setState(produce(draft => {
+                                        const index = draft.confirmationLineItems.findIndex(cli => cli.order_line_item === oli.id);
+                                        draft.confirmationLineItems[index].amount_fulfilled = oli.requested_amount - oli.fulfilled_amount;
+                                        draft.errors[draft.confirmationLineItems[index].id.toString()] = '';
+                                    }));
+                                }}>
+                                <div style={{fontSize: 12}}>Remaining</div>
+                                <div style={{fontSize: 30, fontWeight: 'bold', textAlign: 'right'}}>
+                                    {oli.requested_amount - oli.fulfilled_amount}
+                                </div>
+                            </motion.div>
+                        }
                     </div>
                 </div>
             })}

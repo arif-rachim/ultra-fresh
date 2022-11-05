@@ -7,7 +7,7 @@ export function SkeletonBox(props: PropsWithChildren<{ skeletonVisible: boolean,
 
     if (skeletonVisible) {
         return <motion.div initial={{opacity: 0}} animate={{opacity: 1}} className={'skeleton-box'}
-                           style={{minWidth: 100, minHeight: 19, ...style}}/>
+                           style={{minWidth: 20, minHeight: 19, ...style}}/>
     }
     return <>{children}</>;
 }

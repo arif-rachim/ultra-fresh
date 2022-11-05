@@ -23,8 +23,8 @@ export function ReceivedPanel(props: { order: DbOrder | null, orderLineItems: Db
     return <div style={{display: 'flex', flexDirection: 'column'}}>
         <div style={{display: 'flex', flexDirection: 'column', padding: '10px 20px'}}>
             <div style={{display: 'flex'}}>
-                <TitleValue title={'City'} value={order?.shipping_city} width={'50%'}/>
-                <TitleValue title={'State'} value={order?.shipping_state} width={'50%'}/>
+                <TitleValue title={'City'} value={order?.shipping_city} style={{containerStyle:{width:'50%'}}}/>
+                <TitleValue title={'State'} value={order?.shipping_state} style={{containerStyle:{width:'50%'}}}/>
             </div>
             <TitleValue title={'Address'}
                         value={order === null ? undefined : order?.shipping_address_line_one + '' + order?.shipping_address_line_two}/>

@@ -30,7 +30,7 @@ export function ItemIcon<T extends { barcode: string, name: string }>(props: { i
                 border: '1px solid rgba(0,0,0,0.05)'
             }}>
                 <Image src={`/images/${item.barcode}/THUMB/default.png`}
-                       width={imageDimension - 20} alt={'Barcode ' + item.barcode}/>
+                       width={imageDimension - 20} height={imageDimension-20} alt={'Barcode ' + item.barcode}/>
             </div>
             <div style={{fontSize: 12, textAlign: 'center', marginTop: 5}}>
                 {item.name}

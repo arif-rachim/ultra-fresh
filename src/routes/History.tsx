@@ -10,7 +10,7 @@ import {IoBasket, IoStorefront, IoStorefrontOutline} from "react-icons/io5";
 import {BsPatchCheck, BsPatchCheckFill, BsTruck} from "react-icons/bs";
 import {FaTruck} from "react-icons/fa";
 import {IconType} from "react-icons";
-import { blueDarken, grey,  blue} from "./Theme";
+import {blueDarken, grey, blue, purple} from "./Theme";
 import {produce} from "immer";
 import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
 import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
@@ -24,7 +24,7 @@ function StatusIcon(props: { title: string, icon: IconType, iconSelected: IconTy
         flexDirection: 'column',
         alignItems: 'center',
         fontSize: 13
-    }} animate={isCurrent ? {color:[blue,blueDarken,blue],transition:{duration:2, repeat:Infinity,ease:'easeInOut',repeatType:"loop",bounce:0}} : selected ? {color:blueDarken} : {color:grey}}>
+    }} animate={isCurrent ? {color:[purple,blueDarken,purple],transition:{duration:2, repeat:Infinity,ease:'easeInOut',repeatType:"loop",bounce:0}} : selected ? {color:blueDarken} : {color:grey}}>
         <div style={{fontSize: 28, marginBottom: -3}}>
             <Icon/>
         </div>
@@ -54,7 +54,7 @@ export default function History(props: RouteProps) {
             }, (payload) => {
                 if (payload.eventType === 'INSERT') {
                     const newData: any = payload.new;
-                    setOrders(old => ([...old, newData]));
+                    setOrders(old => ([newData,...old]));
                 } else if (payload.eventType === 'UPDATE') {
                     setOrders(produce(draft => {
                         const index = draft.findIndex(d => d.id === payload.new.id);

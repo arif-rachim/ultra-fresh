@@ -23,14 +23,20 @@ export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: Db
     return <div style={{display: 'flex', flexDirection: 'column',paddingBottom:50}}>
         <div style={{display: 'flex', flexDirection: 'column', padding: '10px 20px'}}>
             <div style={{display: 'flex'}}>
-                <TitleValue title={'City'} value={order === null ? undefined :order?.shipping_city} width={'50%'}/>
-                <TitleValue title={'State'} value={order === null ? undefined :order?.shipping_state} width={'50%'}/>
+                <TitleValue title={'City'} value={order === null ? undefined :order?.shipping_city} style={{containerStyle:{width:'50%'}}}/>
+                <TitleValue title={'State'} value={order === null ? undefined :order?.shipping_state} style={{containerStyle:{width:'50%'}}}/>
             </div>
+
             <TitleValue title={'Address'}
-                        value={order === null ? undefined :order?.shipping_address_line_one + '' + order?.shipping_address_line_two}/>
+                        value={order === null ? undefined :order?.shipping_address_line_one + '' + order?.shipping_address_line_two} />
+
+
             <TitleValue title={'Receiver'}
                         value={order === null ? undefined :order?.shipping_receiver_first_name + ' ' + order?.shipping_receiver_last_name}/>
+
+
             <TitleValue title={'Phone'} value={order?.shipping_receiver_phone}/>
+
         </div>
         {confirmations.map(confirmation => {
             const deliveryNote = deliveryNotes.find(dn => dn.order_confirmation === confirmation.id);
@@ -102,7 +108,7 @@ function OrderDispatchDetail(props: { confirmation: DbOrderConfirmation, confirm
             <div style={{fontSize: 22}}>Items to be dispatched</div>
             <div>Reference No : {formatConfirmationNo(confirmation)}</div>
         </div>
-        {confirmationLineItems.filter(cli => cli.unable_to_fulfill !== true).map((cli, index) => {
+        {confirmationLineItems.filter(cli => cli.amount_fulfilled > 0).map((cli, index) => {
             const item = orderLineItems.find(oli => oli.id === cli.order_line_item);
             invariant(item);
             return <div key={cli.id}

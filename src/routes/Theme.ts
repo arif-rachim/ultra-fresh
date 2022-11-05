@@ -1,4 +1,5 @@
 export const blueDarken = 'rgba(0,122,204,1)';
+export const purple = '#8D86CE';
 export const green = 'rgba(0,100,60,1)';
 export const blue = 'rgba(2,149,210,1)';
 export const red = 'rgba(207,19,33,1)';

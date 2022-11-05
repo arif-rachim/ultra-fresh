@@ -52,7 +52,7 @@ export default function OrderDetail(props: RouteProps) {
                     <TitleValue title={'Order Status'} value={order?.order_status}/>
                 </div>
             </div>
-            <TitleValue title={'Sub total'} value={order && `AED ${order?.sub_total}`} width={'100%'}/>
+            <TitleValue title={'Sub total'} value={order && `AED ${order?.sub_total}`} style={{containerStyle:{flexGrow:1}}}/>
         </div>
         <div style={{
             height: '100%',

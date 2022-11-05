@@ -13,6 +13,7 @@ import invariant from "tiny-invariant";
 import {AcknowledgementNotePanel} from "./modal/AcknowledgementNotePanel";
 import {BsPatchCheckFill} from "react-icons/bs";
 import {formatConfirmationNo} from "./utils/formatConfirmationNo";
+import {DbOrderConfirmationLineItems} from "../../components/model/DbOrderConfirmationLineItems";
 
 export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbOrderLineItems[], confirmations: DbOrderConfirmation[],refresh:() => void }) {
     const appContext = useAppContext();
@@ -36,10 +37,19 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                             <div style={{width:120,display:'flex',flexDirection:'column',paddingTop:10}}>
                                 <Button title={'Detail'} style={{fontSize:14}} theme={ButtonTheme.promoted} icon={IoOpenOutline} onTap={async () => {
                                     invariant(order);
-                                    const {data: confirmedLineItems} = await supabase.from('order_confirmation_line_items').select('*').eq('order_confirmation(id)', c.id);
+                                    let {data} = await supabase.from('order_confirmation_line_items').select('*').eq('order_confirmation(id)', c.id);
+                                    let confirmedLineItems:DbOrderConfirmationLineItems[] = data ?? [];
+                                    let itemsToDisplay = orderLineItems;
+                                    if(c.status !== 'Complete'){
+                                        itemsToDisplay = itemsToDisplay.filter(oli => oli.requested_amount !== oli.fulfilled_amount)
+                                    }else{
+                                        confirmedLineItems = confirmedLineItems.filter(cli => cli.amount_fulfilled > 0 || cli.unable_to_fulfill);
+                                        const oliIds = confirmedLineItems.map(cli => cli.order_line_item);
+                                        itemsToDisplay = itemsToDisplay.filter(i => oliIds.includes(i.id ?? -1));
+                                    }
                                     const shouldRefresh = await appContext.showModal(closePanel => {
                                         return <AcknowledgementNotePanel closePanel={closePanel} order={order}
-                                                                         orderLineItems={orderLineItems}
+                                                                         orderLineItems={itemsToDisplay}
                                                                          confirmation={c}
                                                                          confirmationLineItems={confirmedLineItems ?? []}
                                         />
@@ -50,7 +60,7 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
 
                                 }}/>
                                 {c.status !== 'Complete' &&
-                                <Button title={'Delete'} style={{fontSize:14,marginBottom:15}} icon={IoRemoveCircleOutline} onTap={async () => {
+                                <Button title={'Delete'} style={{fontSize:14,marginTop:7}} icon={IoRemoveCircleOutline} onTap={async () => {
                                     const deleteItem = await appContext.showModal(closePanel => {
                                         return <div style={{
                                             background: 'rgba(255,255,255,0.9)',
@@ -90,10 +100,10 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                             </div>
                         </div>
                         <div style={{display: 'flex'}}>
-                            <div style={{display:'flex',flexDirection:'column',flexGrow:1}}>
-                            <TitleValue title={'Confirmed by'} value={order === null ? undefined :c.confirmed_by} />
-                            </div>
-                            <TitleValue title={'Status'} value={order === null ? undefined :c.status ?? 'N/A'} width={120}/>
+
+                            <TitleValue title={'Confirmed by'} value={order === null ? undefined :c.confirmed_by} style={{containerStyle:{flexGrow:1}}} />
+
+                            <TitleValue title={'Status'} value={order === null ? undefined :c.status ?? 'N/A'} style={{containerStyle:{width:120}}}/>
                         </div>
                     </div>
 
@@ -117,9 +127,13 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                         amount_fulfilled: 0
                     };
                 })).select();
+
+                let itemsToDisplay = orderLineItems;
+                itemsToDisplay = itemsToDisplay.filter(oli => oli.requested_amount !== oli.fulfilled_amount)
+
                 await appContext.showModal(closePanel => {
                     return <AcknowledgementNotePanel closePanel={closePanel} order={order}
-                                                     orderLineItems={orderLineItems}
+                                                     orderLineItems={itemsToDisplay}
                                                      confirmation={confirmation}
                                                      confirmationLineItems={confirmedLineItems ?? []}
                     />
