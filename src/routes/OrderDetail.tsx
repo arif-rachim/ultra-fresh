@@ -44,13 +44,9 @@ export default function OrderDetail(props: RouteProps) {
         <Header title={<SkeletonBox skeletonVisible={order === null}
                                     style={{flexGrow: 1}}>{`Order : ${formatOrderNo(order)}`}</SkeletonBox>}/>
         <div style={{padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,0.1)'}}>
-            <div style={{display: 'flex'}}>
-                <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-                    <TitleValue title={'Order Date'} value={order && formatDateTime(order?.created_at)}/>
-                </div>
-                <div style={{display: 'flex', flexDirection: 'column', width: 120}}>
-                    <TitleValue title={'Order Status'} value={order?.order_status}/>
-                </div>
+            <div style={{display: 'flex',marginBottom:10}}>
+                <TitleValue title={'Order Date'} value={order && formatDateTime(order?.created_at)}  style={{containerStyle:{flexGrow:1}}}/>
+                <TitleValue title={'Order Status'} value={order?.order_status} style={{containerStyle:{width:120}}}/>
             </div>
             <TitleValue title={'Sub total'} value={order && `AED ${order?.sub_total}`} style={{containerStyle:{flexGrow:1}}}/>
         </div>

@@ -28,11 +28,10 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
             }}>
                 <div style={{display: 'flex'}}>
                     <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1}}>
-                        <div style={{display: 'flex'}}>
+                        <div style={{display: 'flex',paddingTop:5}}>
                             <div style={{display: 'flex', flexDirection: 'column',flexGrow:1}}>
-
-                                <TitleValue title={'Confirmation No'} value={order === null ? undefined : formatConfirmationNo(c)}/>
-                                <TitleValue title={'Recorded at'} value={order === null ? undefined :formatDateTime(c.created_at)}/>
+                                <TitleValue title={'Confirmation No'} value={order === null ? undefined : formatConfirmationNo(c)} style={{containerStyle:{marginBottom:10}}}/>
+                                <TitleValue title={'Recorded at'} value={order === null ? undefined :formatDateTime(c.created_at)} style={{containerStyle:{marginBottom:10}}}/>
                             </div>
                             <div style={{width:120,display:'flex',flexDirection:'column',paddingTop:10}}>
                                 <Button title={'Detail'} style={{fontSize:14}} theme={ButtonTheme.promoted} icon={IoOpenOutline} onTap={async () => {
@@ -100,9 +99,7 @@ export function ConfirmPanel(props: { order: DbOrder | null, orderLineItems: DbO
                             </div>
                         </div>
                         <div style={{display: 'flex'}}>
-
-                            <TitleValue title={'Confirmed by'} value={order === null ? undefined :c.confirmed_by} style={{containerStyle:{flexGrow:1}}} />
-
+                            <TitleValue title={'Confirmed by'} value={order === null ? undefined :c.confirmed_by} style={{containerStyle:{flexGrow:1,marginBottom:10}}} />
                             <TitleValue title={'Status'} value={order === null ? undefined :c.status ?? 'N/A'} style={{containerStyle:{width:120}}}/>
                         </div>
                     </div>

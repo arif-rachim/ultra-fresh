@@ -21,35 +21,39 @@ export function DispatchPanel(props: { order: DbOrder | null, orderLineItems: Db
     confirmations = useMemo(() => confirmations.filter(cf => cf.status === 'Complete'), [confirmations]);
     const {showModal, user} = useAppContext();
     return <div style={{display: 'flex', flexDirection: 'column',paddingBottom:50}}>
-        <div style={{display: 'flex', flexDirection: 'column', padding: '10px 20px'}}>
-            <div style={{display: 'flex'}}>
+        <div style={{display: 'flex', flexDirection: 'column', padding: '10px 20px 0px 20px'}}>
+            <div style={{display: 'flex',marginBottom:10}}>
                 <TitleValue title={'City'} value={order === null ? undefined :order?.shipping_city} style={{containerStyle:{width:'50%'}}}/>
                 <TitleValue title={'State'} value={order === null ? undefined :order?.shipping_state} style={{containerStyle:{width:'50%'}}}/>
             </div>
 
             <TitleValue title={'Address'}
-                        value={order === null ? undefined :order?.shipping_address_line_one + '' + order?.shipping_address_line_two} />
+                        value={order === null ? undefined :order?.shipping_address_line_one + '' + order?.shipping_address_line_two}
+                        style={{containerStyle:{marginBottom:10}}}
+            />
 
 
             <TitleValue title={'Receiver'}
-                        value={order === null ? undefined :order?.shipping_receiver_first_name + ' ' + order?.shipping_receiver_last_name}/>
+                        value={order === null ? undefined :order?.shipping_receiver_first_name + ' ' + order?.shipping_receiver_last_name}
+                        style={{containerStyle:{marginBottom:10}}}
+            />
 
 
-            <TitleValue title={'Phone'} value={order?.shipping_receiver_phone}/>
+            <TitleValue title={'Phone'} value={order?.shipping_receiver_phone} style={{containerStyle:{marginBottom:10}}}/>
 
         </div>
         {confirmations.map(confirmation => {
             const deliveryNote = deliveryNotes.find(dn => dn.order_confirmation === confirmation.id);
             const hasDeliveryNote = deliveryNote !== null && deliveryNote !== undefined;
-            return <div key={confirmation.id} style={{display: 'flex', flexDirection: 'column', padding: '10px 20px'}}>
-                <div style={{display: 'flex'}}>
+            return <div key={confirmation.id} style={{display: 'flex', flexDirection: 'column', padding: '0px 20px 30px 20px'}}>
+                <div style={{display: 'flex',marginBottom:10}}>
                     <div style={{display: 'flex', flexDirection: 'column',flexGrow:1}}>
-                        <TitleValue title={'Confirmation No'} value={order === null ? undefined :formatConfirmationNo(confirmation)} />
+                        <TitleValue title={'Confirmation No'} value={order === null ? undefined :formatConfirmationNo(confirmation)} style={{containerStyle:{marginBottom:10}}}/>
                         <TitleValue title={'Confirmation Time'} value={order === null ? undefined :formatDateTime(confirmation.created_at)}/>
                     </div>
                     {hasDeliveryNote &&
                         <div style={{display: 'flex', flexDirection: 'column',flexGrow:1}}>
-                            <TitleValue title={'Delivery No'} value={order === null ? undefined :formatDeliveryNoteNo(deliveryNote)}/>
+                            <TitleValue title={'Delivery No'} value={order === null ? undefined :formatDeliveryNoteNo(deliveryNote)} style={{containerStyle:{marginBottom:10}}}/>
                             <TitleValue title={'Delivery Time'} value={order === null ? undefined :formatDateTime(deliveryNote.created_at)}/>
                         </div>
                     }
