@@ -2,7 +2,7 @@ import {Header} from "../components/page-components/Header";
 import {motion} from "framer-motion";
 import {IoLogInOutline, IoLogOutOutline} from "react-icons/io5";
 import {HiOutlineUserCircle} from "react-icons/hi";
-import {blueDarken, ButtonTheme, white} from "./Theme";
+import {blue, ButtonTheme, white} from "./Theme";
 import {useNavigate} from "../components/useNavigate";
 import {useAppContext, User} from "../components/useAppContext";
 import invariant from "tiny-invariant";
@@ -38,7 +38,7 @@ function AnonymousPage() {
             }} whileTap={{scale: 0.95}} onTap={() => navigate('sign-in')}>
                 <div style={{
                     fontSize: 30,
-                    backgroundColor: blueDarken,
+                    backgroundColor: blue,
                     color: white,
                     padding: '5px 8px 5px 2px',
                     width: 30,

@@ -1,6 +1,8 @@
 import {motion} from "framer-motion";
 import {IoChevronBackOutline} from "react-icons/io5";
 import {PropsWithChildren, ReactFragment} from "react";
+import {white} from "../../routes/Theme";
+
 
 type Element = string | number | boolean | ReactFragment | JSX.Element | null | undefined;
 
@@ -10,12 +12,12 @@ export function Header(props: PropsWithChildren<{ title: Element }>) {
         display: 'flex',
         alignItems: 'center',
         borderBottom: '1px solid rgba(0,0,0,0.05)',
-        background: 'linear-gradient(rgba(255,255,255,0.2),rgba(255,255,255,0.7))',
         paddingLeft: 10,
         padding: 5,
         paddingTop: 7,
         paddingRight: 20,
-        color: 'rgba(0,0,0,0.6)'
+        color:white,
+        backgroundImage: 'url("/logo/banner-bg.png")',
     }}>
         <motion.div onTap={() => window.history.back()}
                     whileHover={{scale: 1.05}}

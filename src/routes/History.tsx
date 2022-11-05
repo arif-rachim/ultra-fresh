@@ -10,7 +10,7 @@ import {IoBasket, IoStorefront, IoStorefrontOutline} from "react-icons/io5";
 import {BsPatchCheck, BsPatchCheckFill, BsTruck} from "react-icons/bs";
 import {FaTruck} from "react-icons/fa";
 import {IconType} from "react-icons";
-import {blueDarken, grey, blue, purple} from "./Theme";
+import {blue,  purple} from "./Theme";
 import {produce} from "immer";
 import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
 import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
@@ -24,7 +24,7 @@ function StatusIcon(props: { title: string, icon: IconType, iconSelected: IconTy
         flexDirection: 'column',
         alignItems: 'center',
         fontSize: 13
-    }} animate={isCurrent ? {color:[purple,blueDarken,purple],transition:{duration:2, repeat:Infinity,ease:'easeInOut',repeatType:"loop",bounce:0}} : selected ? {color:blueDarken} : {color:grey}}>
+    }} animate={isCurrent ? {color:[purple,blue,purple],transition:{duration:2, repeat:Infinity,ease:'easeInOut',repeatType:"loop",bounce:0}} : selected ? {color:blue} : {color:'unset'}}>
         <div style={{fontSize: 28, marginBottom: -3}}>
             <Icon/>
         </div>
@@ -80,7 +80,7 @@ export default function History(props: RouteProps) {
         <Header title={'Order Status'}/>
         {isEmpty &&
             <div style={{margin: 20}}>
-                <div style={{fontSize: 36, color: 'rgba(0,0,0,0.6)', marginBottom: 10}}>
+                <div style={{fontSize: 36, marginBottom: 10}}>
                     Its Empty
                 </div>
                 <div>

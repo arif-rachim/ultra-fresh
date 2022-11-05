@@ -1,5 +1,5 @@
 import {ChangeEventHandler, CSSProperties, HTMLInputTypeAttribute} from "react";
-import {ButtonTheme, theme} from "../../routes/Theme";
+import {ButtonTheme,  theme} from "../../routes/Theme";
 
 interface InputStyle {
     containerStyle?: CSSProperties,
@@ -33,8 +33,7 @@ export function Input(props: {
         <div style={{
             paddingLeft: 5,
             fontWeight: 'bold',
-            fontSize: 13,
-            color: 'rgba(0,0,0,0.6)', ...style?.titleStyle
+            fontSize: 13, ...style?.titleStyle
         }}>{props.title}</div>
         <input style={{
             backgroundColor: 'rgba(0,0,0,0.03)',

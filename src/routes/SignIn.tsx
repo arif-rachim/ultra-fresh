@@ -27,7 +27,7 @@ export function SignIn(props: RouteProps) {
         background: 'rgba(255,255,255,0.4)'
     }}>
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
-            <motion.div style={{fontSize: 36, margin: 20, color: 'rgba(0,0,0,0.6)'}} whileTap={{scale: 0.95}}
+            <motion.div style={{fontSize: 36, margin: 20}} whileTap={{scale: 0.95}}
                         onTap={() => window.history.back()}>
                 <IoClose/>
             </motion.div>

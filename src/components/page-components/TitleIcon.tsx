@@ -2,6 +2,7 @@ import {IconType} from "react-icons";
 import {CSSProperties} from "react";
 import {motion} from "framer-motion";
 
+
 export function TitleIcon(props: { title: string, icon: IconType, iconSize: number, style?: CSSProperties, onTap?: () => void, titlePosition?: 'top' | 'bottom' }) {
     let {icon, title, style, iconSize, onTap, titlePosition} = props;
     iconSize = iconSize ?? 27;
@@ -11,7 +12,6 @@ export function TitleIcon(props: { title: string, icon: IconType, iconSize: numb
         display: 'flex',
         flexDirection: titlePosition === 'bottom' ? 'column' : 'column-reverse',
         alignItems: 'center',
-        color: 'rgba(0,0,0,0.6)',
         fontSize: 12,
         margin: 5,
         ...style

@@ -19,9 +19,7 @@ function App() {
         {isSimulator &&
             <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center'}}>
                 <div style={{margin: 60, marginTop: 0}}>
-                    <div style={{fontSize: 90}}>Ultra Fresh</div>
-                    <div style={{fontSize: 40}}>By Marmum</div>
-                    <div>Build and designed by Windy Des Nadian for INSEAD GEMBA Final Project.</div>
+                    <img src={'ultra-fresh.svg'} />
                 </div>
             </div>}
         <WindowSizeContext.Provider value={useMemo(() => ({width, height}), [height, width])}>

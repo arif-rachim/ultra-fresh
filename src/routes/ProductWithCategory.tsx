@@ -5,7 +5,7 @@ import {useAppContext} from "../components/useAppContext";
 import {Header} from "../components/page-components/Header";
 import {Store, useCreateStore, useStoreValue} from "../components/store/useCreateStore";
 import {AnimatePresence, motion} from "framer-motion";
-import {blue, blueDarken, red, white, yellow} from "./Theme";
+import {blue, red, white, yellow} from "./Theme";
 import {MdAddCircle, MdCancel} from "react-icons/md";
 import {IoCheckmarkCircle} from "react-icons/io5";
 import {Product} from "../components/AppState";
@@ -22,8 +22,8 @@ function UnitSelector(props: { unit: { unitType: string; unit: string, barcode: 
                        animate={{
                            opacity: 1,
                            top: 0,
-                           background: selected ? blueDarken : white,
-                           color: selected ? white : blueDarken
+                           background: selected ? 'url("/logo/banner-bg.png")' : 'unset',
+                           color: selected ? white : 'unset'
                        }}
                        exit={{opacity: 0, top: -10}}
                        key={unit.unit + unit.unitType} style={{
@@ -102,7 +102,6 @@ export function AddRemoveButton(props: { barcode?: string, size?: 'small' | 'nor
                     textAlign: 'center',
                     minWidth: textMinWidth,
                     fontWeight: 'bold',
-                    color: 'rgba(0,0,0,0.7)',
                     fontSize: totalInCartFont
                 }} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
                     {totalInCart}
@@ -155,7 +154,7 @@ function ImageSlider(props: { selectedProduct?: Product }) {
             }}>
                 <Image src={`/images/${selectedProduct?.barcode}/400/${value}.png`}
                        style={{position: 'relative', margin: 10}}
-                       height={appDimension.height * 0.5} width={appDimension.width - 20}
+                       height={appDimension.width} width={appDimension.width}
                        alt={'Barcode ' + selectedProduct?.barcode}
                        key={selectedProduct?.barcode}
                 />
@@ -188,7 +187,7 @@ export default function ProductWithCategory(props: RouteProps) {
     const {appDimension} = useAppContext();
     let totalBox = groups.length < 6 ? 6 : groups.length;
     const imageDimension = Math.floor((appDimension.width - (10 * totalBox)) / totalBox);
-    console.log('We have imageDimension',imageDimension,totalBox);
+    console.log('We have imageDimension', imageDimension, totalBox);
 
     const initialSelectedGroup = groups.find(g => g.name === group) ?? groups[0];
     const selectedStore = useCreateStore({
@@ -235,8 +234,7 @@ export default function ProductWithCategory(props: RouteProps) {
         <Header title={category ?? ''}/>
         <div style={{
             height: '100%',
-            padding: '30px 0px 10px 0px',
-            boxShadow: '0 7px 10px -10px rgba(0,0,0,0.2) inset',
+            padding: '10px 0px 10px 0px',
         }}>
             <ImageSlider selectedProduct={selectedProduct}/>
         </div>
@@ -253,16 +251,23 @@ export default function ProductWithCategory(props: RouteProps) {
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    flexGrow: 1
+                    flexGrow: 1,
+
                 }}>
                     <div style={{
                         fontSize: 26,
+                        textShadow: '2px 0px 2px #ffffff,-2px 0px 2px #ffffff,0px 2px 2px #ffffff,0px -2px 2px #ffffff'
                     }}>{selectedProduct?.unit} {selectedProduct?.unitType}</div>
                     <div style={{
                         fontSize: 26,
-                        marginBottom: 10
+                        marginBottom: 10,
+                        textShadow: '2px 0px 2px #ffffff,-2px 0px 2px #ffffff,0px 2px 2px #ffffff,0px -2px 2px #ffffff'
                     }}>{selectedProduct?.category} {selectedProduct?.name}</div>
-                    <div style={{fontSize: 18, marginBottom: 10}}>AED {selectedProduct?.price}</div>
+                    <div style={{
+                        fontSize: 18,
+                        marginBottom: 10,
+                        textShadow: '2px 0px 2px #ffffff,-2px 0px 2px #ffffff,0px 2px 2px #ffffff,0px -2px 2px #ffffff'
+                    }}>AED {selectedProduct?.price}</div>
                     <div style={{
                         fontSize: 16,
                         fontWeight: 'bold',
@@ -291,7 +296,7 @@ export default function ProductWithCategory(props: RouteProps) {
                 justifyContent: 'center',
                 borderBottom: '1px solid rgba(0,0,0,0.1)',
                 borderTop: '1px solid rgba(0,0,0,0.2)',
-                backgroundColor: blueDarken,
+                background: 'url("/logo/banner-bg.png")',
                 flexShrink: 0,
                 height: 5
             }}>
@@ -334,16 +339,17 @@ const itemStyleSheet: CSSProperties = {
     boxSizing: 'border-box'
 }
 
-
+//backgroundImage: 'url("/logo/banner-bg.png")',
 function CategoryIconSelector<T extends { barcode: string, name: string }>(props: { imageDimension: number, item: T, onTap: (item: T) => void, selected?: boolean }) {
     const {imageDimension, item, selected} = props;
-    return <motion.div style={{...itemStyleSheet, height: imageDimension + 30,width:imageDimension}}
+    return <motion.div style={{...itemStyleSheet, height: imageDimension + 30, width: imageDimension,
+
+        background: selected ? 'url("/logo/banner-bg.png")' : 'rgba(255,255,255,0.5)',
+        color: selected ? white : 'unset'
+
+    }}
                        key={item.barcode}
-                       animate={{
-                           background: selected ? blueDarken : 'rgba(255,255,255,0.5)',
-                           color: selected ? white : blueDarken
-                       }}
-                       onTap={() => props.onTap(item)} >
+                       onTap={() => props.onTap(item)}>
         <Image src={`/images/${item.barcode}/THUMB/default.png`}
                style={{marginTop: 5}}
                width={imageDimension} height={imageDimension} alt={'Barcode ' + item.barcode} whileTap={{scale: 0.95}}
@@ -363,7 +369,7 @@ function CategoryIconSelector<T extends { barcode: string, name: string }>(props
         </div>
 
         {selected &&
-            <div style={{background: blueDarken, position: 'absolute', top: -2, width: '100%', height: 3}}/>
+            <div style={{background: 'url("/logo/banner-bg.png")', position: 'absolute', top: -2, width: '100%', height: 3}}/>
         }
     </motion.div>;
 }

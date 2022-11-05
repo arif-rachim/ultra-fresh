@@ -1,4 +1,4 @@
-import {blueDarken} from "../../Theme";
+import {blue} from "../../Theme";
 import {TitleIcon} from "../../../components/page-components/TitleIcon";
 import {IoBasket, IoBasketOutline, IoHome, IoHomeOutline} from "react-icons/io5";
 import {BsPatchCheck, BsPatchCheckFill, BsTruck} from "react-icons/bs";
@@ -6,8 +6,8 @@ import {FaTruck} from "react-icons/fa";
 
 export function OrderDetailFooter(props: { value: string, onChange: (value: string) => void }) {
     const {value, onChange} = props;
-    const style = {width: '25%', color: 'rgba(0,0,0,0.6)'};
-    const selectedStyle = {width: '25%', color: blueDarken};
+    const style = {width: '25%'};
+    const selectedStyle = {width: '25%', color: blue};
     return <div style={{
         backgroundColor: 'rgba(255,255,255,0.9)',
         display: 'flex',

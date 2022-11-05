@@ -51,14 +51,14 @@ export default function Cart(props: RouteProps) {
         overflow: 'auto'
     }}>
         <div style={{display: 'flex', flexDirection: 'row-reverse', margin: 10}}>
-            <motion.div style={{fontSize: 36, color: 'rgba(0,0,0,0.6)'}} whileTap={{scale: 0.95}}
+            <motion.div style={{fontSize: 36}} whileTap={{scale: 0.95}}
                         onTap={() => window.history.back()}>
                 <IoClose/>
             </motion.div>
         </div>
         {isEmpty &&
             <div style={{margin: 20, marginBottom: 30}}>
-                <div style={{fontSize: 36, color: 'rgba(0,0,0,0.6)', marginBottom: 10}}>
+                <div style={{fontSize: 36, marginBottom: 10}}>
                     Its Empty
                 </div>
                 <div>
@@ -71,7 +71,6 @@ export default function Cart(props: RouteProps) {
         <div style={{
             fontSize: 16,
             fontWeight: 'bold',
-            color: 'rgba(0,0,0,0.5)',
             paddingBottom: 10,
             borderBottom: '1px solid rgba(0,0,0,0.1)',
             paddingLeft: 20

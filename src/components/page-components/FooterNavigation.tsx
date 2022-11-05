@@ -2,7 +2,7 @@ import {useNavigate} from "../useNavigate";
 import {useAppContext} from "../useAppContext";
 import {useStoreValue} from "../store/useCreateStore";
 import {motion} from "framer-motion";
-import {ButtonTheme, theme, white} from "../../routes/Theme";
+import {ButtonTheme, lightGreen, theme, white} from "../../routes/Theme";
 import {
     IoCart,
     IoCartOutline,
@@ -33,30 +33,33 @@ export function FooterNavigation(props: RouteProps) {
         width: appDimension.width,
         boxSizing: 'border-box',
         padding: 5,
-        background: 'rgba(255,255,255,0.9)',
+        background: 'url("/logo/banner-bg.png")',
+        color:white,
         borderTop: '1px solid rgba(0,0,0,0.05)',
     }}>
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: path === 'home' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+
                     style={{
                         position: 'relative',
                         alignItems: 'center',
                         display: 'flex',
                         flexDirection: 'column',
-                        fontSize: 28
+                        fontSize: 28,
+                        color: path === 'home' ? lightGreen : 'unset'
                     }}
                     onTap={() => navigate('home')}>
             {path === 'home' ? <IoHome/> : <IoHomeOutline/>}
             <div style={{fontSize: 12}}>Home</div>
         </motion.div>
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: path === 'categories' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+
                     style={{
                         position: 'relative',
                         alignItems: 'center',
                         display: 'flex',
                         flexDirection: 'column',
-                        fontSize: 28
+                        fontSize: 28,
+                        color: path === 'categories' ? lightGreen : 'unset'
                     }}
                     onTap={() => navigate('categories')}>
             {path === 'categories' ? <IoListCircle/> : <IoListCircleOutline/>}
@@ -64,13 +67,14 @@ export function FooterNavigation(props: RouteProps) {
         </motion.div>
 
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: path === 'cart' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+
                     style={{
                         position: 'relative',
                         alignItems: 'center',
                         display: 'flex',
                         flexDirection: 'column',
-                        fontSize: 28
+                        fontSize: 28,
+                        color: path === 'cart' ? lightGreen : 'unset'
                     }}
                     onTap={() => {
                         navigate('cart');
@@ -98,13 +102,14 @@ export function FooterNavigation(props: RouteProps) {
         </motion.div>
 
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: path === 'history' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+
                     style={{
                         position: 'relative',
                         alignItems: 'center',
                         display: 'flex',
                         flexDirection: 'column',
-                        fontSize: 28
+                        fontSize: 28,
+                        color: path === 'history' ? lightGreen : 'unset'
                     }}
                     onTap={() => {
                         navigate('history');
@@ -114,13 +119,14 @@ export function FooterNavigation(props: RouteProps) {
         </motion.div>
 
         <motion.div whileHover={{scale: 1.05}} whileTap={{scale: 0.95}}
-                    animate={{color: path === 'user-account' ? theme[ButtonTheme.promoted] : theme[ButtonTheme.default]}}
+
                     style={{
                         position: 'relative',
                         alignItems: 'center',
                         display: 'flex',
                         flexDirection: 'column',
-                        fontSize: 28
+                        fontSize: 28,
+                        color: path === 'user-account' ? lightGreen : 'unset'
                     }}
                     onTap={() => navigate('user-account')}>
             {path === 'user-account' ? <IoPerson/> : <IoPersonOutline/>}

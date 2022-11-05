@@ -2,7 +2,7 @@ import {RouteProps} from "../components/useRoute";
 import {Header} from "../components/page-components/Header";
 
 import {RiAppleLine, RiGoogleLine, RiMastercardLine, RiVisaLine} from "react-icons/ri";
-import {blueDarken, white} from "./Theme";
+import {blue, white} from "./Theme";
 import {Input} from "../components/page-components/Input";
 import {Button} from "../components/page-components/Button";
 import {IoCardOutline} from "react-icons/io5";
@@ -153,7 +153,7 @@ export default function Payment(props: RouteProps) {
             }}>
                 <div style={{
                     margin: 5,
-                    backgroundColor: blueDarken,
+                    backgroundColor: blue,
                     height: 40,
                     width: '25%',
                     display: 'flex',
@@ -165,7 +165,7 @@ export default function Payment(props: RouteProps) {
                 </div>
                 <div style={{
                     margin: 5,
-                    backgroundColor: blueDarken,
+                    backgroundColor: blue,
                     height: 40,
                     width: '25%',
                     display: 'flex',
@@ -178,7 +178,7 @@ export default function Payment(props: RouteProps) {
                 <div style={{
                     margin: 5,
                     fontSize: 50,
-                    backgroundColor: blueDarken,
+                    backgroundColor: blue,
                     height: 40,
                     width: '25%',
                     display: 'flex',
@@ -191,7 +191,7 @@ export default function Payment(props: RouteProps) {
                 <div style={{
                     margin: 5,
                     fontSize: 40,
-                    backgroundColor: blueDarken,
+                    backgroundColor: blue,
                     height: 40,
                     width: '25%',
                     display: 'flex',

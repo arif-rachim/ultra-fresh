@@ -1,9 +1,11 @@
-import {MainHeaderSearchPanel, useCategoriesList} from "./Categories";
+import {useCategoriesList} from "./Categories";
 import {useAppContext} from "../components/useAppContext";
 import {useNavigate} from "../components/useNavigate";
 import {useGroupFromCategory} from "./ProductWithCategory";
 import {motion} from "framer-motion";
 import {Image} from "../components/page-components/Image";
+import {MainHeaderSearchPanel} from "../components/page-components/MainHeaderSearchPanel";
+
 
 export function Home() {
 
@@ -21,7 +23,7 @@ export function Home() {
             }}>
                 {categories.map(d => {
                     return <div key={d.label} style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                        <div style={{marginLeft: 10, marginBottom: 5, fontWeight: 'bold', color: 'rgba(0,0,0,0.5)'}}>
+                        <div style={{marginLeft: 10, marginBottom: 5}}>
                             {d.label}
                         </div>
                         <CategoryLineRenderer category={d.label}/>
@@ -40,7 +42,7 @@ function CategoryLineRenderer(props: { category: string }) {
     const navigate = useNavigate();
     return <div style={{
         borderTop: '1px solid rgba(0,0,0,0.1)',
-        paddingTop: 10,
+        paddingTop: 5,
         height: 120,
         overflowX: "auto",
         overflowY: 'hidden',
@@ -53,7 +55,6 @@ function CategoryLineRenderer(props: { category: string }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '1px solid rgba(0,0,0,0.05)',
                     marginLeft: 5,
                     marginRight: 5,
                     borderRadius: 5,
@@ -69,7 +70,7 @@ function CategoryLineRenderer(props: { category: string }) {
                            alt={'Barcode ' + group.barcode}/>
                 </motion.div>
                 <div style={{
-                    fontSize: 12,
+                    fontSize: 14,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

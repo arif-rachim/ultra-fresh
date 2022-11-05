@@ -1,5 +1,6 @@
 import {motion} from "framer-motion";
 import {useNavigate} from "../components/useNavigate";
+import React from "react";
 
 export function LandingScreen() {
     const navigate = useNavigate();
@@ -13,10 +14,7 @@ export function LandingScreen() {
         }} onTap={() => {
             navigate('home');
         }}>
-            <div>
-                <div style={{fontSize: 60}}>Ultra Fresh</div>
-                <div>by Marmum</div>
-            </div>
+            <img src={'ultra-fresh.svg'} width={400} height={300} />
         </motion.div>
     </div>
 
