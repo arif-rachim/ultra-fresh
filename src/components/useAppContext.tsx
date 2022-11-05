@@ -116,7 +116,6 @@ export function AppContextProvider<State extends AppState>(props: PropsWithChild
     }, [session]);
     useEffect(() => {
         supabase.auth.onAuthStateChange((event, session) => {
-            console.log('WE HAVE EVENT ', event, session);
             setSession(session);
         });
     }, []);

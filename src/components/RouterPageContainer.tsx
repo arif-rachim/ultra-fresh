@@ -50,7 +50,6 @@ export function RouterPageContainer() {
     } else {
         componentsRef.current[componentIndex].params = params;
     }
-    console.log('path',path,'params',params);
     return <CurrentActivePathContext.Provider value={path}>
         <div style={{
             height: '100%',
