@@ -10,10 +10,10 @@ import {MainHeaderSearchPanel} from "../components/page-components/MainHeaderSea
 export function Home() {
 
     const categories = useCategoriesList();
-
+    const {appDimension} = useAppContext();
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
         <MainHeaderSearchPanel/>
-        <div style={{height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto', paddingTop: 20}}>
+        <div style={{height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto', paddingTop: 10}}>
             <div style={{
                 display: 'flex',
                 flexDirection: "column",
@@ -21,6 +21,9 @@ export function Home() {
                 paddingBottom: 50,
                 margin: '0px 0px'
             }}>
+
+                <Image src={'/logo/top-banner.jpeg'} width={appDimension.width - 20} height={(appDimension.width - 20) * 0.5} style={{margin:10,marginTop:0}}/>
+
                 {categories.map(d => {
                     return <div key={d.label} style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                         <div style={{marginLeft: 10, marginBottom: 5}}>
@@ -48,6 +51,7 @@ function CategoryLineRenderer(props: { category: string }) {
         overflowY: 'hidden',
         display: 'flex'
     }}>
+
         {groups.map(group => {
             return <div style={{display: 'flex', flexDirection: 'column', width: imageDimension, flexShrink: 0}}
                         key={group.name}>

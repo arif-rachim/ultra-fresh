@@ -19,7 +19,7 @@ function App() {
         {isSimulator &&
             <div style={{display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center'}}>
                 <div style={{margin: 60, marginTop: 0}}>
-                    <img src={'ultra-fresh.svg'} />
+                    <img src={'/logo/ultra-fresh.svg'} />
                 </div>
             </div>}
         <WindowSizeContext.Provider value={useMemo(() => ({width, height}), [height, width])}>

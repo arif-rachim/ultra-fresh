@@ -34,6 +34,7 @@ export function FooterNavigation(props: RouteProps) {
         boxSizing: 'border-box',
         padding: 5,
         background: 'url("/logo/banner-bg.png")',
+        boxShadow:'0px 5px 20px -5px rgba(0,0,0,0.2) inset',
         color:white,
         borderTop: '1px solid rgba(0,0,0,0.05)',
     }}>

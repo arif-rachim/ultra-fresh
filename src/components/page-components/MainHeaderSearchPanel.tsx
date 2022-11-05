@@ -5,7 +5,7 @@ export function MainHeaderSearchPanel() {
     const {appDimension} = useAppContext();
     return <div style={{
         boxSizing: 'border-box',
-        borderBottom: '1px solid rgba(0,0,0,0.08)',
+        boxShadow:'0px -5px 20px -5px rgba(0,0,0,0.2) inset',
         backgroundImage: 'url("/logo/banner-bg.png")',
         width: appDimension.width,
         display: 'flex',

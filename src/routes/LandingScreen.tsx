@@ -14,7 +14,7 @@ export function LandingScreen() {
         }} onTap={() => {
             navigate('home');
         }}>
-            <img src={'ultra-fresh.svg'} width={400} height={300} />
+            <img src={'/logo/ultra-fresh.svg'} width={400} height={300} />
         </motion.div>
     </div>
 
