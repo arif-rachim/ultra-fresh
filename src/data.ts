@@ -1177,7 +1177,7 @@ export const data: Product[] = [
         "price": "5.17",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Uht Milks (Long Life)"
+        "category": "UHT Milk (Long Life)"
     },
     {
         "internalCode": "M7026",
@@ -1188,7 +1188,7 @@ export const data: Product[] = [
         "price": "20.68",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Uht Milks (Long Life)"
+        "category": "UHT Milk (Long Life)"
     },
     {
         "internalCode": "",
@@ -1199,7 +1199,7 @@ export const data: Product[] = [
         "price": "62.04",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Uht Milks (Long Life)"
+        "category": "UHT Milk (Long Life)"
     },
     {
         "internalCode": "",
@@ -1210,7 +1210,7 @@ export const data: Product[] = [
         "price": "5.17",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Uht Milks (Long Life)"
+        "category": "UHT Milk (Long Life)"
     },
     {
         "internalCode": "M7032",
@@ -1221,7 +1221,7 @@ export const data: Product[] = [
         "price": "20.68",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Uht Milks (Long Life)"
+        "category": "UHT Milk (Long Life)"
     },
     {
         "internalCode": "M7031",
@@ -1232,7 +1232,7 @@ export const data: Product[] = [
         "price": "62.04",
         "shelfLife": "6",
         "shelfLifeType": "MONTHS",
-        "category": "Uht Milks (Long Life)"
+        "category": "UHT Milk (Long Life)"
     },
     {
         "internalCode": "M7032",
