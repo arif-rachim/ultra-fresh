@@ -1,12 +1,15 @@
-const statusDescription = {
-    'Placed': 'The order has been submitted, and we are currently awaiting confirmation from the farm.',
-    'Acknowledge': 'The order has been confirmed, but not all of the items can be sent. The items that have been confirmed will be sent out in the morning.',
-    'Confirmed': 'The order has been accepted, all of the items that were requested can be provided, and the items will be shipped first thing in the morning.',
-    'Dispatched': 'The order has been processed and is now en route to the customer where it will be delivered.',
-    'Send ': 'The order has been processed and is now en route to the customer where it will be delivered partially.',
-    'Delivered': 'The customer\'s order has been delivered.',
-    'Received': 'The customer\'s order has been delivered partially.',
-    'Returned': 'The order has been cancelled due to one or more of the following reasons.',
+import {formatDateTime} from "../../routes/order-detail-panels/utils/formatDateTime";
+import {formatOrderNo} from "../../routes/order-detail-panels/utils/formatOrderNo";
+
+export const statusDescription = {
+    'Placed': (order:DbOrder) => `The order of goods was entered into the system on ${formatDateTime(order.created_at)}.The tracking reference number for this order is ${formatOrderNo(order)}.Currently, the farm will confirm and prepare the ordered goods. After the farm confirms the list of items, the truck will deliver them to the customer\'s location the following day.`,
+    'Acknowledge': (order:DbOrder) =>`The order of goods was entered into the system on ${formatDateTime(order.created_at)}.The tracking reference number for this order is ${formatOrderNo(order)}.It appears that not all items can be fulfilled by the farm; those that can be fulfilled will continue to be shipped to the customer\'s location first thing in the morning, while the remaining unfulfilled items will be refunded.`,
+    'Confirmed': (order:DbOrder) =>`The order of goods was entered into the system on ${formatDateTime(order.created_at)}.The tracking reference number for this order is ${formatOrderNo(order)}. All orders have been confirmed by the farm, and they are all set to be delivered the following morning.`,
+    'Send': (order:DbOrder) =>`The order of goods was entered into the system on ${formatDateTime(order.created_at)}.The tracking reference number for this order is ${formatOrderNo(order)}. Orders acknowledged by the farm are currently en route to the customer\'s location. The delivery was initiated by the truck at the crack of dawn.`,
+    'Dispatched': (order:DbOrder) =>`The order of goods was entered into the system on ${formatDateTime(order.created_at)}.The tracking reference number for this order is ${formatOrderNo(order)}.The order is currently en route to the customer\'s location. The truck began its journey very early in the morning.`,
+    'Delivered': (order:DbOrder) =>'The customer has received the order.',
+    'Received': (order:DbOrder) =>'The customer\'s order has been delivered partially.',
+    'Returned': (order:DbOrder) =>'The order has been cancelled due to one or more of the following reasons.',
 }
 
 export interface DbOrder {

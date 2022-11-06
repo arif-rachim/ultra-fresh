@@ -1,11 +1,11 @@
-import {Header} from "../components/page-components/Header";
+
 import {RouteProps} from "../components/useRoute";
 import {useAppContext} from "../components/useAppContext";
 import {motion} from "framer-motion";
 import {useNavigate} from "../components/useNavigate";
 import {useEffect, useState} from "react";
 import {supabase} from "../components/supabase";
-import {DbOrder} from "../components/model/DbOrder";
+import {DbOrder, statusDescription} from "../components/model/DbOrder";
 import {IoBasket, IoStorefront, IoStorefrontOutline} from "react-icons/io5";
 import {BsPatchCheck, BsPatchCheckFill, BsTruck} from "react-icons/bs";
 import {FaTruck} from "react-icons/fa";
@@ -14,6 +14,7 @@ import {blue, grey, purple} from "./Theme";
 import {produce} from "immer";
 import {formatDateTime} from "./order-detail-panels/utils/formatDateTime";
 import {formatOrderNo} from "./order-detail-panels/utils/formatOrderNo";
+
 
 function StatusIcon(props: { title: string, icon: IconType, iconSelected: IconType, selected?: boolean,isCurrent?:boolean }) {
     const {icon, title, selected, iconSelected,isCurrent} = props;
@@ -141,6 +142,9 @@ export default function History(props: RouteProps) {
                                         selected={['Received' , 'Delivered'].includes(order.order_status)}
                                         isCurrent={[ 'Received' , 'Delivered'].includes(order.order_status)}
                             />
+                        </div>
+                        <div style={{borderTop:'1px solid rgba(0,0,0,0.1)',padding:20}}>
+                            {statusDescription[order.order_status](order)}
                         </div>
                     </motion.div>
                 })}
