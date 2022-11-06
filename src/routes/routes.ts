@@ -12,6 +12,7 @@ import {FooterNavigation} from "../components/page-components/FooterNavigation";
 import {UserAccount} from "./UserAccount";
 import {SignIn} from "./SignIn";
 import {LandingScreen} from "./LandingScreen";
+import {HeaderNavigation} from "../components/page-components/HeaderNavigation";
 
 
 export const routes: Routes = {
@@ -36,6 +37,7 @@ export const routes: Routes = {
     'categories': {
         component: Categories,
         footerComponent: FooterNavigation,
+        headerComponent :HeaderNavigation,
         animateIn: {
             left: 0,
             transition: {
@@ -55,6 +57,7 @@ export const routes: Routes = {
     'home': {
         component: Home,
         footerComponent: FooterNavigation,
+        headerComponent :HeaderNavigation,
         animateIn: {
             left: 0,
             transition: {
@@ -92,6 +95,7 @@ export const routes: Routes = {
     'cart': {
         component: Cart,
         footerComponent: FooterNavigation,
+        headerComponent :HeaderNavigation,
         animateOut: {
             bottom: '-100%',
             transition: {
@@ -165,6 +169,7 @@ export const routes: Routes = {
     'history': {
         component: History,
         footerComponent: FooterNavigation,
+        headerComponent :HeaderNavigation,
         animateIn: {
             right: 0,
             transition: {
@@ -202,6 +207,7 @@ export const routes: Routes = {
     'user-account': {
         component: UserAccount,
         footerComponent: FooterNavigation,
+        headerComponent :HeaderNavigation,
         animateIn: {
             right: 0,
             transition: {

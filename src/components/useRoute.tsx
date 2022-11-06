@@ -5,7 +5,8 @@ import {Target, TargetAndTransition} from "framer-motion";
 export interface ParamsAndComponent {
     params: Map<string, string>,
     routeComponent: ComponentType<RouteProps>,
-    routeFooterComponent: ComponentType<RouteProps>
+    routeFooterComponent: ComponentType<RouteProps>,
+    routeHeaderComponent: ComponentType<RouteProps>,
     path: string,
     animateIn: TargetAndTransition,
     animateOut: TargetAndTransition,
@@ -42,6 +43,7 @@ interface FilteredComponents {
     path: string,
     component: RouteElement,
     footerComponent?: RouteElement,
+    headerComponent?: RouteElement,
     animateIn: TargetAndTransition,
     animateOut: TargetAndTransition,
     initial: Target
@@ -58,13 +60,15 @@ let defaultOnHidden: Target = {
 };
 
 function useParamsAndComponent() {
-    const componentCache = useRef<Map<any,MemoExoticComponent<RouteElement>>>(new Map());
-    return function getParamsAndComponents(route: [string, RouteElement | MotionRouteElement][]): ParamsAndComponent{
+    const componentCache = useRef<Map<any, MemoExoticComponent<RouteElement>>>(new Map());
+    return function getParamsAndComponents(route: [string, RouteElement | MotionRouteElement][]): ParamsAndComponent {
         const hash = getHash();
         const hashArray = hash.split('/');
         let params = new Map<string, string>();
         let routeComponent: MemoExoticComponent<RouteElement> = memo(EmptyComponent);
         let routeFooterComponent: MemoExoticComponent<RouteElement> = memo(EmptyComponent);
+        let routeHeaderComponent: MemoExoticComponent<RouteElement> = memo(EmptyComponent);
+
         let path: string = '';
         let animateIn: TargetAndTransition = defaultOnVisible;
         let animateOut: TargetAndTransition = defaultOnHidden;
@@ -74,19 +78,31 @@ function useParamsAndComponent() {
                 const params: Map<string, any> = new Map();
                 let component: RouteElement | undefined;
                 let footerComponent: RouteElement | undefined;
+                let headerComponent: RouteElement | undefined;
                 let animateIn: TargetAndTransition = defaultOnVisible;
                 let animateOut: TargetAndTransition = defaultOnHidden;
                 let initial: Target = defaultOnHidden;
                 if ('component' in componentOrMotionComponent) {
                     component = (componentOrMotionComponent as MotionRouteElement).component;
                     footerComponent = (componentOrMotionComponent as MotionRouteElement).footerComponent;
+                    headerComponent = (componentOrMotionComponent as MotionRouteElement).headerComponent;
                     animateIn = (componentOrMotionComponent as MotionRouteElement).animateIn;
                     animateOut = (componentOrMotionComponent as MotionRouteElement).animateOut;
                     initial = (componentOrMotionComponent as MotionRouteElement).initial;
                 } else {
                     component = componentOrMotionComponent as RouteElement;
                 }
-                return {paths: path.split('/'), component, params, path, animateIn, initial, animateOut, footerComponent}
+                return {
+                    paths: path.split('/'),
+                    component,
+                    params,
+                    path,
+                    animateIn,
+                    initial,
+                    animateOut,
+                    footerComponent,
+                    headerComponent
+                }
             });
             for (let i = 0; i < hashArray.length; i++) {
                 const value = hashArray[i];
@@ -107,21 +123,35 @@ function useParamsAndComponent() {
                 const fc = filteredComponents[0];
                 params = fc.params;
                 const FooterComponent = fc.footerComponent ?? EmptyComponent;
-                if(!componentCache.current.has(FooterComponent)){
-                    componentCache.current.set(FooterComponent,memo(FooterComponent, (prevProps: any, nextProps: any) => prevProps.path === nextProps.path && mapsAreEqual(prevProps.params, nextProps.params)));
+                const HeaderComponent = fc.headerComponent ?? EmptyComponent;
+                if (!componentCache.current.has(FooterComponent)) {
+                    componentCache.current.set(FooterComponent, memo(FooterComponent, (prevProps: any, nextProps: any) => prevProps.path === nextProps.path && mapsAreEqual(prevProps.params, nextProps.params)));
                 }
-                if(!componentCache.current.has(fc.component)){
-                    componentCache.current.set(fc.component,memo(fc.component, (prevProps: any, nextProps: any) => prevProps.path === nextProps.path && mapsAreEqual(prevProps.params, nextProps.params)));
+                if (!componentCache.current.has(HeaderComponent)) {
+                    componentCache.current.set(HeaderComponent, memo(HeaderComponent, (prevProps: any, nextProps: any) => prevProps.path === nextProps.path && mapsAreEqual(prevProps.params, nextProps.params)));
+                }
+                if (!componentCache.current.has(fc.component)) {
+                    componentCache.current.set(fc.component, memo(fc.component, (prevProps: any, nextProps: any) => prevProps.path === nextProps.path && mapsAreEqual(prevProps.params, nextProps.params)));
                 }
                 routeFooterComponent = (componentCache.current.get(FooterComponent) as any);
                 routeComponent = (componentCache.current.get(fc.component) as any);
+                routeHeaderComponent = (componentCache.current.get(HeaderComponent) as any);
                 path = fc.path;
                 animateIn = fc.animateIn;
                 animateOut = fc.animateOut;
                 initial = fc.initial;
             }
         }
-        return {routeComponent, params, path, animateIn, animateOut, initial, routeFooterComponent};
+        return {
+            routeComponent,
+            params,
+            path,
+            animateIn,
+            animateOut,
+            initial,
+            routeFooterComponent,
+            routeHeaderComponent
+        };
     }
 
 }
@@ -136,6 +166,7 @@ const mapsAreEqual = (m1: Map<string, any>, m2: Map<string, any>) => m1.size ===
 export type RouteElement = ComponentType<RouteProps>;
 
 interface MotionRouteElement {
+    headerComponent?: RouteElement,
     component: RouteElement,
     footerComponent?: RouteElement,
     animateIn: TargetAndTransition,

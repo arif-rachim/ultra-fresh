@@ -27,16 +27,14 @@ export function Categories(props: RouteProps) {
     const navigate = useNavigate();
     const imageDimension = Math.floor(appDimension.width / 3) - 10;
     const categories = useCategoriesList();
-    return <div
-        style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-
-        <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto'}}>
+    return <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto'}}>
             <div style={{
                 display: 'flex',
                 flexWrap: "wrap",
                 alignContent: "space-between",
                 margin: 'auto',
-                paddingBottom: 52
+                paddingBottom: 52,
+                paddingTop:50,
             }}>
                 {categories.map(d => {
                     return <ItemIcon imageDimension={imageDimension}
@@ -46,5 +44,4 @@ export function Categories(props: RouteProps) {
             </div>
         </div>
 
-    </div>
 }

@@ -98,8 +98,7 @@ export function UserAccount() {
 
     const isAnonymous = user === null;
 
-    return <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden'}}>
-        <Header title={'User Account Information'}/>
+    return <div style={{display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden',paddingTop:50,boxSizing:'border-box'}}>
         {isAnonymous &&
             <AnonymousPage/>}
         {!isAnonymous && <AccountInfo user={user}/>}

@@ -17,7 +17,8 @@ export function RouterPageContainer() {
         animateIn,
         animateOut,
         initial,
-        routeFooterComponent: RouteFooterComponent
+        routeFooterComponent: RouteFooterComponent,
+        routeHeaderComponent : RouterHeaderComponent
     } = useRoute();
     const currentAnimateOutRef = useRef(animateOut); //
     currentAnimateOutRef.current = animateOut;
@@ -66,6 +67,9 @@ export function RouterPageContainer() {
             })}
             <div style={{position: 'absolute', bottom: 0, width: '100%'}}>
                 <RouteFooterComponent path={path} params={params}/>
+            </div>
+            <div style={{position: 'absolute', top: 0, width: '100%'}}>
+                <RouterHeaderComponent path={path} params={params}/>
             </div>
         </div>
     </CurrentActivePathContext.Provider>

@@ -4,7 +4,7 @@ import {useNavigate} from "../components/useNavigate";
 import {useGroupFromCategory} from "./ProductWithCategory";
 import {motion} from "framer-motion";
 import {Image} from "../components/page-components/Image";
-import {MainHeaderSearchPanel} from "../components/page-components/MainHeaderSearchPanel";
+import {HeaderNavigation} from "../components/page-components/HeaderNavigation";
 import {FaShippingFast} from "react-icons/fa";
 import {IoPricetagsOutline, IoRibbonOutline} from "react-icons/io5";
 import {TbRefresh} from "react-icons/tb";
@@ -144,7 +144,7 @@ export function Home() {
     const categories = useCategoriesList();
     const {appDimension} = useAppContext();
     return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-        <MainHeaderSearchPanel/>
+        <HeaderNavigation/>
         <div style={{height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto', paddingTop: 10}}>
             <div style={{
                 display: 'flex',
@@ -202,7 +202,8 @@ function CategoryLineRenderer(props: { category: string,background?:string|numbe
         display: 'flex',
         boxShadow: '0 -7px 10px -7px rgba(0,0,0,0.15)',
         position:'relative',
-        marginBottom:15,
+        marginBottom:5,
+        paddingBottom:15,
         background
     }}>
         {groups.map(group => {

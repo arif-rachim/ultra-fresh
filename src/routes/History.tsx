@@ -77,8 +77,8 @@ export default function History(props: RouteProps) {
 
     }, [user?.phone]);
 
-    return <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-        <Header title={'Order Status'}/>
+    return <div style={{display: 'flex', flexDirection: 'column', height: '100%',paddingTop:54,boxSizing:'border-box'}}>
+
         {isEmpty &&
             <div style={{margin: 20}}>
                 <div style={{fontSize: 36, marginBottom: 10}}>
