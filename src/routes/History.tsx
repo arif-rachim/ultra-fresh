@@ -39,7 +39,9 @@ export default function History(props: RouteProps) {
     const [orders, setOrders] = useState<DbOrder[]>([]);
     useEffect(() => {
         (async () => {
-            const {data} = await supabase.from('orders').select('*').eq('created_by', user?.phone).order('id', {ascending: false});
+            // for time being we will display all orders since we have not develop security
+            //const {data} = await supabase.from('orders').select('*').eq('created_by', user?.phone).order('id', {ascending: false});
+            const {data} = await supabase.from('orders').select('*').order('id', {ascending: false});
             setOrders(data ?? []);
         })();
     }, [user?.phone])
@@ -52,7 +54,7 @@ export default function History(props: RouteProps) {
                 event: '*',
                 schema: 'public',
                 table: 'orders',
-                filter: `created_by=eq.${user?.phone}`
+                // filter: `created_by=eq.${user?.phone}` // we disable this for time being
             }, (payload) => {
                 if (payload.eventType === 'INSERT') {
                     const newData: any = payload.new;
